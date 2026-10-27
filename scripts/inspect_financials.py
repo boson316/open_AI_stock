@@ -8,7 +8,7 @@ client=SECClient()
 result={'documents':[]}
 try:
  r=filings(client,'0001046179')
- candidates=[i for i,f in enumerate(r['form']) if f=='6-K' and ('fsx' in r['primaryDocument'][i] or (re.fullmatch(r'tsm-6k_2022(?:02|05|08|11)\d{2}\.htm',r['primaryDocument'][i]) and 8<=int(r['filingDate'][i][-2:])<=21))]
+ candidates=[i for i,f in enumerate(r['form']) if f=='6-K' and ('fsx' in r['primaryDocument'][i] or (re.fullmatch(r'tsm-6k_(?:2022(?:02|05|08|11)|202302)\d{2}\.htm',r['primaryDocument'][i]) and 8<=int(r['filingDate'][i][-2:])<=28))]
  for i in candidates:
   acc=r['accessionNumber'][i];base=f"https://www.sec.gov/Archives/edgar/data/1046179/{acc.replace('-','')}/"
   items=client.get_json(base+'index.json')['directory']['item']
