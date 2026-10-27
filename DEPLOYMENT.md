@@ -2,7 +2,7 @@
 
 ## GitHub Pages
 
-1. 將本機專案檔案（含 `package-lock.json`、`requirements.lock`、`public/data/`）提交並推送至 `boson316/open_AI_stock` 的 `main`。本次實作尚未自動推送或建立遠端分支。
+1. 將本機專案檔案（含 `package-lock.json`、`requirements.lock`、`public/data/`）提交並推送至 `boson316/open_AI_stock` 的 `main`。本專案已推送至 main；後續更新仍需提交並推送。
 2. Repository Settings → Pages → Build and deployment → Source 選 **GitHub Actions**。
 3. Settings → Actions → General，允許 Actions 執行；財報更新須允許 workflow 建立 PR（不授予無關權限）。
 4. Settings → Secrets and variables → Actions → Variables，設定 `SEC_USER_AGENT` 為專案名稱與可公開聯絡信箱。不需要付費 API key。
