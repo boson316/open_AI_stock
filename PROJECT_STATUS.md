@@ -10,7 +10,7 @@
 | 4：SoFi | 淨營收口徑已核對；官方 Q4 EPS 直接披露、TTM、NIM、母公司 CET1、會員與產品數可用。其他信用、放款與分部指標未完整解析，明示 N/A。 |
 | 5：圖表與表格 | 損益、EPS、成長、現金流、資產負債、比率、季度/年度/TTM、單位及匯出已實作。資料缺漏的圖表保留缺值；不因缺任一指標使頁面崩潰。 |
 | 6：估值 | CSV、point-in-time 正 PE、五條分位估值線、對數軸、ROIC/WACC 使用者假設已實作。Adjusted/Normalized EPS、聚焦價格模式、band deviation tooltip、分割事件 UI 尚未完成。 |
-| 7：Actions / Pages | 兩套 workflow 已建立，含測試 gate / cache / permissions / artifacts / update PR；已推送 main；目前環境對 GitHub API 連線回傳 403，尚未確認遠端 Actions / Pages 部署結果。 |
+| 7：Actions / Pages | 兩套 workflow 已建立，含測試 gate / cache / permissions / artifacts / update PR；已推送 main；遠端 Actions 已完成測試及 build；configure-pages 因儲存庫尚未啟用 Pages 而失敗。目前環境 GitHub API 連線回傳 403，須由管理員將 Pages Source 設為 GitHub Actions 後重新執行 workflow。 |
 | 8：測試 | pytest 18 項、Vitest 9 項、Chromium E2E 3 項通過；TypeScript、ESLint、Vite build 與 catalog 驗證通過。正式 dist 以瀏覽器驗證 HTTP 200、SoFi TTM 卡及無 page error。 |
 | 9：文件 | README、ARCHITECTURE、DATA_SOURCES、FINANCIAL_FORMULAS、DEPLOYMENT 及本檔已完成。 |
 
@@ -31,4 +31,4 @@
 
 程式碼已推送 main。仍需啟用 Pages Actions、填 SEC_USER_AGENT repository variable，執行並檢查遠端 workflow。雲端環境 draft 需使用者檢閱、儲存並發布；未驗證新 task 的 snapshot restoration。
 
-雲端 `install_script`、`start_skill` 已儲存，安裝腳本已在本機實際重跑成功；已新增 SEC 兩個網域與 SEC_USER_AGENT 變數需求/建議值。開發服務啟動指令已執行。GitHub 程式碼與 workflow 已推送；Pages 上線及雲端 snapshot 發布尚未確認。
+雲端 `install_script`、`start_skill` 已儲存，安裝腳本已在本機實際重跑成功；已新增 SEC 兩個網域與 SEC_USER_AGENT 變數需求/建議值。開發服務啟動指令已執行。GitHub 程式碼與 workflow 已推送；Pages 尚未啟用，網站回應 404；雲端 snapshot 發布亦未確認。

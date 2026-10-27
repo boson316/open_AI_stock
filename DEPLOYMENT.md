@@ -12,6 +12,8 @@ Pages workflow 權限為 contents read、pages write、id-token write；使用 g
 
 `VITE_BASE_PATH=/<repository-name>/` 由 workflow 注入。預設 `/open_AI_stock/` 適合此 repository；若部署至自訂網域根目錄或 owner.github.io 根 repository，使用 `/`。所有 JSON 與 assets 都經 `import.meta.env.BASE_URL` 存取。
 
+初次遠端驗證：Actions run `40539518554` 已執行測試及 build，於 `actions/configure-pages` 因尚未啟用 Pages 回傳 Not Found。先完成上方第 2 步，再重新執行 GitHub Pages workflow。
+
 ## 財報更新
 
 `Financial Update` 週二至週六 UTC 06:30 執行（台北 14:30），也可手動選白名單 ticker。預設 SoFi 同時抓 Company Facts 和最近四份官方 earnings release。流程執行財務測試、完整生成與 schema 驗證後，建立或更新 `automation/financial-data` PR。資料 PR 合併後才觸發 Pages workflow。
