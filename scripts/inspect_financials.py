@@ -46,7 +46,11 @@ try:
    rows=[[' '.join(c.text().split()) for c in row.children if c.tag in {'td','th'}] for row in t.walk('tr')]
    text=' '.join(' '.join(row) for row in rows)
    if re.search('purchases.*property|purchases.*equipment|purchases.*intangible',text,re.I):tables.append(rows)
-  result['documents'].append({'source':url,'filed':r['filingDate'][i],'accession':acc,'sha256':hashlib.sha256(content).hexdigest(),'tables':tables,'intro':'NVIDIA US GAAP consolidated cash flows'})
+  from openstock.inline import inline_facts
+  tags=sorted({n.attrs.get('name','') for n in parser.root.walk('nonfraction') if re.search('PaymentsToAcquire.*(?:Property|Productive|Intangible)',n.attrs.get('name',''))})
+  fs=inline_facts(content.decode(),{'capex':tags},filed=r['filingDate'][i],accession=acc,form=f,source=url,cik='0001045810')
+  text=' '.join(parser.root.text().split());m=re.search('CONSOLIDATED STATEMENTS OF CASH FLOWS',text,re.I)
+  result['documents'].append({'inline_capex':[v.model_dump(mode='json') for v in fs],'unit_evidence':text[m.start():m.start()+500] if m else '', 'tags':tags,'source':url,'filed':r['filingDate'][i],'accession':acc,'sha256':hashlib.sha256(content).hexdigest(),'tables':tables,'intro':'NVIDIA US GAAP consolidated cash flows'})
 except Exception as e:
  result['error']=type(e).__name__+': '+str(e)
 Path('data').mkdir(exist_ok=True)
