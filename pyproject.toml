@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openstock-pipeline"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["httpx==0.28.1", "pydantic==2.11.7", "pandas==2.3.0", "numpy==2.3.1"]
+
+[project.optional-dependencies]
+test = ["pytest==8.4.1"]
+
+[tool.setuptools.packages.find]
+where = ["scripts"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/financial"]
+pythonpath = ["scripts"]

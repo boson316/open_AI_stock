@@ -1,0 +1,49 @@
+name: Financial Update
+on:
+  schedule:
+    - cron: '30 6 * * 2-6'
+  workflow_dispatch:
+    inputs:
+      ticker:
+        description: Whitelisted US GAAP ticker (TSM IFRS not yet supported)
+        default: SOFI
+        type: choice
+        options: [SOFI, GOOGL, GOOG, NVDA, AMD, MSFT, AAPL, AMZN, META, PLTR]
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: financial-update
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - run: pip install -r requirements.lock && pip install --no-deps -e .
+      - run: pytest
+      - name: Fetch and validate official facts (failure preserves committed data)
+        run: |
+          if [ "$UPDATE_TICKER" = SOFI ]; then
+            python -m openstock.pipeline --ticker SOFI --supplemental
+          else
+            python -m openstock.pipeline --ticker "$UPDATE_TICKER"
+          fi
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+          UPDATE_TICKER: ${{ inputs.ticker || 'SOFI' }}
+      - run: python -m openstock.validate public/data
+      # A PR intentionally triggers the normal checks on merge; GITHUB_TOKEN
+      # commits alone do not trigger another push workflow.
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/financial-data
+          title: 'data: refresh validated SEC financial facts'
+          commit-message: 'data: refresh validated SEC financial facts'
+          body: 'Official SEC Company Facts update. Schema validation and financial tests passed in the update workflow. Review sources and merge to publish through the Pages workflow.'
+          add-paths: public/data/
