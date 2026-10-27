@@ -16,6 +16,11 @@ def days(f):
 
 def quarters(facts: list[Fact], as_of: date | None = None) -> list[Fact]:
     available = [f for f in facts if as_of is None or f.filed <= as_of]
+    groups = {}
+    def group_key(f):
+        return (f.metric, f.tag, f.unit, f.start, f.accession)
+    for f in available:
+        groups.setdefault(group_key(f), []).append(f)
     selected = {}
     for f in available:
         if f.metric in INSTANT or 70 <= days(f) <= 105:
@@ -26,9 +31,7 @@ def quarters(facts: list[Fact], as_of: date | None = None) -> list[Fact]:
     for f in available:
         if f.metric in INSTANT or f.metric in {"eps", "nim"} or not 150 <= days(f) <= 380:
             continue
-        prior = [p for p in available if p.metric == f.metric and p.tag == f.tag
-                 and p.unit == f.unit and p.start == f.start and p.accession == f.accession
-                 and 70 <= (f.end - p.end).days <= 105]
+        prior = [p for p in groups[group_key(f)] if 70 <= (f.end - p.end).days <= 105]
         if not prior:
             continue
         p = max(prior, key=lambda x: x.end)

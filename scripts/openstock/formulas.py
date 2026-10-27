@@ -28,7 +28,7 @@ def ttm(facts: list[Fact]):
     if len(facts) != 4 or any(f.start is None for f in facts):
         return None
     fs = sorted(facts, key=lambda f: f.end)
-    if len({(f.metric, f.unit, basis(f)) for f in fs}) != 1:
+    if len({(f.metric, f.unit, f.basis or basis(f)) for f in fs}) != 1:
         return None
     if any(not 70 <= (f.end - f.start).days + 1 <= 105 for f in fs):
         return None

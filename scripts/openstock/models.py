@@ -13,6 +13,7 @@ class Fact(BaseModel):
     filed: date
     accession: str
     tag: str
+    basis: str | None = None
     source: str
     form: str
     quality: Literal["reported", "derived"] = "reported"
@@ -34,6 +35,10 @@ class Dataset(BaseModel):
     cik: str
     name: str
     sector: str
+    currency: Literal["USD", "TWD"] = "USD"
+    accounting_standard: Literal["US GAAP", "IFRS"] = "US GAAP"
+    share_basis: Literal["ordinary"] = "ordinary"
+    periods: list[Literal["quarter", "annual"]] = Field(default_factory=lambda: ["quarter", "annual"])
     updated: str
     source: str
     facts: list[Fact]

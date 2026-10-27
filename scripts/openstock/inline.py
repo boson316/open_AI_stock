@@ -23,8 +23,8 @@ class Node:
                 yield child
             yield from child.walk(suffix)
 
-    def text(self):
-        return "".join(c.text() if isinstance(c, Node) else c for c in self.content)
+    def text(self, separator=""):
+        return separator.join(c.text(separator) if isinstance(c, Node) else c for c in self.content)
 
 
 class InlineParser(HTMLParser):

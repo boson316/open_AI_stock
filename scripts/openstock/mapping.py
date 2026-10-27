@@ -26,17 +26,61 @@ METRICS = {
 }
 INSTANT = {"assets", "liabilities", "equity", "cash", "shares", "deposits", "allowance", "members", "products", "cet1"}
 
+IFRS_METRICS = {
+    "revenue": ["Revenue"],
+    "gross_profit": ["GrossProfit"],
+    "operating_income": ["ProfitLossFromOperatingActivities"],
+    "net_income": ["ProfitLossAttributableToOwnersOfParent"],
+    "eps": ["DilutedEarningsLossPerShare"],
+    "assets": ["Assets"],
+    "liabilities": ["Liabilities"],
+    "equity": ["EquityAttributableToOwnersOfParent"],
+    "cash": ["CashAndCashEquivalents"],
+    "ocf": ["CashFlowsFromUsedInOperatingActivities"],
+    "icf": ["CashFlowsFromUsedInInvestingActivities"],
+    "financing_cf": ["CashFlowsFromUsedInFinancingActivities"],
+    "capex": ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"],
+    "sbc": ["AdjustmentsForSharebasedPayments"],
+}
 
-def extract(companyfacts, cik, overrides=None):
+
+def extract(companyfacts, cik, overrides=None, *, currency="USD", standard="US GAAP"):
     from .models import Fact
     result = []
     for metric, (unit, tags) in METRICS.items():
-        candidates = (overrides or {}).get(metric, [f"us-gaap:{t}" for t in tags])
+        if standard == "IFRS":
+            tags = IFRS_METRICS.get(metric, [])
+        namespace = "ifrs-full" if standard == "IFRS" else "us-gaap"
+        candidates = (overrides or {}).get(metric, [f"{namespace}:{t}" for t in tags])
+        unit = unit.replace("USD", currency)
+        forms = {"20-F", "20-F/A", "6-K", "6-K/A"} if standard == "IFRS" else {"10-K", "10-Q", "10-K/A", "10-Q/A"}
+        # Issuers can migrate between reviewed equivalent candidates. Select one
+        # current concept for the whole series, never splice older concepts in.
+        def latest(tag):
+            ns, local = tag.split(":", 1)
+            values = companyfacts.get("facts", {}).get(ns, {}).get(local, {}).get("units", {}).get(unit, [])
+            return max((r["end"] for r in values if r.get("form") in forms), default="")
+        candidates = sorted(candidates, key=latest, reverse=True)
+        bridged = metric == "revenue" and cik in {"0001652044","0001045810","0001318605"}
+        if bridged:
+            snapshots=[]
+            for tag in candidates:
+                ns, local=tag.split(':',1)
+                values=companyfacts.get('facts',{}).get(ns,{}).get(local,{}).get('units',{}).get(unit,[])
+                periods={}
+                for r in sorted(values,key=lambda r:(r['filed'],r['accn'])):
+                    if r.get('form') in forms and r['end']>='2020-01-01':periods[(r.get('start'),r['end'])]=r['val']
+                if periods:snapshots.append(periods)
+            for i,a in enumerate(snapshots):
+                for b in snapshots[i+1:]:
+                    common=set(a)&set(b)
+                    if not common or any(a[k]!=b[k] for k in common):
+                        raise ValueError(f"Revenue concept migration requires review: {cik}")
         # Choose one concept per metric, never splice different accounting bases.
         for tag in candidates:
             namespace, local = tag.split(":", 1)
             rows = companyfacts.get("facts", {}).get(namespace, {}).get(local, {}).get("units", {}).get(unit, [])
-            rows = [r for r in rows if r.get("form") in {"10-K", "10-Q", "10-K/A", "10-Q/A"}]
+            rows = [r for r in rows if r.get("form") in forms]
             if not rows:
                 continue
             for row in rows:
@@ -44,6 +88,8 @@ def extract(companyfacts, cik, overrides=None):
                 result.append(Fact(metric=metric, value=row["val"], unit=unit,
                     start=row.get("start"), end=row["end"], filed=row["filed"], accession=accession,
                     tag=tag, form=row["form"],
+                    basis=f"{cik}:consolidated-revenue" if bridged else None,
                     source=f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession.replace('-', '')}/{accession}-index.html"))
-            break
+            if not bridged:
+                break
     return result

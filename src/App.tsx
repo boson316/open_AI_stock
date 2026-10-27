@@ -79,14 +79,42 @@ const companyFallback = {
   name: "SoFi Technologies",
   sector: "fintech",
   exchange: "NASDAQ",
+  cik: "0001818874",
+  currency: "USD" as const,
+  coverage: undefined as
+    | {
+        quarters: number;
+        first_end: string;
+        last_end: string;
+        core_complete: boolean;
+      }
+    | undefined,
 };
 const base = import.meta.env.BASE_URL;
 type Mode = "quarter" | "annual" | "ttm";
 type Transform = "value" | "yoy" | "qoq";
 type Detail = { title: string; description: string; facts: Fact[] };
 const isRatio = (metric: string) => metric === "nim" || metric === "cet1";
-const metricScale = (metric: string, currencyScale: number) => isRatio(metric) ? .01 : ["eps","shares","members","products"].includes(metric) ? 1 : currencyScale;
-const metricUnit = (metric: string, currencyUnit: string) => isRatio(metric) ? "%" : metric === "eps" ? "美元／股" : metric === "shares" ? "股" : ["members","products"].includes(metric) ? "人／項" : currencyUnit;
+const metricScale = (metric: string, currencyScale: number) =>
+  isRatio(metric)
+    ? 0.01
+    : ["eps", "shares", "members", "products"].includes(metric)
+      ? 1
+      : currencyScale;
+const metricUnit = (
+  metric: string,
+  currencyUnit: string,
+  shareUnit = "美元／股",
+) =>
+  isRatio(metric)
+    ? "%"
+    : metric === "eps"
+      ? shareUnit
+      : metric === "shares"
+        ? "股"
+        : ["members", "products"].includes(metric)
+          ? "人／項"
+          : currencyUnit;
 
 export function App() {
   const [catalog, setCatalog] = useState<Catalog>({
@@ -165,6 +193,7 @@ export function App() {
         if (d.ticker !== ticker || d.cik !== company.cik)
           throw Error("公司資料不一致");
         setDataset(d);
+        if (d.periods?.includes("quarter") === false) setMode("annual");
       })
       .catch((e) => {
         if (e.name !== "AbortError") setError(`財報讀取失敗：${e.message}`);
@@ -177,7 +206,25 @@ export function App() {
   const company =
     catalog.companies.find((c) => c.ticker === ticker) ?? companyFallback;
   const raw = dataset?.facts ?? [];
-  const quarters = useMemo(() => normalize(dataset?.facts ?? []), [dataset]);
+  const annualOnly = dataset?.periods?.includes("quarter") === false;
+  const currency = dataset?.currency ?? company.currency ?? "USD";
+  const currencyLabel = currency === "TWD" ? "新臺幣" : "美元";
+  const shareUnit = currency === "TWD" ? "新臺幣／普通股" : "美元／股";
+  const displayFormat = (v: number | null | undefined, unit = "USD") =>
+    format(v, unit, currency);
+  const isFinancial = company.sector === "fintech" || company.sector === "bank";
+  const visibleGroups = Object.fromEntries(
+    Object.entries(financialGroups).filter(
+      ([key]) => key !== "banking" || isFinancial,
+    ),
+  );
+  const quarters = useMemo(
+    () =>
+      annualOnly
+        ? annual(dataset?.facts ?? [])
+        : normalize(dataset?.facts ?? []),
+    [dataset, annualOnly],
+  );
   const view = useMemo(
     () => (mode === "annual" ? annual(raw) : quarters),
     [mode, raw, quarters],
@@ -197,14 +244,19 @@ export function App() {
     .filter((d) => d >= cutoff)
     .sort();
   const unitLabel =
-    unit === 1e6 ? "百萬美元" : unit === 1e8 ? "億美元" : "美元";
+    unit === 1e6
+      ? `百萬${currencyLabel}`
+      : unit === 1e8
+        ? `億${currencyLabel}`
+        : currencyLabel;
   function aligned(metric: string, end: string) {
     return view.find((f) => f.metric === metric && f.end === end) ?? null;
   }
   function value(metric: string, end: string): number | null {
     const f = aligned(metric, end);
     if (!f) return null;
-    if (mode !== "ttm" || instant.has(metric) || metric === "nim") return f.value;
+    if (mode !== "ttm" || instant.has(metric) || metric === "nim")
+      return f.value;
     return ttm(
       quarters.filter((x) => x.metric === metric && x.end <= end).slice(-4),
     );
@@ -231,8 +283,11 @@ export function App() {
         previousEnd ? value(metric, previousEnd) : null,
       );
       if (transform === "qoq" && previousEnd) {
-        const days = (Date.parse(d)-Date.parse(previousEnd))/86400000;
-        if (mode === "annual" ? days < 350 || days > 380 : days < 70 || days > 105) return null;
+        const days = (Date.parse(d) - Date.parse(previousEnd)) / 86400000;
+        if (
+          mode === "annual" ? days < 350 || days > 380 : days < 70 || days > 105
+        )
+          return null;
       }
       return g === null ? null : g * 100;
     });
@@ -249,19 +304,27 @@ export function App() {
       unit={
         transform === "value"
           ? metrics.length === 1 && metrics[0] === "eps"
-            ? "美元／股"
+            ? shareUnit
             : unitLabel
           : "%"
       }
       dualAxis={dualAxis && transform === "value"}
+      secondaryUnit={shareUnit}
     />
   );
-  const revenue = sumTTM(quarters, "revenue"),
-    income = sumTTM(quarters, "net_income"),
-    eps = sumTTM(quarters, "eps");
+  const revenue = annualOnly
+      ? (last(quarters, "revenue")?.value ?? null)
+      : sumTTM(quarters, "revenue"),
+    income = annualOnly
+      ? (last(quarters, "net_income")?.value ?? null)
+      : sumTTM(quarters, "net_income"),
+    eps = annualOnly
+      ? (last(quarters, "eps")?.value ?? null)
+      : sumTTM(quarters, "eps");
   const endingEquity = last(quarters, "equity"),
     endingAssets = last(quarters, "assets");
   function returnOn(metric: string) {
+    if (currency === "TWD") return null; // TIFRS earnings must not mix with IASB IFRS balance sheets.
     const end = last(quarters, metric);
     if (!end) return null;
     const prior = [...quarters]
@@ -272,11 +335,14 @@ export function App() {
           (Date.parse(end.end) - Date.parse(f.end)) / 86400000 >= 350 &&
           (Date.parse(end.end) - Date.parse(f.end)) / 86400000 <= 380,
       );
-    const earnings = ttm(
-      quarters
-        .filter((f) => f.metric === "net_income" && f.end <= end.end)
-        .slice(-4),
-    );
+    const earnings = annualOnly
+      ? (quarters.find((f) => f.metric === "net_income" && f.end === end.end)
+          ?.value ?? null)
+      : ttm(
+          quarters
+            .filter((f) => f.metric === "net_income" && f.end <= end.end)
+            .slice(-4),
+        );
     const earningsEnd = last(
       quarters.filter((f) => f.end <= end.end),
       "net_income",
@@ -288,6 +354,8 @@ export function App() {
   const lastPrice = prices.at(-1),
     prevPrice = prices.at(-2);
   const matchedLatest =
+    currency === "USD" &&
+    !annualOnly &&
     !!lastPrice &&
     !!latestDate &&
     lastPrice.date >= latestDate &&
@@ -297,7 +365,11 @@ export function App() {
       ? divide(lastPrice!.close, eps)
       : null;
   const equityForPB =
-    endingEquity && endingEquity.filed < (lastPrice?.date ?? "") && lastPrice && (Date.parse(lastPrice.date)-Date.parse(endingEquity.end))/86400000 <= 180
+    endingEquity &&
+    endingEquity.filed < (lastPrice?.date ?? "") &&
+    lastPrice &&
+    (Date.parse(lastPrice.date) - Date.parse(endingEquity.end)) / 86400000 <=
+      180
       ? endingEquity
       : null;
   const sharesForPB = last(quarters, "shares");
@@ -310,39 +382,49 @@ export function App() {
       : null;
   const kpis = [
     {
-      title: "TTM 營業收入",
+      title: annualOnly ? "年度營業收入" : "TTM 營業收入",
       value: revenue,
       unit: "USD",
       metric: "revenue",
-      desc: "四個連續且相容的單季營收之和；缺任一季不計算。",
+      desc: annualOnly
+        ? "官方完整會計年度營收，不推估季度。"
+        : "四個連續且相容的單季營收之和；缺任一季不計算。",
     },
     {
       title: "營收年增率",
       value: yoy(quarters, "revenue"),
       unit: "%",
       metric: "revenue",
-      desc: "本季營收 ÷ 去年同期營收 − 1；去年值非正數時 N/A。",
+      desc: annualOnly
+        ? "本年度營收 ÷ 上年度營收 − 1；上年度非正數時 N/A。"
+        : "本季營收 ÷ 去年同期營收 − 1；去年值非正數時 N/A。",
     },
     {
-      title: "稀釋 EPS · TTM",
+      title: annualOnly ? "年度稀釋 EPS（普通股）" : "稀釋 EPS · TTM",
       value: eps,
       unit: "USD/shares",
       metric: "eps",
-      desc: "四個已公布單季 GAAP 稀釋 EPS 合計。不從累積 EPS 相減，股數變動時不等同全年加權 EPS。",
+      desc: annualOnly
+        ? "官方 IFRS 年度稀釋 EPS，單位為新臺幣／普通股，不等同美國 ADR EPS。"
+        : "四個已公布單季稀釋 EPS 合計（依公司 US GAAP 或 IFRS）。不從累積 EPS 相減，股數變動時不等同全年加權 EPS。",
     },
     {
       title: "EPS 年增率",
       value: yoy(quarters, "eps"),
       unit: "%",
       metric: "eps",
-      desc: "本季 GAAP 稀釋 EPS ÷ 去年同期 EPS − 1；去年值非正數時 N/A。",
+      desc: annualOnly
+        ? "本年度 IFRS 普通股稀釋 EPS ÷ 上年度 EPS − 1。"
+        : "本季 GAAP 稀釋 EPS ÷ 去年同期 EPS − 1；去年值非正數時 N/A。",
     },
     {
-      title: "TTM 稅後淨利",
+      title: annualOnly ? "年度稅後淨利" : "TTM 稅後淨利",
       value: income,
       unit: "USD",
       metric: "net_income",
-      desc: "四個連續單季稅後淨利合計。",
+      desc: annualOnly
+        ? "官方完整會計年度歸屬母公司淨利。"
+        : "四個連續單季稅後淨利合計。",
     },
     {
       title: "股東權益報酬率",
@@ -374,14 +456,14 @@ export function App() {
     },
     {
       title: "淨利差 NIM",
-      value: last(quarters,"nim")?.value ?? null,
+      value: last(quarters, "nim")?.value ?? null,
       unit: "%",
       metric: "nim",
       desc: "平均生息資產與淨利息收入之比。採官方季度平均餘額表揭露的淨利差，不使用期末資產推算。",
     },
     {
       title: "CET1 資本適足率",
-      value: last(quarters,"cet1")?.value ?? null,
+      value: last(quarters, "cet1")?.value ?? null,
       unit: "%",
       metric: "cet1",
       desc: "普通股權益第一類資本 ÷ 風險加權資產；此卡明確採 SoFi Technologies 母公司，不能與銀行子公司混用。",
@@ -424,8 +506,11 @@ export function App() {
   const summary =
     revenueGrowth === null
       ? "尚無足夠且可比較的財報資料，暫不產生營收趨勢結論。"
-      : `本季營收較去年同期${revenueGrowth >= 0 ? "增加" : "減少"} ${Math.abs(revenueGrowth * 100).toFixed(1)}%。此變化需要查閱財報附註確認原因。`;
-  const riverRows = useMemo(() => river(raw, prices), [raw, prices]);
+      : `${annualOnly ? "本年度營收較上年度" : "本季營收較去年同期"}${revenueGrowth >= 0 ? "增加" : "減少"} ${Math.abs(revenueGrowth * 100).toFixed(1)}%。此變化需要查閱財報附註確認原因。`;
+  const riverRows = useMemo(
+    () => river(currency === "USD" && !annualOnly ? raw : [], prices),
+    [raw, prices, currency, annualOnly],
+  );
   const riverDates = riverRows.filter(
     (r) =>
       !prices.at(-1) ||
@@ -454,6 +539,7 @@ export function App() {
       )
         throw Error("請匯入目前所選公司的資料");
       setDataset(d);
+      if (d.periods?.includes("quarter") === false) setMode("annual");
       setImported(true);
       setError("");
     } catch (e) {
@@ -472,18 +558,16 @@ export function App() {
       setError((e as Error).message);
     }
   }
-  const tableMetrics = Object.values(financialGroups).flat();
+  const tableMetrics = Object.values(visibleGroups).flat();
   function exportTable() {
     csvDownload(`${ticker}-${mode}.csv`, [
       ["指標", "單位", ...dates],
       ...tableMetrics.map((m) => [
         labels[m],
-        metricUnit(m,unitLabel),
+        metricUnit(m, unitLabel, shareUnit),
         ...dates.map((d) => {
           const v = value(m, d);
-          return v === null
-            ? null
-            : v / metricScale(m,unit);
+          return v === null ? null : v / metricScale(m, unit);
         }),
       ]),
     ]);
@@ -505,21 +589,23 @@ export function App() {
         </a>
         <p className="nav-label">RESEARCH WORKSPACE</p>
         <nav aria-label="研究導覽">
-          {sections.map((s) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              className={section === s.id ? "active" : ""}
-              onClick={() => {
-                setSection(s.id);
-                setMobile(false);
-              }}
-            >
-              <s.icon size={18} />
-              {s.label}
-              {section === s.id && <ChevronRight size={15} />}
-            </a>
-          ))}
+          {sections
+            .filter((s) => s.id !== "banking" || isFinancial)
+            .map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                className={section === s.id ? "active" : ""}
+                onClick={() => {
+                  setSection(s.id);
+                  setMobile(false);
+                }}
+              >
+                <s.icon size={18} />
+                {s.label}
+                {section === s.id && <ChevronRight size={15} />}
+              </a>
+            ))}
         </nav>
         <div className="sidebar-bottom">
           <div className="source-badge">
@@ -583,6 +669,15 @@ export function App() {
                         onClick={() => {
                           if (c.available || c.ticker === "SOFI") {
                             setTicker(c.ticker);
+                            setMode(
+                              catalog.companies
+                                .find((x) => x.ticker === c.ticker)
+                                ?.periods?.includes("quarter") === false
+                                ? "annual"
+                                : "quarter",
+                            );
+                            setError("");
+                            setSection("overview");
                             setQuery("");
                           } else
                             setError(
@@ -663,8 +758,11 @@ export function App() {
                     ? "金融科技 / 銀行業務"
                     : company.sector === "semiconductor"
                       ? "半導體"
-                      : "科技"}{" "}
-                  <span className="dot">·</span> 美國美元 USD
+                      : company.sector === "automotive"
+                        ? "汽車 / 能源"
+                        : "科技"}{" "}
+                  <span className="dot">·</span> {currencyLabel} {currency} ·{" "}
+                  {dataset?.accounting_standard ?? "US GAAP"}
                 </p>
               </div>
             </div>
@@ -679,7 +777,7 @@ export function App() {
               </span>
               {lastPrice && prevPrice && (
                 <span>
-                  {format(growth(lastPrice.close, prevPrice.close), "%")}
+                  {displayFormat(growth(lastPrice.close, prevPrice.close), "%")}
                   （相鄰匯入交易日）
                 </span>
               )}
@@ -690,14 +788,32 @@ export function App() {
                 {loading
                   ? "載入中"
                   : dataset
-                  ? imported ? "使用者匯入財報" : "已載入 SEC 財報"
+                    ? imported
+                      ? "使用者匯入財報"
+                      : "已載入 SEC 財報"
                     : "等待官方財報"}
               </span>
               <p>財報截至 {latestDate ?? "N/A"}</p>
+              {!imported && company.coverage?.core_complete && (
+                <p>近 {company.coverage.quarters} 季核心資料已核對</p>
+              )}
               <p>更新 {dataset?.updated.slice(0, 10) ?? "N/A"}</p>
             </div>
           </section>
-          {imported && <div className="notice">這是使用者匯入的財報資料，僅通過格式檢查，尚未向 SEC 核實內容。請逐項核對官方申報來源。</div>}
+          {currency === "TWD" && (
+            <div className="notice">
+              TSM 季度公告採 TIFRS，年度報表採 IFRS
+              (IASB)，皆以新臺幣與普通股口徑顯示；部分淨利／EPS
+              不可直接合併，ROE／ROA 暫不混算。美元 ADR 股價未與財報換算，PE／PB
+              保留 N/A。請注意財報截至日期。
+            </div>
+          )}
+          {imported && (
+            <div className="notice">
+              這是使用者匯入的財報資料，僅通過格式檢查，尚未向 SEC
+              核實內容。請逐項核對官方申報來源。
+            </div>
+          )}
           <div className="insight">
             <span className="insight-icon">
               <Activity size={19} />
@@ -731,35 +847,43 @@ export function App() {
             </span>
           </div>
           <div className="kpi-grid">
-            {kpis.map((k) => (
-              <button
-                className="kpi panel"
-                key={k.title}
-                onClick={() =>
-                  setDetail({
-                    title: k.title,
-                    description: k.desc,
-                    facts: quarters
-                      .filter((f) => f.metric === k.metric)
-                      .slice(-8),
-                  })
-                }
-              >
-                <div className="kpi-label">
-                  {k.title}
-                  <ArrowUpRight size={15} />
-                </div>
-                <strong>{format(k.value, k.unit)}</strong>
-                <div className="kpi-footer">
-                  <span>{last(quarters, k.metric)?.end ?? "期間 N/A"}</span>
-                  <span className={k.value === null ? "muted" : "accent"}>
-                    {k.value === null ? "資料不足" : "查看來源"}
-                  </span>
-                </div>
-              </button>
-            ))}
+            {kpis
+              .filter(
+                (k) =>
+                  isFinancial || !["nim", "cet1", "members"].includes(k.metric),
+              )
+              .map((k) => (
+                <button
+                  className="kpi panel"
+                  key={k.title}
+                  onClick={() =>
+                    setDetail({
+                      title: k.title,
+                      description: k.desc,
+                      facts: quarters
+                        .filter((f) => f.metric === k.metric)
+                        .slice(-8),
+                    })
+                  }
+                >
+                  <div className="kpi-label">
+                    {k.title}
+                    <ArrowUpRight size={15} />
+                  </div>
+                  <strong>{displayFormat(k.value, k.unit)}</strong>
+                  <div className="kpi-footer">
+                    <span>{last(quarters, k.metric)?.end ?? "期間 N/A"}</span>
+                    <span className={k.value === null ? "muted" : "accent"}>
+                      {k.value === null ? "資料不足" : "查看來源"}
+                    </span>
+                  </div>
+                </button>
+              ))}
           </div>
-          <section id="banking" className="sector-note">
+          <section
+            id={isFinancial ? "banking" : "sector"}
+            className="sector-note"
+          >
             <div className="sector-icon">
               <ShieldCheck size={24} />
             </div>
@@ -775,30 +899,32 @@ export function App() {
                   ? "存款、放款與信用成本影響金融機構的現金流。傳統 FCF、ROIC / WACC 不宜直接作為 SoFi 的核心估值結論；請優先關注 P/B、ROE、信用品質及資本適足率。"
                   : "比較公司時，請確認會計口徑與商業模式相容。衍生估值屬研究假設，並非官方財報指標。"}
               </p>
-              <details>
-                <summary>查看金融機構專屬指標與缺值</summary>
-                <div className="bank-grid">
-                  {financialGroups.banking.map((m) => (
-                    <div key={m}>
-                      {labels[m]}
-                      <strong>
-                        {format(
-                          last(quarters, m)?.value,
-                          last(quarters, m)?.unit,
-                        )}
-                      </strong>
-                      <small>{last(quarters, m)?.end ?? "尚未取得"}</small>
-                    </div>
-                  ))}
-                  {missingBanking.map((m) => (
-                    <div key={m}>
-                      {m}
-                      <strong>N/A</strong>
-                      <small>待官方揭露解析與口徑驗證</small>
-                    </div>
-                  ))}
-                </div>
-              </details>
+              {isFinancial && (
+                <details>
+                  <summary>查看金融機構專屬指標與缺值</summary>
+                  <div className="bank-grid">
+                    {financialGroups.banking.map((m) => (
+                      <div key={m}>
+                        {labels[m]}
+                        <strong>
+                          {displayFormat(
+                            last(quarters, m)?.value,
+                            last(quarters, m)?.unit,
+                          )}
+                        </strong>
+                        <small>{last(quarters, m)?.end ?? "尚未取得"}</small>
+                      </div>
+                    ))}
+                    {missingBanking.map((m) => (
+                      <div key={m}>
+                        {m}
+                        <strong>N/A</strong>
+                        <small>待官方揭露解析與口徑驗證</small>
+                      </div>
+                    ))}
+                  </div>
+                </details>
+              )}
             </div>
           </section>
           <div className="analysis-toolbar">
@@ -811,6 +937,7 @@ export function App() {
                 ] as const
               ).map(([v, l]) => (
                 <button
+                  disabled={annualOnly && v !== "annual"}
                   aria-pressed={mode === v}
                   className={mode === v ? "selected" : ""}
                   key={v}
@@ -846,9 +973,9 @@ export function App() {
                 value={unit}
                 onChange={(e) => setUnit(Number(e.target.value))}
               >
-                <option value={1e6}>百萬美元</option>
-                <option value={1e8}>億美元</option>
-                <option value={1}>美元</option>
+                <option value={1e6}>百萬{currencyLabel}</option>
+                <option value={1e8}>億{currencyLabel}</option>
+                <option value={1}>{currencyLabel}</option>
               </select>
             </div>
           </div>
@@ -892,13 +1019,20 @@ export function App() {
           </section>
           <div className="mini-metrics">
             <span>
-              營收 3 年 CAGR<strong>{format(revenueCagr(3), "%")}</strong>
+              營收 3 年 CAGR
+              <strong>{displayFormat(revenueCagr(3), "%")}</strong>
             </span>
             <span>
-              營收 5 年 CAGR<strong>{format(revenueCagr(5), "%")}</strong>
+              營收 5 年 CAGR
+              <strong>{displayFormat(revenueCagr(5), "%")}</strong>
             </span>
           </div>
-          <RuleAnalysis facts={quarters} />
+          <RuleAnalysis
+            facts={quarters}
+            currency={currency}
+            sector={company.sector}
+            annualOnly={annualOnly}
+          />
           <section id="cashflow">
             <SectionTitle eyebrow="CASH FLOW" title="現金流分析" />
             <div className="chart-grid">
@@ -910,7 +1044,9 @@ export function App() {
                 unit={unitLabel}
                 series={[
                   {
-                    name: "自由現金流（金融機構解釋有限）",
+                    name: isFinancial
+                      ? "自由現金流（金融機構解釋有限）"
+                      : "自由現金流",
                     values: dates.map((d) => {
                       const o = value("ocf", d),
                         c = value("capex", d);
@@ -945,7 +1081,9 @@ export function App() {
                 initialType="line"
                 series={[
                   {
-                    name: "FCF／營收（金融機構解釋有限）",
+                    name: isFinancial
+                      ? "FCF／營收（金融機構解釋有限）"
+                      : "FCF／營收",
                     values: dates.map((d) => {
                       const o = value("ocf", d),
                         c = value("capex", d);
@@ -983,7 +1121,7 @@ export function App() {
               <span>
                 每股淨值{" "}
                 <strong>
-                  {format(
+                  {displayFormat(
                     endingEquity && sharesForPB?.end === endingEquity.end
                       ? divide(endingEquity.value, sharesForPB.value)
                       : null,
@@ -992,7 +1130,7 @@ export function App() {
                 </strong>
               </span>
               <span>
-                最新資產 <strong>{format(endingAssets?.value)}</strong>
+                最新資產 <strong>{displayFormat(endingAssets?.value)}</strong>
               </span>
             </div>
           </section>
@@ -1121,7 +1259,7 @@ export function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {Object.entries(financialGroups).map(([group, metrics]) => (
+                    {Object.entries(visibleGroups).map(([group, metrics]) => (
                       <TableGroup
                         key={group}
                         title={
@@ -1137,13 +1275,16 @@ export function App() {
                         get={value}
                         fact={aligned}
                         unit={unit}
+                        shareUnit={shareUnit}
                         onDetail={(f) =>
                           setDetail({
                             title: labels[f.metric],
                             description:
                               "數值與期間、申報版本及原始標籤可追溯。衍生單季請核對計算血緣。",
                             facts:
-                              mode === "ttm" && !instant.has(f.metric) && !isRatio(f.metric)
+                              mode === "ttm" &&
+                              !instant.has(f.metric) &&
+                              !isRatio(f.metric)
                                 ? quarters
                                     .filter(
                                       (x) =>
@@ -1173,27 +1314,41 @@ export function App() {
                 </strong>
                 <p>資料不足，拒絕產生總分。</p>
                 <p className="muted">
-                  金融機構研究模型預定權重：獲利 20%、成長 15%、財務強度
-                  15%、信用風險 20%、資本適足 20%、估值
-                  10%。缺少任何維度即不計總分；目前尚未校準評分門檻，不提供客觀排名。
+                  {isFinancial
+                    ? "金融機構研究模型預定權重：獲利 20%、成長 15%、財務強度 15%、信用風險 20%、資本適足 20%、估值 10%。缺少任何維度即不計總分；目前尚未校準評分門檻。"
+                    : "非金融企業評分模型尚未校準，產業資料亦未完整，不產生總分或客觀排名。"}
                 </p>
               </div>
               <div className="panel prose">
                 <h3>值得追蹤的風險</h3>
                 <ul>
-                  <li>
-                    個人貸款信用品質、淨沖銷及逾期率：目前缺官方解析值，無法判定趨勢。
-                  </li>
-                  <li>
-                    存款成本與資本適足率：需核對銀行子公司及母公司的報告口徑。
-                  </li>
-                  <li>
-                    一次性損益、收購、股數稀釋與重編：需查閱財報附註，不能僅由總額推斷原因。
-                  </li>
-                  <li>
-                    下一季觀察：營收、稀釋
-                    EPS、存款、信用成本及資本適足率的同口徑變化。
-                  </li>
+                  {(isFinancial
+                    ? [
+                        "信用損失、淨沖銷與逾期率需核對正式揭露。",
+                        "存款成本、母公司及銀行子公司資本口徑需分別核對。",
+                      ]
+                    : company.sector === "semiconductor"
+                      ? [
+                          "庫存、產能利用率、資本支出與客戶集中度需核對正式揭露。",
+                          "不同會計年度、產業週期與匯率可能影響可比性。",
+                        ]
+                      : company.sector === "automotive"
+                        ? [
+                            "交付量、產品組合、售價與監管揭露需另外核對。",
+                            "不能僅由營收總額推斷需求或競爭變化。",
+                          ]
+                        : [
+                            "研發、客戶集中度、產品與地區組合需核對正式揭露。",
+                            "不同會計年度與會計概念可能影響公司比較。",
+                          ]
+                  )
+                    .concat([
+                      "一次性損益、收購、股數稀釋及重編需要查閱附註；不由總額推斷原因。",
+                      "追蹤同口徑營收、稀釋 EPS、利潤率及現金流變化。",
+                    ])
+                    .map((r) => (
+                      <li key={r}>{r}</li>
+                    ))}
                 </ul>
               </div>
             </div>
@@ -1213,7 +1368,7 @@ export function App() {
                 <a
                   href={
                     dataset?.source ??
-                    "https://data.sec.gov/api/xbrl/companyfacts/CIK0001818874.json"
+                    `https://data.sec.gov/api/xbrl/companyfacts/CIK${company.cik}.json`
                   }
                   target="_blank"
                   rel="noreferrer"
@@ -1228,12 +1383,23 @@ export function App() {
                   Fair Access Policy ↗
                 </a>
               </p>
+              <p>
+                <a
+                  href={`${base}data/coverage.json`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  近五年逐季覆蓋與來源核對報告 ↗
+                </a>
+                （核心欄位：營收、淨利、直接披露稀釋 EPS；其他缺值另列）
+              </p>
               <p className="muted">
                 Company Facts
                 並未完整涵蓋公司自訂及分部指標。管線可依明確映射解析官方 Inline
-                XBRL 的合併報表數值；未驗證的自訂及分部欄位一律 N/A。TSM 的 20-F
-                / 6-K、IFRS 與 ADR
-                口徑尚待支援，不列為可用。所有顯示數值均提供申報日期、期間、單位及來源；資料更新失敗時保留上一有效版本。
+                XBRL 的合併報表數值；未驗證的自訂及分部欄位一律 N/A。TSM
+                支援官方 6-K 季度公告與 IFRS 年度資料，以新臺幣及普通股 EPS
+                顯示；美元 ADR
+                估值尚未換算。所有顯示數值均提供申報日期、期間、單位及來源；資料更新失敗時保留上一有效版本。
               </p>
               {dataset?.warnings.map((w) => (
                 <p className="small muted" key={w}>
@@ -1248,7 +1414,7 @@ export function App() {
               OpenStock Analytics
             </span>
             <span>公開資料，審慎研究。僅供研究輔助，不構成投資建議。</span>
-            <span>繁體中文 · USD</span>
+            <span>繁體中文 · {currency}</span>
           </footer>
         </main>
       </div>
@@ -1278,7 +1444,7 @@ export function App() {
               detail.facts.map((f) => (
                 <div className="fact-detail" key={`${f.metric}-${f.end}`}>
                   <strong>
-                    {format(f.value, f.unit)} · {f.end}
+                    {displayFormat(f.value, f.unit)} · {f.end}
                   </strong>
                   <dl>
                     <dt>會計期間</dt>
@@ -1287,6 +1453,14 @@ export function App() {
                     </dd>
                     <dt>申報日</dt>
                     <dd>{f.filed}</dd>
+                    <dt>會計口徑</dt>
+                    <dd>
+                      {f.tag.startsWith("disclosure:tsm.")
+                        ? "TIFRS（季度公告）"
+                        : f.tag.startsWith("ifrs-full:")
+                          ? "IFRS (IASB)（年度報表）"
+                          : "US GAAP"}
+                    </dd>
                     <dt>原始標籤</dt>
                     <dd>{f.tag}</dd>
                     <dt>Accession</dt>
@@ -1356,6 +1530,7 @@ function TableGroup({
   get,
   fact,
   unit,
+  shareUnit,
   onDetail,
 }: {
   title: string;
@@ -1364,6 +1539,7 @@ function TableGroup({
   get: (m: string, d: string) => number | null;
   fact: (m: string, d: string) => Fact | null;
   unit: number;
+  shareUnit: string;
   onDetail: (f: Fact) => void;
 }) {
   return (
@@ -1374,12 +1550,10 @@ function TableGroup({
       {metrics.map((m) => (
         <tr key={m}>
           <th
-            title={`${labels[m]}；${metricUnit(m,"所選美元單位")}`}
+            title={`${labels[m]}；${metricUnit(m, "所選幣別單位", shareUnit)}`}
           >
             {labels[m]}
-            <small>
-              {metricUnit(m,"")}
-            </small>
+            <small>{metricUnit(m, "", shareUnit)}</small>
           </th>
           {dates.length ? (
             dates.map((d) => {
@@ -1394,9 +1568,9 @@ function TableGroup({
                   >
                     {v === null
                       ? "N/A"
-                      : (
-                          v / metricScale(m,unit)
-                        ).toLocaleString("zh-TW", { maximumFractionDigits: 2 })}
+                      : (v / metricScale(m, unit)).toLocaleString("zh-TW", {
+                          maximumFractionDigits: 2,
+                        })}
                   </button>
                 </td>
               );

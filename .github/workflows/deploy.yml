@@ -28,6 +28,7 @@ jobs:
       - run: pip install -r requirements.lock && pip install --no-deps -e .
       - run: pytest
       - run: python -m openstock.validate public/data
+      - run: python -m openstock.coverage --check
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run test

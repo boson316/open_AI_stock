@@ -93,7 +93,9 @@ test("real chart renderer responds to imported validated financial JSON", async 
       buffer: Buffer.from(JSON.stringify(fixture)),
     });
   await expect(page.getByText("使用者匯入財報")).toBeVisible();
-  await expect(page.getByText(/僅通過格式檢查，尚未向 SEC 核實內容/)).toBeVisible();
+  await expect(
+    page.getByText(/僅通過格式檢查，尚未向 SEC 核實內容/),
+  ).toBeVisible();
   const chart = page.getByRole("region", { name: "營收與淨利", exact: true });
   await expect(chart.locator("canvas,svg").first()).toBeAttached();
   await page.getByLabel("營收與淨利圖表類型").selectOption("line");
@@ -103,27 +105,123 @@ test("real chart renderer responds to imported validated financial JSON", async 
     .click();
   expect((await download).suggestedFilename()).toContain("營收與淨利");
   expect(errors).toEqual([]);
-  const png=page.waitForEvent("download");
-  await chart.getByRole("button",{name:"PNG",exact:true}).click();
+  const png = page.waitForEvent("download");
+  await chart.getByRole("button", { name: "PNG", exact: true }).click();
   expect((await png).suggestedFilename()).toMatch(/\.png$/);
-  const svg=page.waitForEvent("download");
-  await chart.getByRole("button",{name:"SVG",exact:true}).click();
+  const svg = page.waitForEvent("download");
+  await chart.getByRole("button", { name: "SVG", exact: true }).click();
   expect((await svg).suggestedFilename()).toMatch(/\.svg$/);
 });
 
-test("official persisted data loads through the repository base path with correct financial units",async({page})=>{
+test("official persisted data loads through the repository base path with correct financial units", async ({
+  page,
+}) => {
   await page.unroute("**/data/catalog.json");
-  const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("./");
   await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
-  await expect(page.getByRole("button",{name:/TTM 營業收入/})).not.toContainText("N/A");
-  await expect(page.getByRole("button",{name:/淨利差 NIM/})).toContainText("%");
-  await expect(page.getByRole("button",{name:/CET1 資本適足率/})).toContainText("%");
-  await page.getByRole("button",{name:/淨利差 NIM/}).click();
+  await expect(
+    page.getByRole("button", { name: /TTM 營業收入/ }),
+  ).not.toContainText("N/A");
+  await expect(page.getByRole("button", { name: /淨利差 NIM/ })).toContainText(
+    "%",
+  );
+  await expect(
+    page.getByRole("button", { name: /CET1 資本適足率/ }),
+  ).toContainText("%");
+  await page.getByRole("button", { name: /淨利差 NIM/ }).click();
   await expect(page.getByRole("dialog")).toContainText("disclosure:sofi.nim");
-  await expect(page.getByRole("dialog").getByRole("link",{name:/檢視官方 Filing/}).first()).toHaveAttribute("href",/^https:\/\/www.sec.gov\/Archives\/edgar\/data\/1818874\//);
-  await page.getByRole("button",{name:"關閉明細"}).click();
-  await page.setViewportSize({width:390,height:844});
-  await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await expect(
+    page
+      .getByRole("dialog")
+      .getByRole("link", { name: /檢視官方 Filing/ })
+      .first(),
+  ).toHaveAttribute(
+    "href",
+    /^https:\/\/www.sec.gov\/Archives\/edgar\/data\/1818874\//,
+  );
+  await page.getByRole("button", { name: "關閉明細" }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    )
+    .toBe(true);
+  expect(errors).toEqual([]);
+});
+
+test("every requested ticker loads its own verified data and TSM keeps TIFRS quarters separate from IFRS annual TWD", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await page.unroute("**/data/catalog.json");
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  for (const ticker of [
+    "GOOGL",
+    "GOOG",
+    "NVDA",
+    "AMD",
+    "TSM",
+    "MSFT",
+    "AAPL",
+    "AMZN",
+    "META",
+    "PLTR",
+    "MU",
+    "TSLA",
+  ]) {
+    const search = page.getByRole("textbox", { name: "搜尋股票" });
+    await search.fill(ticker);
+    await page
+      .locator(".search-results button")
+      .filter({
+        has: page.locator("strong", { hasText: new RegExp(`^${ticker}$`) }),
+      })
+      .click();
+    await expect(page.locator(".ticker-pill")).toHaveText(ticker);
+    await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+    await expect(page.getByRole("button", { name: /淨利差 NIM/ })).toHaveCount(
+      0,
+    );
+    await expect(
+      page.getByRole("link", { name: "官方 Company Facts" }),
+    ).toHaveAttribute(
+      "href",
+      /^https:\/\/data.sec.gov\/api\/xbrl\/companyfacts\/CIK\d{10}\.json$/,
+    );
+    if (ticker === "TSM") {
+      await expect(
+        page.getByRole("button", { name: /TTM 營業收入/ }),
+      ).toContainText("NT$");
+      await expect(
+        page.getByRole("button", { name: "季度", exact: true }),
+      ).toBeEnabled();
+      await expect(
+        page.getByRole("button", { name: /股東權益報酬率/ }),
+      ).toContainText("N/A");
+      await page.getByRole("button", { name: "年度", exact: true }).click();
+      // Annual card remains labelled TTM only for quarterly-capable issuers;
+      // financial table explicitly shows the IASB IFRS annual basis.
+      await expect(
+        page.getByRole("heading", { name: "年度財務資料", exact: true }),
+      ).toBeVisible();
+      await expect(page.locator(".company-overview")).toContainText("新臺幣");
+      await expect(
+        page.getByRole("button", { name: "季度", exact: true }),
+      ).toBeEnabled();
+      await expect(
+        page.getByRole("button", { name: "年度", exact: true }),
+      ).toHaveAttribute("aria-pressed", "true");
+      await expect(page.getByText(/美元 ADR 股價未與財報換算/)).toBeVisible();
+    } else {
+      await expect(
+        page.getByRole("button", { name: "季度", exact: true }),
+      ).toBeEnabled();
+    }
+  }
   expect(errors).toEqual([]);
 });

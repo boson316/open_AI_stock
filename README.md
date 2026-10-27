@@ -2,7 +2,7 @@
 
 免費、靜態部署的繁體中文美股財報研究平台。React / TypeScript / Vite / Tailwind CSS / Apache ECharts；Python 3.12 處理 SEC 資料。不需要付費 API、資料庫或常駐後端。
 
-本版以 **SoFi Technologies (SOFI)** 為驗證標的。已附正式 SEC 資料快照，可直接啟動研究介面。所有測試中的合成數字只存在於 `tests/`，不發布至 `public/data/`。
+本版收錄 **SOFI、GOOGL、GOOG、NVDA、AMD、TSM、MSFT、AAPL、AMZN、META、PLTR、MU、TSLA**。13 個代號各有最近 20 個連續財季的營收、淨利與直接披露稀釋 EPS，並附正式 SEC 資料快照。GOOGL / GOOG 共用 Alphabet 的發行人財報；股價仍須按各自代號匯入。所有測試中的合成數字只存在於 `tests/`，不發布至 `public/data/`。
 
 ## 本地開發
 
@@ -24,6 +24,7 @@ npm run lint
 npm run test
 .venv/bin/pytest -q
 .venv/bin/python -m openstock.validate public/data
+.venv/bin/python -m openstock.coverage --check
 npm run build
 npx playwright install chromium
 npm run test:e2e
@@ -35,13 +36,14 @@ npm run test:e2e
 
 ```bash
 export SEC_USER_AGENT='OpenStockAnalytics your-real-contact@your-domain.com'
-.venv/bin/python -m openstock.pipeline --ticker SOFI --supplemental
+.venv/bin/python -m openstock.pipeline --ticker ALL --supplemental
 .venv/bin/python -m openstock.validate public/data
+.venv/bin/python -m openstock.coverage
 ```
 
 請使用真實可聯絡的 User-Agent；`.env.example` 僅供格式參考，CLI 不會自動載入 `.env`。正式來源是 `data.sec.gov` 的 Company Facts、Submissions，以及 `www.sec.gov` 的官方申報附件。每個 client 循序請求、最多 2 次/秒、40 秒逾時、最多 4 次退避重試，快取 24 小時。請勿平行執行多個更新程序。
 
-`--supplemental` 僅支援 SoFi，循序解析最近四份官方 earnings release，包括直接揭露的 Q4 GAAP EPS、季度歷史表、會員數、季度 NIM 與明確標示為 **SoFi Technologies 母公司** 的 CET1。解析器遇到未知格式會拒絕猜測，更新命令失敗時保留上一有效版本。
+`--supplemental` 解析官方季度公告：美國公司以正式 8-K 補入直接披露的 Q4 EPS；SoFi 另解析最近四份會員、NIM、母公司 CET1 等補充表；TSM 解析近二十份 6-K 盈餘公告。Tesla 早期圖片表格已人工核對，來源圖片 SHA256 固定校驗，不使用 OCR 猜值。解析器遇到未知格式會拒絕猜測，更新命令失敗時保留上一有效版本。
 
 離線可匯入**未修改的官方 Company Facts JSON**：
 
@@ -85,16 +87,16 @@ Date,Open,High,Low,Close,AdjustedClose,Volume
 
 ## 新增股票
 
-白名單位於 `scripts/openstock/pipeline.py`。GOOGL / GOOG、NVDA、AMD、MSFT、AAPL、AMZN、META、PLTR 可執行 Company Facts 管線；仍需逐公司核對總收入定義與會計口徑，再將輸出提交。只有 SOFI 已在本次驗證並隨專案附上資料。
+白名單位於 `scripts/openstock/pipeline.py`。全部 13 個代號已附上並驗證官方快照；以 `--ticker ALL --supplemental` 循序更新全部，或使用單一代號更新後重建 coverage 報告。Alphabet、NVIDIA、Tesla 的歷史營收標籤遷移，須先核對重疊期間數值一致，才保留各期原始標籤並連接其 accounting basis。
 
-TSM 雖預留 CIK，20-F / 6-K、IFRS、ADR 每股單位尚未支援，不會被標示為可用。新增公司需檢查會計年度、產業、tag 映射及法定申報型態，不能只填一個 ticker。
+TSM 季度採官方 6-K 的 **TIFRS**，年度採 Company Facts / 20-F 的 **IFRS (IASB)**；兩者部分淨利與 EPS 不一致，不能混合還原季度或計算 ROE/ROA。財報使用新臺幣與普通股 EPS，美元 ADR PE/PB 在未完成可靠換算前維持 N/A。新增公司需檢查會計年度、產業、tag 映射及法定申報型態，不能只填一個 ticker。
 
 ## GitHub Actions / Pages
 
-詳見 [DEPLOYMENT.md](DEPLOYMENT.md)。Pages 工作流程執行 Python schema / 財務測試、前端 typecheck / lint / test、Chromium E2E、正式 build，成功才部署。財報更新於週二至週六 UTC 06:30 執行，預設更新 SoFi，建立資料 PR；審閱合併後由 Pages workflow 部署。更新失敗不發布損毀 JSON。
+詳見 [DEPLOYMENT.md](DEPLOYMENT.md)。Pages 工作流程執行 Python schema / 財務測試、前端 typecheck / lint / test、Chromium E2E、正式 build，成功才部署。財報更新於週二至週六 UTC 06:30 執行，預設更新全部 13 個代號，建立資料 PR；審閱合併後由 Pages workflow 部署。更新失敗不發布損毀 JSON。
 
 ## 已知限制
 
-這是可執行、可部署的第一版，尚未完成需求中的所有進階功能。詳見 [PROJECT_STATUS.md](PROJECT_STATUS.md)：同 filing 累積值不足時現金流單季仍會 N/A；分部營收、放款與信用風險等補充指標尚未完整解析；健康分數未校準；Adjusted / Normalized EPS 模式尚未提供；股票分割 / ADR / 股息調整未整合至 UI。匯入資料經 schema 驗證仍不代表具有真實來源認證，使用者應核對官方申報。
+近五年覆蓋指營收、淨利與稀釋 EPS，**不表示每個選用財務欄位都沒有缺值**。`public/data/coverage.json` 列出每季來源、會計期間、年度核對與選用欄位缺值，部署會檢查報告未過期且核心 20 季完整。這是可執行、可部署的版本，尚未完成需求中的所有進階功能。詳見 [PROJECT_STATUS.md](PROJECT_STATUS.md)：同 filing 累積值不足時現金流單季仍會 N/A；分部營收、放款與信用風險等補充指標尚未完整解析；健康分數未校準；Adjusted / Normalized EPS 模式尚未提供；股票分割 / ADR / 股息調整未整合至 UI。匯入資料經 schema 驗證仍不代表具有真實來源認證，使用者應核對官方申報。
 
 相關文件：[架構](ARCHITECTURE.md) · [資料來源](DATA_SOURCES.md) · [公式](FINANCIAL_FORMULAS.md) · [部署](DEPLOYMENT.md)。僅供研究輔助，不構成投資建議。

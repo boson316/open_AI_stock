@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
     inputs:
       ticker:
-        description: Whitelisted US GAAP ticker (TSM IFRS not yet supported)
-        default: SOFI
+        description: Whitelisted ticker or ALL (TSM uses TWD IFRS)
+        default: ALL
         type: choice
-        options: [SOFI, GOOGL, GOOG, NVDA, AMD, MSFT, AAPL, AMZN, META, PLTR]
+        options: [ALL, SOFI, GOOGL, GOOG, NVDA, AMD, TSM, MSFT, AAPL, AMZN, META, PLTR, MU, TSLA]
 permissions:
   contents: write
   pull-requests: write
@@ -28,16 +28,12 @@ jobs:
       - run: pip install -r requirements.lock && pip install --no-deps -e .
       - run: pytest
       - name: Fetch and validate official facts (failure preserves committed data)
-        run: |
-          if [ "$UPDATE_TICKER" = SOFI ]; then
-            python -m openstock.pipeline --ticker SOFI --supplemental
-          else
-            python -m openstock.pipeline --ticker "$UPDATE_TICKER"
-          fi
+        run: python -m openstock.pipeline --ticker "$UPDATE_TICKER" --supplemental
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
-          UPDATE_TICKER: ${{ inputs.ticker || 'SOFI' }}
+          UPDATE_TICKER: ${{ inputs.ticker || 'ALL' }}
       - run: python -m openstock.validate public/data
+      - run: python -m openstock.coverage
       # A PR intentionally triggers the normal checks on merge; GITHUB_TOKEN
       # commits alone do not trigger another push workflow.
       - uses: peter-evans/create-pull-request@v7

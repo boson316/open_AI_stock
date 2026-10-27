@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   cagr,
+  annual,
+  format,
   normalize,
   parsePrices,
   river,
@@ -35,9 +37,43 @@ const eps = [
   fact(1, "2024-10-01", "2024-12-31"),
 ];
 describe("financial integrity", () => {
-  it("uses actual elapsed years and rejects negative CAGR bases",()=>{
-    expect(cagr(100,121,"2022-01-01","2024-01-01")).toBeCloseTo(.1,3);
-    expect(cagr(-100,121,"2022-01-01","2024-01-01")).toBeNull();
+  it("keeps IFRS annual instants and labels TWD ordinary EPS without USD conversion", () => {
+    const f = {
+      ...fact(44.67, "2024-01-01", "2024-12-31"),
+      unit: "TWD/shares",
+      tag: "ifrs-full:DilutedEarningsLossPerShare",
+      form: "20-F",
+    };
+    const asset = {
+      ...f,
+      metric: "assets",
+      unit: "TWD",
+      start: null,
+      value: 1000000,
+    };
+    expect(annual([f, asset])).toHaveLength(2);
+    expect(format(f.value, f.unit, "TWD")).toBe("NT$44.67");
+    expect(
+      river(
+        [f],
+        [
+          {
+            date: "2025-03-01",
+            close: 100,
+            open: 100,
+            high: 100,
+            low: 100,
+            adjustedClose: null,
+            volume: 1,
+            source: "test",
+          },
+        ],
+      )[0].pe,
+    ).toBeNull();
+  });
+  it("uses actual elapsed years and rejects negative CAGR bases", () => {
+    expect(cagr(100, 121, "2022-01-01", "2024-01-01")).toBeCloseTo(0.1, 3);
+    expect(cagr(-100, 121, "2022-01-01", "2024-01-01")).toBeNull();
   });
   it("requires four contiguous quarters and no duplicate counting", () => {
     expect(ttm(eps)).toBe(4);

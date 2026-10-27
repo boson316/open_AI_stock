@@ -3,11 +3,26 @@ import ReactECharts from "echarts-for-react/lib/core";
 import type { EChartsOption } from "echarts";
 import * as echarts from "echarts/core";
 import { BarChart, LineChart, ScatterChart } from "echarts/charts";
-import { GridComponent, TooltipComponent, LegendComponent, DataZoomComponent } from "echarts/components";
+import {
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  DataZoomComponent,
+} from "echarts/components";
 import { CanvasRenderer, SVGRenderer } from "echarts/renderers";
 import { Download, Expand } from "lucide-react";
 import { csvDownload } from "../lib/finance";
-echarts.use([BarChart, LineChart, ScatterChart, GridComponent, TooltipComponent, LegendComponent, DataZoomComponent, CanvasRenderer, SVGRenderer]);
+echarts.use([
+  BarChart,
+  LineChart,
+  ScatterChart,
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  DataZoomComponent,
+  CanvasRenderer,
+  SVGRenderer,
+]);
 export type Series = { name: string; values: (number | null)[] };
 type Props = {
   title: string;
@@ -18,6 +33,7 @@ type Props = {
   initialType?: string;
   log?: boolean;
   dualAxis?: boolean;
+  secondaryUnit?: string;
 };
 export function FinancialChart({
   title,
@@ -28,13 +44,15 @@ export function FinancialChart({
   initialType = "bar",
   log = false,
   dualAxis = false,
+  secondaryUnit = "美元／股",
 }: Props) {
   const ref = useRef<ReactECharts>(null),
     box = useRef<HTMLElement>(null);
   const [kind, setKind] = useState(initialType);
   const hasData = series.some((s) => s.values.some((v) => v !== null));
   useEffect(() => {
-    if (!hasData || !box.current || typeof ResizeObserver === "undefined") return;
+    if (!hasData || !box.current || typeof ResizeObserver === "undefined")
+      return;
     const observer = new ResizeObserver(() => {
       const instance = ref.current?.getEchartsInstance();
       if (instance && !instance.isDisposed()) instance.resize();
@@ -71,7 +89,7 @@ export function FinancialChart({
             name: unit,
             splitLine: { lineStyle: { color: "#899c9a22" } },
           },
-          { type: "value", name: "美元／股", splitLine: { show: false } },
+          { type: "value", name: secondaryUnit, splitLine: { show: false } },
         ]
       : {
           type: log ? "log" : "value",
@@ -150,7 +168,13 @@ export function FinancialChart({
             aria-label={`${title}匯出 CSV`}
             onClick={() =>
               csvDownload(`${title}.csv`, [
-                ["日期", ...series.map((s, i) => `${s.name} (${dualAxis && i === 1 ? "美元／股" : unit})`)],
+                [
+                  "日期",
+                  ...series.map(
+                    (s, i) =>
+                      `${s.name} (${dualAxis && i === 1 ? secondaryUnit : unit})`,
+                  ),
+                ],
                 ...dates.map((d, i) => [d, ...series.map((s) => s.values[i])]),
               ])
             }

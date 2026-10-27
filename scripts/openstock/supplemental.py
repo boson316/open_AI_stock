@@ -125,7 +125,8 @@ def parse_release(content, *, source, accession, filed):
 
 
 def fetch_releases(client, limit=4):
-    submissions=client.get_json("https://data.sec.gov/submissions/CIK0001818874.json")["filings"]["recent"]
+    from .history import filings
+    submissions=filings(client,"0001818874")
     result=[]
     selected=[i for i,f in enumerate(submissions["form"]) if f=="8-K" and "2.02" in submissions["items"][i]][:limit]
     for i in selected:

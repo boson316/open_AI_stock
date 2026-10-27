@@ -28,6 +28,10 @@ flowchart LR
 | `normalize.py` | 單季還原、最新申報版本、as-of 過濾 |
 | `formulas.py`, `valuation.py` | 純函式及明確分割事件調整 |
 | `models.py`, `validate.py` | schema、日期、有限數值、catalog identity |
+| `history.py`, `us_quarters.py` | SEC 歷史申報、發行人直接 GAAP Q4（不相減 EPS） |
+| `tsm.py` | TSM 官方 6-K 季報，TIFRS 新臺幣及明確季度欄位 |
+| `tesla.py`, `tesla_verified.py` | Tesla 可提取文字及人工核對、固定圖片 hash 的歷史披露 |
+| `coverage.py` | 20 個連續季度、核心欄位、年度核對、檔案 hash 及缺值報告 |
 | `pipeline.py` | 白名單、公司口徑、原子輸出與失敗保留 |
 | `src/lib/finance.ts` | 前端同規則計算、CSV、歷史估值 |
 | `src/components/` | ECharts 共用圖、規則分析 |

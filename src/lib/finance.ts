@@ -7,6 +7,7 @@ export type Fact = {
   filed: string;
   accession: string;
   tag: string;
+  basis?: string | null;
   source: string;
   form: string;
   quality: "reported" | "derived";
@@ -22,6 +23,10 @@ export type Dataset = {
   source: string;
   facts: Fact[];
   warnings: string[];
+  currency?: "USD" | "TWD";
+  accounting_standard?: "US GAAP" | "IFRS";
+  share_basis?: "ordinary";
+  periods?: ("quarter" | "annual")[];
 };
 export type Company = {
   ticker: string;
@@ -32,6 +37,14 @@ export type Company = {
   status: string;
   file: string | null;
   updated: string | null;
+  coverage?: {
+    quarters: number;
+    first_end: string;
+    last_end: string;
+    core_complete: boolean;
+  };
+  currency?: "USD" | "TWD";
+  periods?: ("quarter" | "annual")[];
 };
 export type Catalog = {
   version: number;
@@ -92,6 +105,15 @@ export function cagr(
 }
 export function normalize(facts: Fact[], asOf = "9999-12-31"): Fact[] {
   const fs = facts.filter((f) => f.filed <= asOf);
+  const groups = new Map<string, Fact[]>();
+  const groupKey = (f: Fact) =>
+    `${f.metric}|${f.tag}|${f.unit}|${f.start}|${f.accession}`;
+  for (const f of fs) {
+    const key = groupKey(f);
+    const group = groups.get(key) ?? [];
+    group.push(f);
+    groups.set(key, group);
+  }
   const selected = new Map<string, Fact>();
   const key = (f: Fact) => `${f.metric}|${f.end}|${f.unit}`;
   const newer = (a: Fact, b: Fact) =>
@@ -105,9 +127,16 @@ export function normalize(facts: Fact[], asOf = "9999-12-31"): Fact[] {
   }
   for (const f of fs) {
     const days = f.start ? duration(f.start, f.end) + 1 : 0;
-    if (instant.has(f.metric) || (f.metric === "eps" || f.metric === "nim") || days < 150 || days > 380)
+    if (
+      instant.has(f.metric) ||
+      f.metric === "eps" ||
+      f.metric === "nim" ||
+      days < 150 ||
+      days > 380
+    )
       continue;
-    const previous = fs
+    const previous = groups
+      .get(groupKey(f))!
       .filter(
         (p) =>
           p.metric === f.metric &&
@@ -141,7 +170,10 @@ export function ttm(fs: Fact[]): number | null {
   const sorted = [...fs].sort((a, b) => a.end.localeCompare(b.end));
   if (
     new Set(
-      fs.map((f) => `${f.metric}|${f.unit}|${equivalentTags[f.tag] ?? f.tag}`),
+      fs.map(
+        (f) =>
+          `${f.metric}|${f.unit}|${f.basis ?? equivalentTags[f.tag] ?? f.tag}`,
+      ),
     ).size !== 1
   )
     return null;
@@ -165,7 +197,12 @@ export function annual(facts: Fact[]): Fact[] {
   for (const f of facts) {
     const days = f.start ? duration(f.start, f.end) + 1 : 0;
     if (!instant.has(f.metric) && (days < 350 || days > 380)) continue;
-    if (instant.has(f.metric) && !f.form.startsWith("10-K")) continue;
+    if (
+      instant.has(f.metric) &&
+      !f.form.startsWith("10-K") &&
+      !f.form.startsWith("20-F")
+    )
+      continue;
     const key = `${f.metric}|${f.end}|${f.unit}`;
     const old = map.get(key);
     if (!old || `${f.filed}|${f.accession}` > `${old.filed}|${old.accession}`)
@@ -198,7 +235,13 @@ export function validateDataset(raw: unknown): Dataset {
     !d.ticker ||
     !/^\d{10}$/.test(d.cik) ||
     !d.name ||
-    d.source !== `https://data.sec.gov/api/xbrl/companyfacts/CIK${d.cik}.json` ||
+    (d.currency !== undefined && !["USD", "TWD"].includes(d.currency)) ||
+    (d.periods !== undefined &&
+      (!Array.isArray(d.periods) ||
+        d.periods.length === 0 ||
+        d.periods.some((p) => !["quarter", "annual"].includes(p)))) ||
+    d.source !==
+      `https://data.sec.gov/api/xbrl/companyfacts/CIK${d.cik}.json` ||
     !Array.isArray(d.facts) ||
     !Array.isArray(d.warnings) ||
     !Number.isFinite(Date.parse(d.updated))
@@ -278,7 +321,7 @@ export function river(facts: Fact[], prices: Price[]) {
       .slice(0, 10);
     const eps = sumTTM(
       normalize(
-        facts.filter((f) => f.metric === "eps"),
+        facts.filter((f) => f.metric === "eps" && f.unit === "USD/shares"),
         asOf,
       ),
       "eps",
@@ -323,20 +366,24 @@ export function csvDownload(name: string, rows: (string | number | null)[][]) {
   a.click();
   URL.revokeObjectURL(url);
 }
-export const format = (v: number | null | undefined, unit = "USD") =>
+export const format = (
+  v: number | null | undefined,
+  unit = "USD",
+  currency = "USD",
+) =>
   v == null || !Number.isFinite(v)
     ? "N/A"
     : unit === "%" || unit === "pure"
       ? `${(v * 100).toFixed(1)}%`
       : unit === "x"
         ? `${v.toFixed(1)}×`
-        : unit === "USD/shares"
-          ? `$${v.toFixed(2)}`
+        : unit.endsWith("/shares")
+          ? `${currency === "TWD" ? "NT$" : "$"}${v.toFixed(2)}`
           : unit === "count"
             ? `${v.toLocaleString("zh-TW")} 人／項`
             : unit === "shares"
               ? `${(v / 1e6).toFixed(1)} 百萬股`
-              : `$${(v / 1e6).toLocaleString("zh-TW", { maximumFractionDigits: 1 })} 百萬`;
+              : `${currency === "TWD" ? "NT$" : "$"}${(v / 1e6).toLocaleString("zh-TW", { maximumFractionDigits: 1 })} 百萬`;
 export const labels: Record<string, string> = {
   nim: "淨利差 NIM",
   cet1: "CET1（母公司）",

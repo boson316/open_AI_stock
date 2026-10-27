@@ -9,10 +9,287 @@
       "sector": "fintech",
       "status": "available",
       "file": "SOFI.json",
-      "updated": "2026-10-27T16:00:52.698819+00:00"
+      "updated": "2026-10-27T17:17:52.465826+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "cik": "0001652044",
+      "name": "Alphabet",
+      "exchange": "NASDAQ",
+      "sector": "technology",
+      "status": "available",
+      "file": "GOOGL.json",
+      "updated": "2026-10-27T17:17:52.687220+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-09-30",
+        "last_end": "2026-06-30",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "GOOG",
+      "cik": "0001652044",
+      "name": "Alphabet",
+      "exchange": "NASDAQ",
+      "sector": "technology",
+      "status": "available",
+      "file": "GOOG.json",
+      "updated": "2026-10-27T17:17:52.911040+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-09-30",
+        "last_end": "2026-06-30",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "cik": "0001045810",
+      "name": "NVIDIA",
+      "exchange": "NASDAQ",
+      "sector": "semiconductor",
+      "status": "available",
+      "file": "NVDA.json",
+      "updated": "2026-10-27T17:17:53.133761+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-10-31",
+        "last_end": "2026-07-26",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "AMD",
+      "cik": "0000002488",
+      "name": "Advanced Micro Devices",
+      "exchange": "NASDAQ",
+      "sector": "semiconductor",
+      "status": "available",
+      "file": "AMD.json",
+      "updated": "2026-10-27T17:17:53.456594+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-09-25",
+        "last_end": "2026-06-27",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "TSM",
+      "cik": "0001046179",
+      "name": "Taiwan Semiconductor Manufacturing",
+      "exchange": "NYSE",
+      "sector": "semiconductor",
+      "status": "available",
+      "file": "TSM.json",
+      "updated": "2026-10-27T17:17:53.599840+00:00",
+      "currency": "TWD",
+      "accounting_standard": "IFRS",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "cik": "0000789019",
+      "name": "Microsoft",
+      "exchange": "NASDAQ",
+      "sector": "technology",
+      "status": "available",
+      "file": "MSFT.json",
+      "updated": "2026-10-27T17:17:54.061036+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-09-30",
+        "last_end": "2026-06-30",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "cik": "0000320193",
+      "name": "Apple",
+      "exchange": "NASDAQ",
+      "sector": "technology",
+      "status": "available",
+      "file": "AAPL.json",
+      "updated": "2026-10-27T17:17:54.207828+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-09-25",
+        "last_end": "2026-06-27",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "cik": "0001018724",
+      "name": "Amazon",
+      "exchange": "NASDAQ",
+      "sector": "technology",
+      "status": "available",
+      "file": "AMZN.json",
+      "updated": "2026-10-27T17:17:54.541686+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-09-30",
+        "last_end": "2026-06-30",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "META",
+      "cik": "0001326801",
+      "name": "Meta Platforms",
+      "exchange": "NASDAQ",
+      "sector": "technology",
+      "status": "available",
+      "file": "META.json",
+      "updated": "2026-10-27T17:17:54.747779+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "PLTR",
+      "cik": "0001321655",
+      "name": "Palantir Technologies",
+      "exchange": "NASDAQ",
+      "sector": "technology",
+      "status": "available",
+      "file": "PLTR.json",
+      "updated": "2026-10-27T17:17:54.917704+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-09-30",
+        "last_end": "2026-06-30",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "MU",
+      "cik": "0000723125",
+      "name": "Micron Technology",
+      "exchange": "NASDAQ",
+      "sector": "semiconductor",
+      "status": "available",
+      "file": "MU.json",
+      "updated": "2026-10-27T17:17:55.141390+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-12-02",
+        "last_end": "2026-09-03",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "cik": "0001318605",
+      "name": "Tesla",
+      "exchange": "NASDAQ",
+      "sector": "automotive",
+      "status": "available",
+      "file": "TSLA.json",
+      "updated": "2026-10-27T17:17:55.226102+00:00",
+      "currency": "USD",
+      "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
+        "core_complete": true
+      }
     }
   ],
   "coverage": [
+    "SOFI",
     "GOOGL",
     "GOOG",
     "NVDA",
@@ -22,6 +299,8 @@
     "AAPL",
     "AMZN",
     "META",
-    "PLTR"
+    "PLTR",
+    "MU",
+    "TSLA"
   ]
 }

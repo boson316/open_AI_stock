@@ -8,26 +8,24 @@ afterEach(() => vi.unstubAllGlobals());
 function mount() {
   vi.stubGlobal(
     "fetch",
-    vi
-      .fn()
-      .mockResolvedValue({
-        ok: true,
-        json: async () => ({
-          version: 1,
-          companies: [
-            {
-              ticker: "SOFI",
-              cik: "0001818874",
-              name: "SoFi Technologies",
-              sector: "fintech",
-              exchange: "NASDAQ",
-              status: "unavailable",
-              file: null,
-            },
-          ],
-          coverage: ["NVDA"],
-        }),
+    vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        version: 1,
+        companies: [
+          {
+            ticker: "SOFI",
+            cik: "0001818874",
+            name: "SoFi Technologies",
+            sector: "fintech",
+            exchange: "NASDAQ",
+            status: "unavailable",
+            file: null,
+          },
+        ],
+        coverage: ["NVDA"],
       }),
+    }),
   );
   return render(<App />);
 }
