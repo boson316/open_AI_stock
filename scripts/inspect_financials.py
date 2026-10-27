@@ -35,6 +35,18 @@ try:
     item['tables']=tables
     text=' '.join(parser.root.text().split());item['intro']=text[:1000];item['unit_evidence']=[text[max(0,m.start()-100):m.end()+130] for m in list(re.finditer(r'thousands|millions|New Taiwan',text,re.I))[:8]]
    result['documents'].append(item)
+ # NVIDIA's older capex concepts are absent from current CompanyFacts.
+ r=filings(client,'0001045810')
+ for i,f in enumerate(r['form']):
+  if f not in {'10-Q','10-K'} or not '2022-01-01'<=r['filingDate'][i]<='2023-03-01':continue
+  acc=r['accessionNumber'][i];url=f"https://www.sec.gov/Archives/edgar/data/1045810/{acc.replace('-','')}/{r['primaryDocument'][i]}"
+  content=client.get_bytes(url);parser=InlineParser();parser.feed(content.decode())
+  tables=[]
+  for t in parser.root.walk('table'):
+   rows=[[' '.join(c.text().split()) for c in row.children if c.tag in {'td','th'}] for row in t.walk('tr')]
+   text=' '.join(' '.join(row) for row in rows)
+   if re.search('purchases.*property|purchases.*equipment|purchases.*intangible',text,re.I):tables.append(rows)
+  result['documents'].append({'source':url,'filed':r['filingDate'][i],'accession':acc,'sha256':hashlib.sha256(content).hexdigest(),'tables':tables,'intro':'NVIDIA US GAAP consolidated cash flows'})
 except Exception as e:
  result['error']=type(e).__name__+': '+str(e)
 Path('data').mkdir(exist_ok=True)
