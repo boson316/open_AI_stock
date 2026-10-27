@@ -1,0 +1,30 @@
+name: Inspect official TSM financial statements
+on:
+  push:
+    branches: [codex/source-inspection]
+    paths: [.github/workflows/source-inspection.yml, scripts/inspect_financials.py]
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/source-inspection
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.lock && pip install --no-deps -e .
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - run: python scripts/inspect_financials.py
+        env:
+          SEC_USER_AGENT: OpenStockAnalytics boson316@gmail.com
+      - name: Save source table inspection for parser development
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/source-inspection.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record official filing table structure and source hashes'
+          git push origin HEAD:codex/source-inspection
