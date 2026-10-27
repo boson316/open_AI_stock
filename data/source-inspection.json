@@ -83911,6 +83911,2265 @@
         "borrower is TSMC Nanjing, a wholly-owned subsidiary of TSMC. 3. Endorsements and guarantees (in NT$ thousands)： Guarantor Limit of guarantee Amount Bal. as of period end TSMC* 519,005,016 2,314,994 TSMC** 180,830,000 TSMC*** 126,091,924 TS",
         "n Technology Japan, a wholly-owned subsidiary of TSMC. 4. Financial derivative transactions (in NT$ thousands) (1) Derivatives not under hedge accounting. ‧TSMC Forward Margin Payment - Premium Income (Expense) - Outstanding Contracts Noti"
       ]
+    },
+    {
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000017/nvda-20230129.htm",
+      "filed": "2023-02-24",
+      "accession": "0001045810-23-000017",
+      "sha256": "b948321da2565b4f64079c0e5402df22bf0038006fe9163fe57df41fa0c7dd62",
+      "tables": [
+        [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "Year Ended",
+            "",
+            ""
+          ],
+          [
+            "",
+            "January 29,2023",
+            "",
+            "January 30,2022",
+            "",
+            "January 31,2021"
+          ],
+          [
+            "Cash flows from operating activities:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Net income",
+            "$",
+            "4,368",
+            "",
+            "",
+            "$",
+            "9,752",
+            "",
+            "",
+            "$",
+            "4,332",
+            ""
+          ],
+          [
+            "Adjustments to reconcile net income to net cash provided by operating activities:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Stock-based compensation expense",
+            "2,709",
+            "",
+            "",
+            "2,004",
+            "",
+            "",
+            "1,397",
+            ""
+          ],
+          [
+            "Depreciation and amortization",
+            "1,544",
+            "",
+            "",
+            "1,174",
+            "",
+            "",
+            "1,098",
+            ""
+          ],
+          [
+            "Acquisition termination cost",
+            "1,353",
+            "",
+            "",
+            "—",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Losses (gains) on investments in non-affiliates, net",
+            "45",
+            "",
+            "",
+            "(100)",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Deferred income taxes",
+            "(2,164)",
+            "",
+            "",
+            "(406)",
+            "",
+            "",
+            "(282)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Other",
+            "(7)",
+            "",
+            "",
+            "47",
+            "",
+            "",
+            "(20)",
+            ""
+          ],
+          [
+            "Changes in operating assets and liabilities, net of acquisitions:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Accounts receivable",
+            "822",
+            "",
+            "",
+            "(2,215)",
+            "",
+            "",
+            "(550)",
+            ""
+          ],
+          [
+            "Inventories",
+            "(2,554)",
+            "",
+            "",
+            "(774)",
+            "",
+            "",
+            "(524)",
+            ""
+          ],
+          [
+            "Prepaid expenses and other assets",
+            "(1,517)",
+            "",
+            "",
+            "(1,715)",
+            "",
+            "",
+            "(394)",
+            ""
+          ],
+          [
+            "Accounts payable",
+            "(551)",
+            "",
+            "",
+            "568",
+            "",
+            "",
+            "312",
+            ""
+          ],
+          [
+            "Accrued and other current liabilities",
+            "1,341",
+            "",
+            "",
+            "581",
+            "",
+            "",
+            "290",
+            ""
+          ],
+          [
+            "Other long-term liabilities",
+            "252",
+            "",
+            "",
+            "192",
+            "",
+            "",
+            "163",
+            ""
+          ],
+          [
+            "Net cash provided by operating activities",
+            "5,641",
+            "",
+            "",
+            "9,108",
+            "",
+            "",
+            "5,822",
+            ""
+          ],
+          [
+            "Cash flows from investing activities:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Proceeds from maturities of marketable securities",
+            "19,425",
+            "",
+            "",
+            "15,197",
+            "",
+            "",
+            "8,792",
+            ""
+          ],
+          [
+            "Proceeds from sales of marketable securities",
+            "1,806",
+            "",
+            "",
+            "1,023",
+            "",
+            "",
+            "527",
+            ""
+          ],
+          [
+            "Purchases of marketable securities",
+            "(11,897)",
+            "",
+            "",
+            "(24,787)",
+            "",
+            "",
+            "(19,308)",
+            ""
+          ],
+          [
+            "Purchases related to property and equipment and intangible assets",
+            "(1,833)",
+            "",
+            "",
+            "(976)",
+            "",
+            "",
+            "(1,128)",
+            ""
+          ],
+          [
+            "Acquisitions, net of cash acquired",
+            "(49)",
+            "",
+            "",
+            "(263)",
+            "",
+            "",
+            "(8,524)",
+            ""
+          ],
+          [
+            "Investments and other, net",
+            "(77)",
+            "",
+            "",
+            "(24)",
+            "",
+            "",
+            "(34)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Net cash provided by (used in) investing activities",
+            "7,375",
+            "",
+            "",
+            "(9,830)",
+            "",
+            "",
+            "(19,675)",
+            ""
+          ],
+          [
+            "Cash flows from financing activities:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Proceeds related to employee stock plans",
+            "355",
+            "",
+            "",
+            "281",
+            "",
+            "",
+            "194",
+            ""
+          ],
+          [
+            "Payments related to repurchases of common stock",
+            "(10,039)",
+            "",
+            "",
+            "—",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Payments related to tax on restricted stock units",
+            "(1,475)",
+            "",
+            "",
+            "(1,904)",
+            "",
+            "",
+            "(942)",
+            ""
+          ],
+          [
+            "Dividends paid",
+            "(398)",
+            "",
+            "",
+            "(399)",
+            "",
+            "",
+            "(395)",
+            ""
+          ],
+          [
+            "Principal payments on property and equipment",
+            "(58)",
+            "",
+            "",
+            "(83)",
+            "",
+            "",
+            "(17)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Issuance of debt, net of issuance costs",
+            "—",
+            "",
+            "",
+            "4,977",
+            "",
+            "",
+            "4,968",
+            ""
+          ],
+          [
+            "Repayment of debt",
+            "—",
+            "",
+            "",
+            "(1,000)",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Other",
+            "(2)",
+            "",
+            "",
+            "(7)",
+            "",
+            "",
+            "(4)",
+            ""
+          ],
+          [
+            "Net cash provided by (used in) financing activities",
+            "(11,617)",
+            "",
+            "",
+            "1,865",
+            "",
+            "",
+            "3,804",
+            ""
+          ],
+          [
+            "Change in cash and cash equivalents",
+            "1,399",
+            "",
+            "",
+            "1,143",
+            "",
+            "",
+            "(10,049)",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at beginning of period",
+            "1,990",
+            "",
+            "",
+            "847",
+            "",
+            "",
+            "10,896",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at end of period",
+            "$",
+            "3,389",
+            "",
+            "",
+            "$",
+            "1,990",
+            "",
+            "",
+            "$",
+            "847",
+            ""
+          ],
+          [
+            "Supplemental disclosures of cash flow information:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Cash paid for income taxes, net",
+            "$",
+            "1,404",
+            "",
+            "",
+            "$",
+            "396",
+            "",
+            "",
+            "$",
+            "249",
+            ""
+          ],
+          [
+            "Cash paid for interest",
+            "$",
+            "254",
+            "",
+            "",
+            "$",
+            "246",
+            "",
+            "",
+            "$",
+            "138",
+            ""
+          ]
+        ]
+      ],
+      "intro": "NVIDIA US GAAP consolidated cash flows"
+    },
+    {
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000166/nvda-20221030.htm",
+      "filed": "2022-11-18",
+      "accession": "0001045810-22-000166",
+      "sha256": "3b19dbb1ca5ffdabbb1566e690b49886fd0d05ea8264d2befa5b222f6c9b1fc9",
+      "tables": [
+        [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "Nine Months Ended"
+          ],
+          [
+            "",
+            "October 30,",
+            "",
+            "October 31,"
+          ],
+          [
+            "",
+            "2022",
+            "",
+            "2021"
+          ],
+          [
+            "Cash flows from operating activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Net income",
+            "$",
+            "2,954",
+            "",
+            "",
+            "$",
+            "6,749",
+            ""
+          ],
+          [
+            "Adjustments to reconcile net income to net cash provided by operating activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Stock-based compensation expense",
+            "1,971",
+            "",
+            "",
+            "1,453",
+            ""
+          ],
+          [
+            "Acquisition termination cost",
+            "1,353",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Depreciation and amortization",
+            "1,118",
+            "",
+            "",
+            "865",
+            ""
+          ],
+          [
+            "Losses (gains) on investments in non-affiliates, net",
+            "35",
+            "",
+            "",
+            "(152)",
+            ""
+          ],
+          [
+            "Deferred income taxes",
+            "(1,517)",
+            "",
+            "",
+            "(182)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Other",
+            "(27)",
+            "",
+            "",
+            "25",
+            ""
+          ],
+          [
+            "Changes in operating assets and liabilities, net of acquisitions:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Accounts receivable",
+            "(258)",
+            "",
+            "",
+            "(1,523)",
+            ""
+          ],
+          [
+            "Inventories",
+            "(1,848)",
+            "",
+            "",
+            "(400)",
+            ""
+          ],
+          [
+            "Prepaid expenses and other assets",
+            "(1,307)",
+            "",
+            "",
+            "(1,557)",
+            ""
+          ],
+          [
+            "Accounts payable",
+            "(358)",
+            "",
+            "",
+            "385",
+            ""
+          ],
+          [
+            "Accrued and other current liabilities",
+            "1,175",
+            "",
+            "",
+            "159",
+            ""
+          ],
+          [
+            "Other long-term liabilities",
+            "102",
+            "",
+            "",
+            "253",
+            ""
+          ],
+          [
+            "Net cash provided by operating activities",
+            "3,393",
+            "",
+            "",
+            "6,075",
+            ""
+          ],
+          [
+            "Cash flows from investing activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Proceeds from maturities of marketable securities",
+            "16,792",
+            "",
+            "",
+            "7,780",
+            ""
+          ],
+          [
+            "Proceeds from sales of marketable securities",
+            "1,806",
+            "",
+            "",
+            "916",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Purchases of marketable securities",
+            "(9,764)",
+            "",
+            "",
+            "(16,020)",
+            ""
+          ],
+          [
+            "Purchases related to property and equipment and intangible assets",
+            "(1,324)",
+            "",
+            "",
+            "(703)",
+            ""
+          ],
+          [
+            "Acquisitions, net of cash acquired",
+            "(49)",
+            "",
+            "",
+            "(203)",
+            ""
+          ],
+          [
+            "Investments and other, net",
+            "(83)",
+            "",
+            "",
+            "(14)",
+            ""
+          ],
+          [
+            "Net cash provided by (used in) investing activities",
+            "7,378",
+            "",
+            "",
+            "(8,244)",
+            ""
+          ],
+          [
+            "Cash flows from financing activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Proceeds related to employee stock plans",
+            "349",
+            "",
+            "",
+            "277",
+            ""
+          ],
+          [
+            "Payments related to repurchases of common stock",
+            "(8,826)",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Payments related to tax on restricted stock units",
+            "(1,131)",
+            "",
+            "",
+            "(1,282)",
+            ""
+          ],
+          [
+            "Dividends paid",
+            "(300)",
+            "",
+            "",
+            "(298)",
+            ""
+          ],
+          [
+            "Principal payments on property and equipment and intangible asset",
+            "(54)",
+            "",
+            "",
+            "(62)",
+            ""
+          ],
+          [
+            "Issuance of debt, net of issuance costs",
+            "—",
+            "",
+            "",
+            "4,977",
+            ""
+          ],
+          [
+            "Repayment of debt",
+            "—",
+            "",
+            "",
+            "(1,000)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Other",
+            "1",
+            "",
+            "",
+            "(2)",
+            ""
+          ],
+          [
+            "Net cash provided by (used in) financing activities",
+            "(9,961)",
+            "",
+            "",
+            "2,610",
+            ""
+          ],
+          [
+            "Change in cash and cash equivalents",
+            "810",
+            "",
+            "",
+            "441",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at beginning of period",
+            "1,990",
+            "",
+            "",
+            "847",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at end of period",
+            "$",
+            "2,800",
+            "",
+            "",
+            "$",
+            "1,288",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Supplemental disclosures of cash flow information:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Cash paid for income taxes, net",
+            "$",
+            "1,372",
+            "",
+            "",
+            "$",
+            "313",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      ],
+      "intro": "NVIDIA US GAAP consolidated cash flows"
+    },
+    {
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000147/nvda-20220731.htm",
+      "filed": "2022-08-31",
+      "accession": "0001045810-22-000147",
+      "sha256": "f9e25e14ce80611acc4780cfe43302c399fc1f104442710bf5f7041b3908e7ed",
+      "tables": [
+        [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "Six Months Ended"
+          ],
+          [
+            "",
+            "July 31,",
+            "",
+            "August 1,"
+          ],
+          [
+            "",
+            "2022",
+            "",
+            "2021"
+          ],
+          [
+            "Cash flows from operating activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Net income",
+            "$",
+            "2,274",
+            "",
+            "",
+            "$",
+            "4,285",
+            ""
+          ],
+          [
+            "Adjustments to reconcile net income to net cash provided by operating activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Acquisition termination cost",
+            "1,353",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Stock-based compensation expense",
+            "1,226",
+            "",
+            "",
+            "894",
+            ""
+          ],
+          [
+            "Depreciation and amortization",
+            "712",
+            "",
+            "",
+            "567",
+            ""
+          ],
+          [
+            "Losses (gains) on investments in non-affiliates, net",
+            "24",
+            "",
+            "",
+            "(133)",
+            ""
+          ],
+          [
+            "Deferred income taxes",
+            "(985)",
+            "",
+            "",
+            "(161)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Other",
+            "18",
+            "",
+            "",
+            "16",
+            ""
+          ],
+          [
+            "Changes in operating assets and liabilities, net of acquisitions:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Accounts receivable",
+            "(668)",
+            "",
+            "",
+            "(1,157)",
+            ""
+          ],
+          [
+            "Inventories",
+            "(1,285)",
+            "",
+            "",
+            "(282)",
+            ""
+          ],
+          [
+            "Prepaid expenses and other assets",
+            "(1,554)",
+            "",
+            "",
+            "18",
+            ""
+          ],
+          [
+            "Accounts payable",
+            "559",
+            "",
+            "",
+            "245",
+            ""
+          ],
+          [
+            "Accrued and other current liabilities",
+            "1,267",
+            "",
+            "",
+            "166",
+            ""
+          ],
+          [
+            "Other long-term liabilities",
+            "60",
+            "",
+            "",
+            "98",
+            ""
+          ],
+          [
+            "Net cash provided by operating activities",
+            "3,001",
+            "",
+            "",
+            "4,556",
+            ""
+          ],
+          [
+            "Cash flows from investing activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Proceeds from maturities of marketable securities",
+            "10,983",
+            "",
+            "",
+            "5,236",
+            ""
+          ],
+          [
+            "Proceeds from sales of marketable securities",
+            "1,731",
+            "",
+            "",
+            "705",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Purchases of marketable securities",
+            "(7,576)",
+            "",
+            "",
+            "(9,268)",
+            ""
+          ],
+          [
+            "Purchases related to property and equipment and intangible assets",
+            "(794)",
+            "",
+            "",
+            "(481)",
+            ""
+          ],
+          [
+            "Acquisitions, net of cash acquired",
+            "(49)",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Investments and other, net",
+            "(65)",
+            "",
+            "",
+            "3",
+            ""
+          ],
+          [
+            "Net cash provided by (used in) investing activities",
+            "4,230",
+            "",
+            "",
+            "(3,805)",
+            ""
+          ],
+          [
+            "Cash flows from financing activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Issuance of debt, net of issuance costs",
+            "—",
+            "",
+            "",
+            "4,985",
+            ""
+          ],
+          [
+            "Proceeds related to employee stock plans",
+            "205",
+            "",
+            "",
+            "128",
+            ""
+          ],
+          [
+            "Payments related to repurchases of common stock",
+            "(5,341)",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Payments related to tax on restricted stock units",
+            "(837)",
+            "",
+            "",
+            "(843)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Dividends paid",
+            "(200)",
+            "",
+            "",
+            "(198)",
+            ""
+          ],
+          [
+            "Principal payments on property and equipment and intangible asset",
+            "(36)",
+            "",
+            "",
+            "(40)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Other",
+            "1",
+            "",
+            "",
+            "(2)",
+            ""
+          ],
+          [
+            "Net cash provided by (used in) financing activities",
+            "(6,208)",
+            "",
+            "",
+            "4,030",
+            ""
+          ],
+          [
+            "Change in cash and cash equivalents",
+            "1,023",
+            "",
+            "",
+            "4,781",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at beginning of period",
+            "1,990",
+            "",
+            "",
+            "847",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at end of period",
+            "$",
+            "3,013",
+            "",
+            "",
+            "$",
+            "5,628",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Supplemental disclosures of cash flow information:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Cash paid for income taxes, net",
+            "$",
+            "1,108",
+            "",
+            "",
+            "$",
+            "241",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      ],
+      "intro": "NVIDIA US GAAP consolidated cash flows"
+    },
+    {
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000079/nvda-20220501.htm",
+      "filed": "2022-05-27",
+      "accession": "0001045810-22-000079",
+      "sha256": "6fab293ff19b776f7f9c5fac0028bcb041ebd865fef5d30ad402e4af3adc517b",
+      "tables": [
+        [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "Three Months Ended"
+          ],
+          [
+            "",
+            "May 1,",
+            "",
+            "May 2,"
+          ],
+          [
+            "",
+            "2022",
+            "",
+            "2021"
+          ],
+          [
+            "Cash flows from operating activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Net income",
+            "$",
+            "1,618",
+            "",
+            "",
+            "$",
+            "1,912",
+            ""
+          ],
+          [
+            "Adjustments to reconcile net income to net cash provided by operating activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Acquisition termination cost",
+            "1,353",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Stock-based compensation expense",
+            "578",
+            "",
+            "",
+            "429",
+            ""
+          ],
+          [
+            "Depreciation and amortization",
+            "334",
+            "",
+            "",
+            "281",
+            ""
+          ],
+          [
+            "Losses (gains) on investments in non-affiliates, net",
+            "17",
+            "",
+            "",
+            "(133)",
+            ""
+          ],
+          [
+            "Deferred income taxes",
+            "(542)",
+            "",
+            "",
+            "24",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Other",
+            "23",
+            "",
+            "",
+            "(3)",
+            ""
+          ],
+          [
+            "Changes in operating assets and liabilities, net of acquisitions:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Accounts receivable",
+            "(788)",
+            "",
+            "",
+            "(595)",
+            ""
+          ],
+          [
+            "Inventories",
+            "(560)",
+            "",
+            "",
+            "(159)",
+            ""
+          ],
+          [
+            "Prepaid expenses and other assets",
+            "(1,261)",
+            "",
+            "",
+            "2",
+            ""
+          ],
+          [
+            "Accounts payable",
+            "255",
+            "",
+            "",
+            "36",
+            ""
+          ],
+          [
+            "Accrued and other current liabilities",
+            "634",
+            "",
+            "",
+            "33",
+            ""
+          ],
+          [
+            "Other long-term liabilities",
+            "70",
+            "",
+            "",
+            "47",
+            ""
+          ],
+          [
+            "Net cash provided by operating activities",
+            "1,731",
+            "",
+            "",
+            "1,874",
+            ""
+          ],
+          [
+            "Cash flows from investing activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Proceeds from maturities of marketable securities",
+            "5,947",
+            "",
+            "",
+            "3,140",
+            ""
+          ],
+          [
+            "Proceeds from sales of marketable securities",
+            "1,029",
+            "",
+            "",
+            "358",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Purchases of marketable securities",
+            "(3,932)",
+            "",
+            "",
+            "(4,470)",
+            ""
+          ],
+          [
+            "Purchases related to property and equipment and intangible assets",
+            "(361)",
+            "",
+            "",
+            "(298)",
+            ""
+          ],
+          [
+            "Acquisitions, net of cash acquired",
+            "(36)",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Investments and other, net",
+            "(35)",
+            "",
+            "",
+            "(2)",
+            ""
+          ],
+          [
+            "Net cash provided by (used in) investing activities",
+            "2,612",
+            "",
+            "",
+            "(1,272)",
+            ""
+          ],
+          [
+            "Cash flows from financing activities:",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Proceeds related to employee stock plans",
+            "204",
+            "",
+            "",
+            "126",
+            ""
+          ],
+          [
+            "Payments related to repurchases of common stock",
+            "(1,996)",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Payments related to tax on restricted stock units",
+            "(532)",
+            "",
+            "",
+            "(477)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Dividends paid",
+            "(100)",
+            "",
+            "",
+            "(99)",
+            ""
+          ],
+          [
+            "Principal payments on property and equipment and intangible asset",
+            "(22)",
+            "",
+            "",
+            "(19)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Other",
+            "—",
+            "",
+            "",
+            "(2)",
+            ""
+          ],
+          [
+            "Net cash used in financing activities",
+            "(2,446)",
+            "",
+            "",
+            "(471)",
+            ""
+          ],
+          [
+            "Change in cash and cash equivalents",
+            "1,897",
+            "",
+            "",
+            "131",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at beginning of period",
+            "1,990",
+            "",
+            "",
+            "847",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at end of period",
+            "$",
+            "3,887",
+            "",
+            "",
+            "$",
+            "978",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      ],
+      "intro": "NVIDIA US GAAP consolidated cash flows"
+    },
+    {
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000036/nvda-20220130.htm",
+      "filed": "2022-03-18",
+      "accession": "0001045810-22-000036",
+      "sha256": "9fba881177c049a8112fc5eb4046befd47b567bc6364b4e86b655a59455c8a5b",
+      "tables": [
+        [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "Year Ended",
+            "",
+            ""
+          ],
+          [
+            "",
+            "January 30,2022",
+            "",
+            "January 31,2021",
+            "",
+            "January 26,2020"
+          ],
+          [
+            "Cash flows from operating activities:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Net income",
+            "$",
+            "9,752",
+            "",
+            "",
+            "$",
+            "4,332",
+            "",
+            "",
+            "$",
+            "2,796",
+            ""
+          ],
+          [
+            "Adjustments to reconcile net income to net cash provided by operating activities:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Stock-based compensation expense",
+            "2,004",
+            "",
+            "",
+            "1,397",
+            "",
+            "",
+            "844",
+            ""
+          ],
+          [
+            "Depreciation and amortization",
+            "1,174",
+            "",
+            "",
+            "1,098",
+            "",
+            "",
+            "381",
+            ""
+          ],
+          [
+            "Deferred income taxes",
+            "(406)",
+            "",
+            "",
+            "(282)",
+            "",
+            "",
+            "18",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "(Gains) losses on investments in non-affiliates, net",
+            "(100)",
+            "",
+            "",
+            "—",
+            "",
+            "",
+            "1",
+            ""
+          ],
+          [
+            "Other",
+            "47",
+            "",
+            "",
+            "(20)",
+            "",
+            "",
+            "4",
+            ""
+          ],
+          [
+            "Changes in operating assets and liabilities, net of acquisitions:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Accounts receivable",
+            "(2,215)",
+            "",
+            "",
+            "(550)",
+            "",
+            "",
+            "(233)",
+            ""
+          ],
+          [
+            "Inventories",
+            "(774)",
+            "",
+            "",
+            "(524)",
+            "",
+            "",
+            "597",
+            ""
+          ],
+          [
+            "Prepaid expenses and other assets",
+            "(1,715)",
+            "",
+            "",
+            "(394)",
+            "",
+            "",
+            "77",
+            ""
+          ],
+          [
+            "Accounts payable",
+            "568",
+            "",
+            "",
+            "312",
+            "",
+            "",
+            "194",
+            ""
+          ],
+          [
+            "Accrued and other current liabilities",
+            "581",
+            "",
+            "",
+            "290",
+            "",
+            "",
+            "54",
+            ""
+          ],
+          [
+            "Other long-term liabilities",
+            "192",
+            "",
+            "",
+            "163",
+            "",
+            "",
+            "28",
+            ""
+          ],
+          [
+            "Net cash provided by operating activities",
+            "9,108",
+            "",
+            "",
+            "5,822",
+            "",
+            "",
+            "4,761",
+            ""
+          ],
+          [
+            "Cash flows from investing activities:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Proceeds from maturities of marketable securities",
+            "15,197",
+            "",
+            "",
+            "8,792",
+            "",
+            "",
+            "4,744",
+            ""
+          ],
+          [
+            "Proceeds from sales of marketable securities",
+            "1,023",
+            "",
+            "",
+            "527",
+            "",
+            "",
+            "3,365",
+            ""
+          ],
+          [
+            "Purchases of marketable securities",
+            "(24,787)",
+            "",
+            "",
+            "(19,308)",
+            "",
+            "",
+            "(1,461)",
+            ""
+          ],
+          [
+            "Purchases related to property and equipment and intangible assets",
+            "(976)",
+            "",
+            "",
+            "(1,128)",
+            "",
+            "",
+            "(489)",
+            ""
+          ],
+          [
+            "Acquisitions, net of cash acquired",
+            "(263)",
+            "",
+            "",
+            "(8,524)",
+            "",
+            "",
+            "(4)",
+            ""
+          ],
+          [
+            "Investments and other, net",
+            "(24)",
+            "",
+            "",
+            "(34)",
+            "",
+            "",
+            "(10)",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Net cash provided by (used in) investing activities",
+            "(9,830)",
+            "",
+            "",
+            "(19,675)",
+            "",
+            "",
+            "6,145",
+            ""
+          ],
+          [
+            "Cash flows from financing activities:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Issuance of debt, net of issuance costs",
+            "4,977",
+            "",
+            "",
+            "4,968",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Proceeds related to employee stock plans",
+            "281",
+            "",
+            "",
+            "194",
+            "",
+            "",
+            "149",
+            ""
+          ],
+          [
+            "Payments related to tax on restricted stock units",
+            "(1,904)",
+            "",
+            "",
+            "(942)",
+            "",
+            "",
+            "(551)",
+            ""
+          ],
+          [
+            "Repayment of debt",
+            "(1,000)",
+            "",
+            "",
+            "—",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Dividends paid",
+            "(399)",
+            "",
+            "",
+            "(395)",
+            "",
+            "",
+            "(390)",
+            ""
+          ],
+          [
+            "Principal payments on property and equipment",
+            "(83)",
+            "",
+            "",
+            "(17)",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Other",
+            "(7)",
+            "",
+            "",
+            "(4)",
+            "",
+            "",
+            "—",
+            ""
+          ],
+          [
+            "Net cash provided by (used in) financing activities",
+            "1,865",
+            "",
+            "",
+            "3,804",
+            "",
+            "",
+            "(792)",
+            ""
+          ],
+          [
+            "Change in cash and cash equivalents",
+            "1,143",
+            "",
+            "",
+            "(10,049)",
+            "",
+            "",
+            "10,114",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at beginning of period",
+            "847",
+            "",
+            "",
+            "10,896",
+            "",
+            "",
+            "782",
+            ""
+          ],
+          [
+            "Cash and cash equivalents at end of period",
+            "$",
+            "1,990",
+            "",
+            "",
+            "$",
+            "847",
+            "",
+            "",
+            "$",
+            "10,896",
+            ""
+          ],
+          [
+            "Supplemental disclosures of cash flow information:",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Cash paid for income taxes, net",
+            "$",
+            "396",
+            "",
+            "",
+            "$",
+            "249",
+            "",
+            "",
+            "$",
+            "176",
+            ""
+          ],
+          [
+            "Cash paid for interest",
+            "$",
+            "246",
+            "",
+            "",
+            "$",
+            "138",
+            "",
+            "",
+            "$",
+            "54",
+            ""
+          ]
+        ]
+      ],
+      "intro": "NVIDIA US GAAP consolidated cash flows"
     }
   ]
 }
