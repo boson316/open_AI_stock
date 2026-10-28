@@ -352,3 +352,48 @@ test("gross margin line has 20 real quarters per eligible stock and SoFi is mark
     }
   }
 });
+
+test("AI analysis pack copies a 20-quarter, source-tied summary for every stock", async ({
+  page,
+  context,
+}) => {
+  test.setTimeout(90000);
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.unroute("**/data/catalog.json");
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  for (const ticker of ["SOFI", "NVDA", "TSM", "MU"]) {
+    await page
+      .getByRole("button", { name: `切換至 ${ticker}`, exact: true })
+      .click();
+    await expect(page.locator(".ticker-pill")).toHaveText(ticker);
+    await page.getByRole("button", { name: "複製 AI 分析包" }).click();
+    await expect(page.getByRole("status")).toContainText("已複製");
+    const text = await page.evaluate(() => navigator.clipboard.readText());
+    expect(text).toContain(`（${ticker}）財務分析資料包`);
+    expect(text).toContain("不提供買賣建議");
+    expect(text).not.toMatch(/NaN|undefined/);
+    expect(text.split("\n").filter((l) => /^\| \d{4}-\d{2}-\d{2} /.test(l))).toHaveLength(20);
+    if (ticker === "SOFI") expect(text).toContain("不適用");
+    if (ticker === "TSM") expect(text).toContain("新臺幣");
+  }
+});
+
+test("one-click export downloads every stock in a single AI analysis pack", async ({
+  page,
+}) => {
+  test.setTimeout(120000);
+  await page.unroute("**/data/catalog.json");
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  const waiting = page.waitForEvent("download");
+  await page.getByRole("button", { name: "一鍵匯出股票 AI 分析包" }).click();
+  const download = await waiting;
+  expect(download.suggestedFilename()).toBe("stocks-ai-analysis-pack.md");
+  const chunks = [];
+  for await (const chunk of (await download.createReadStream())!) chunks.push(chunk);
+  const text = Buffer.concat(chunks).toString("utf8");
+  for (const t of ["SOFI","GOOGL","GOOG","NVDA","AMD","TSM","MSFT","AAPL","AMZN","META","PLTR","MU","TSLA"])
+    expect(text).toContain(`（${t}）財務分析資料包`);
+  expect(text).not.toMatch(/NaN|undefined/);
+});

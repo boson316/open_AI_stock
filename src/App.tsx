@@ -20,6 +20,7 @@ import {
   FileText,
   Layers3,
   Menu,
+  Sparkles,
   Moon,
   Search,
   ShieldCheck,
@@ -28,6 +29,11 @@ import {
   X,
 } from "lucide-react";
 import { RuleAnalysis } from "./components/RuleAnalysis";
+import {
+  buildAnalysisPack,
+  buildCombinedPack,
+  downloadText,
+} from "./lib/analysisPack";
 import { FinancialChart } from "./components/FinancialChart";
 import {
   annual,
@@ -137,6 +143,7 @@ export function App() {
   const [query, setQuery] = useState(""),
     [searchOpen, setSearchOpen] = useState(false),
     [error, setError] = useState(""),
+    [packStatus, setPackStatus] = useState(""),
     [loading, setLoading] = useState(true);
   const [section, setSection] = useState("overview"),
     [mobile, setMobile] = useState(false);
@@ -623,6 +630,58 @@ export function App() {
       setError((e as Error).message);
     }
   }
+  const packReady = !!dataset && !imported && !annualOnly;
+  async function copyPack() {
+    if (!dataset) return;
+    const text = buildAnalysisPack(dataset, quarters);
+    try {
+      await navigator.clipboard.writeText(text);
+      setPackStatus("已複製，貼到 Claude／ChatGPT 即可分析");
+    } catch {
+      downloadText(`${ticker}-ai-analysis-pack.md`, text);
+      setPackStatus("瀏覽器不允許複製，已改為下載 .md 檔");
+    }
+    setTimeout(() => setPackStatus(""), 4000);
+  }
+  async function exportAllPacks() {
+    const targets = catalog.companies.filter(
+      (c) =>
+        c.status === "available" &&
+        c.file &&
+        /^[A-Z]+\.json$/.test(c.file) &&
+        (listFilter === "all" || favorites.includes(c.ticker)),
+    );
+    if (!targets.length) {
+      setError("沒有可匯出的股票，請先收藏股票或切回「全部股票」。");
+      return;
+    }
+    setPackStatus(`正在彙整 ${targets.length} 檔…`);
+    try {
+      const packs = [];
+      for (const c of targets) {
+        const r = await fetch(`${base}data/${c.file}`);
+        if (!r.ok) throw Error(`${c.ticker} HTTP ${r.status}`);
+        const d = validateDataset(await r.json());
+        if (d.ticker !== c.ticker || d.cik !== c.cik)
+          throw Error(`${c.ticker} 公司資料不一致`);
+        packs.push({ dataset: d, quarters: normalize(d.facts) });
+      }
+      downloadText("stocks-ai-analysis-pack.md", buildCombinedPack(packs));
+      setPackStatus(`已下載 ${packs.length} 檔 AI 分析包（stocks-ai-analysis-pack.md）`);
+    } catch (e) {
+      setPackStatus("");
+      setError(`匯出失敗：${(e as Error).message}`);
+      return;
+    }
+    setTimeout(() => setPackStatus(""), 5000);
+  }
+  function downloadPack() {
+    if (!dataset) return;
+    downloadText(
+      `${ticker}-ai-analysis-pack.md`,
+      buildAnalysisPack(dataset, quarters),
+    );
+  }
   const tableMetrics = Object.values(visibleGroups).flat();
   function exportTable() {
     csvDownload(`${ticker}-${mode}.csv`, [
@@ -805,6 +864,19 @@ export function App() {
         <div className="watchlist-heading">
           <span>觀察清單</span>
           <span className="count-badge">{catalog.companies.length}</span>
+          <button
+            className="watchlist-export"
+            aria-label="一鍵匯出股票 AI 分析包"
+            title={
+              listFilter === "favorites"
+                ? "匯出已收藏股票 AI 分析包"
+                : "匯出全部股票 AI 分析包"
+            }
+            onClick={() => void exportAllPacks()}
+          >
+            <Sparkles size={14} />
+            一鍵匯出
+          </button>
         </div>
         <div
           className="watchlist-filter"
@@ -994,6 +1066,16 @@ export function App() {
                   <Download size={16} />
                   匯出財務資料
                 </button>
+                <button onClick={() => void exportAllPacks()}>
+                  <Sparkles size={16} />
+                  {listFilter === "favorites"
+                    ? "匯出已收藏股票 AI 分析包"
+                    : "匯出全部股票 AI 分析包"}
+                </button>
+                <button disabled={!packReady} onClick={downloadPack}>
+                  <Sparkles size={16} />
+                  下載 AI 分析包（.md）
+                </button>
                 <button onClick={() => navigate("sources")}>
                   <ShieldCheck size={16} />
                   資料來源與核對報告
@@ -1092,6 +1174,15 @@ export function App() {
                 <Download size={15} />
                 <span>匯出財務資料</span>
               </button>
+              <button
+                className="button export-main ai-pack"
+                aria-label="複製 AI 分析包"
+                disabled={!packReady}
+                onClick={() => void copyPack()}
+              >
+                <Sparkles size={15} />
+                <span>複製 AI 分析包</span>
+              </button>
             </div>
           </section>
           <nav className="page-tabs" aria-label="分析分頁" role="tablist">
@@ -1108,6 +1199,11 @@ export function App() {
               </button>
             ))}
           </nav>
+          {packStatus && (
+            <div className="notice" role="status">
+              {packStatus}
+            </div>
+          )}
           {error && (
             <div className="notice error" role="alert">
               {error}
