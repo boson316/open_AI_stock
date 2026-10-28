@@ -63,7 +63,7 @@ p { line-height: 1.7; }
   box-shadow: 0 2px 4px rgb(79 70 229 / 8%), 0 14px 32px rgb(79 70 229 / 12%);
 }
 .metric-card > strong {
-  font-size: 32px;
+  font-size: clamp(22px, 2.1vw, 32px);
   letter-spacing: -1px;
   color: var(--text);
 }
@@ -203,3 +203,17 @@ select, input { border-radius: 12px; }
 .compare-table-panel th, .compare-table-panel td { padding: 11px 12px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
 .compare-table-panel th:first-child { text-align: left; }
 .compare-table-panel td.best { color: var(--positive); font-weight: 700; }
+
+/* 選股篩選 */
+.filter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 10px 22px; }
+.filter-row { display: grid; grid-template-columns: 1fr 78px 16px 78px 18px; align-items: center; gap: 8px; font-size: 13px; }
+.filter-row input { width: 100%; padding: 7px 9px; border: 1px solid var(--line); background: var(--bg); border-radius: 10px; }
+.filter-row small { color: var(--muted); }
+.sort-button { font: inherit; color: inherit; font-weight: 600; white-space: nowrap; }
+.link-button { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--accent); }
+.link-button small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.empty-row { text-align: left !important; white-space: normal !important; color: var(--muted); padding: 22px 12px !important; }
+@media (max-width: 760px) {
+  .filter-grid { grid-template-columns: 1fr; }
+  .filter-row { grid-template-columns: 1fr 70px 14px 70px 16px; }
+}

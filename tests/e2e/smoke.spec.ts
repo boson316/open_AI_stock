@@ -122,6 +122,13 @@ test("official persisted data loads through the repository base path with correc
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("./");
   await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  // 預設開啟 TSM：新臺幣口徑；SOFI 專屬指標需先切換公司。
+  await expect(page.locator(".ticker-pill")).toHaveText("TSM");
+  await expect(
+    page.getByRole("button", { name: /TTM 營業收入/ }),
+  ).toContainText("NT$");
+  await page.getByRole("button", { name: "切換至 SOFI", exact: true }).click();
+  await expect(page.locator(".ticker-pill")).toHaveText("SOFI");
   await expect(
     page.getByRole("button", { name: /TTM 營業收入/ }),
   ).not.toContainText("N/A");
@@ -432,4 +439,35 @@ test("multi-stock comparison charts 20 aligned quarters and exports ratios", asy
   await expect(page.locator("body")).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   expect(overflow).toBe(false);
+});
+
+test("default company is TSM and the screener filters by TTM gross margin using official figures", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await page.unroute("**/data/catalog.json");
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  await expect(page.locator(".ticker-pill")).toHaveText("TSM");
+  const coverage = await (await page.request.get("data/coverage.json")).json();
+  const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
+  const expected = coverage.companies
+    .filter((c: { gross_margin: { status: string } }) => c.gross_margin.status !== "not_applicable")
+    .filter((c: { gross_margin: { periods: { gross_profit: number; revenue: number }[] } }) => {
+      const p = c.gross_margin.periods.slice(-4);
+      return (sum(p.map((x) => x.gross_profit)) / sum(p.map((x) => x.revenue))) * 100 >= 70;
+    })
+    .map((c: { ticker: string }) => c.ticker)
+    .sort();
+  await page.getByRole("tab", { name: "選股篩選", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("符合條件 13 / 13");
+  await page.getByRole("spinbutton", { name: "毛利率（TTM） 下限" }).fill("70");
+  await expect(page.getByRole("status")).toContainText(`符合條件 ${expected.length} / 13`);
+  const shown = (await page.locator(".compare-table-panel tbody tr th .link-button").evaluateAll((els) => els.map((e) => e.getAttribute("aria-label")?.replace("查看 ", "")))).sort();
+  expect(shown).toEqual(expected);
+  expect(shown).not.toContain("SOFI");
+  await page.getByRole("button", { name: `查看 ${expected[0]}` }).click();
+  await expect(page.locator(".ticker-pill")).toHaveText(expected[0]);
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)).toBe(false);
 });

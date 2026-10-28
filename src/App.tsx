@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { RuleAnalysis } from "./components/RuleAnalysis";
 import { Compare } from "./components/Compare";
+import { Screener } from "./components/Screener";
 import {
   buildAnalysisPack,
   buildCombinedPack,
@@ -62,6 +63,7 @@ const sections = [
   { id: "cashflow", label: "現金流分析", icon: Activity },
   { id: "balance", label: "資產與負債", icon: Database },
   { id: "banking", label: "金融機構指標", icon: ShieldCheck },
+  { id: "screener", label: "選股篩選", icon: Search },
   { id: "compare", label: "多股比較", icon: Layers3 },
   { id: "valuation", label: "估值研究", icon: Activity },
   { id: "statements", label: "完整財務報表", icon: FileText },
@@ -214,6 +216,9 @@ export function App() {
         if (c.version !== 1 || !Array.isArray(c.companies))
           throw Error("目錄格式無效");
         setCatalog(c);
+        // 預設開啟台積電；目錄沒有 TSM 時維持原本的備援公司。
+        if (c.companies.some((x) => x.ticker === "TSM" && x.status === "available"))
+          setTicker("TSM");
       })
       .catch((e) => {
         if (e.name !== "AbortError")
@@ -707,6 +712,7 @@ export function App() {
     cashflow: "現金流",
     balance: "資產負債",
     banking: "銀行指標",
+    screener: "選股篩選",
     compare: "多股比較",
     valuation: "估值",
     statements: "財報明細",
@@ -1757,6 +1763,17 @@ export function App() {
                 </section>
               </>
             )}
+            {section === "screener" && (
+              <Screener
+                catalog={catalog}
+                base={base}
+                colors={stockColors}
+                onSelect={(t) => {
+                  selectCompany(t);
+                  navigate("overview");
+                }}
+              />
+            )}
             {section === "compare" && (
               <Compare
                 catalog={catalog}
@@ -2111,7 +2128,8 @@ export function App() {
             className={
               section === s.id ||
               (s.id === "income" &&
-                ["cashflow", "balance", "banking"].includes(section))
+                ["cashflow", "balance", "banking"].includes(section)) ||
+              (s.id === "compare" && section === "screener")
                 ? "active"
                 : ""
             }
