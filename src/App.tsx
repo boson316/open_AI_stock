@@ -29,6 +29,7 @@ import {
   X,
 } from "lucide-react";
 import { RuleAnalysis } from "./components/RuleAnalysis";
+import { Compare } from "./components/Compare";
 import {
   buildAnalysisPack,
   buildCombinedPack,
@@ -61,6 +62,7 @@ const sections = [
   { id: "cashflow", label: "現金流分析", icon: Activity },
   { id: "balance", label: "資產與負債", icon: Database },
   { id: "banking", label: "金融機構指標", icon: ShieldCheck },
+  { id: "compare", label: "多股比較", icon: Layers3 },
   { id: "valuation", label: "估值研究", icon: Activity },
   { id: "statements", label: "完整財務報表", icon: FileText },
   { id: "sources", label: "資料與方法", icon: CircleHelp },
@@ -705,6 +707,7 @@ export function App() {
     cashflow: "現金流",
     balance: "資產負債",
     banking: "銀行指標",
+    compare: "多股比較",
     valuation: "估值",
     statements: "財報明細",
     sources: "資料來源",
@@ -1754,6 +1757,15 @@ export function App() {
                 </section>
               </>
             )}
+            {section === "compare" && (
+              <Compare
+                catalog={catalog}
+                base={base}
+                dark={dark}
+                current={ticker}
+                colors={stockColors}
+              />
+            )}
             {section === "valuation" && (
               <>
                 <section id="valuation">
@@ -1844,6 +1856,27 @@ export function App() {
                       },
                     ]}
                   />
+                  {riverDates.length > 0 && (
+                    <FinancialChart
+                      title="股價 × TTM EPS 疊圖"
+                      dates={riverDates.map((r) => r.date)}
+                      dark={dark}
+                      unit="股價（美元）"
+                      secondaryUnit="TTM EPS（美元／股）"
+                      dualAxis
+                      initialType="line"
+                      series={[
+                        {
+                          name: "歷史收盤價",
+                          values: riverDates.map((r) => r.price),
+                        },
+                        {
+                          name: "TTM EPS（公布翌日起生效）",
+                          values: riverDates.map((r) => r.eps),
+                        },
+                      ]}
+                    />
+                  )}
                   <p className="muted small">
                     分位數採截至各交易日的擴展樣本，不引用未來股價。EPS ≤
                     0、缺季度或分割口徑未確認時不得作正 PE 結論。Adjusted /
@@ -2070,8 +2103,8 @@ export function App() {
           { id: "overview", label: "總覽", icon: LayoutDashboard },
           { id: "income", label: "財務", icon: ChartNoAxesCombined },
           { id: "statements", label: "報表", icon: FileText },
+          { id: "compare", label: "比較", icon: Layers3 },
           { id: "valuation", label: "估值", icon: ChartCandlestick },
-          { id: "sources", label: "來源", icon: ShieldCheck },
         ].map((s) => (
           <button
             key={s.id}

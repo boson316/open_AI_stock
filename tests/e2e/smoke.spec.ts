@@ -397,3 +397,39 @@ test("one-click export downloads every stock in a single AI analysis pack", asyn
     expect(text).toContain(`（${t}）財務分析資料包`);
   expect(text).not.toMatch(/NaN|undefined/);
 });
+
+test("multi-stock comparison charts 20 aligned quarters and exports ratios", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await page.unroute("**/data/catalog.json");
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  await page.getByRole("button", { name: "切換至 NVDA", exact: true }).click();
+  await page.getByRole("tab", { name: "多股比較", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "多股比較", exact: true })).toBeVisible();
+  const group = page.getByRole("group", { name: "比較公司" });
+  await group.getByRole("button", { name: "MSFT", exact: true }).click();
+  await group.getByRole("button", { name: "SOFI", exact: true }).click();
+  await expect(page.locator(".compare-table-panel tbody tr")).toHaveCount(5);
+  const coverage = await (await page.request.get("data/coverage.json")).json();
+  const nvda = coverage.companies.find((c: { ticker: string }) => c.ticker === "NVDA");
+  const waiting = page.waitForEvent("download");
+  await page.getByRole("button", { name: "多股比較：毛利率匯出 CSV", exact: true }).click();
+  const chunks = [];
+  for await (const chunk of (await (await waiting).createReadStream())!) chunks.push(chunk);
+  const rows = Buffer.concat(chunks).toString("utf8").replace(/^\uFEFF/, "").trim().split(/\r?\n/).map((r) => r.split('","').map((c) => c.replace(/^"|"$/g, "")));
+  const col = rows[0].findIndex((h) => h.startsWith("NVDA"));
+  expect(col).toBeGreaterThan(0);
+  const filled = rows.slice(1).filter((r) => r[col] !== "");
+  expect(filled.length).toBeGreaterThanOrEqual(20);
+  const last = nvda.gross_margin.periods.at(-1);
+  expect(filled.some((r) => Math.abs(Number(r[col]) - last.margin_pct) < 0.01)).toBe(true);
+  const sofi = rows[0].findIndex((h) => h.startsWith("SOFI"));
+  expect(rows.slice(1).every((r) => r[sofi] === "")).toBe(true);
+  await expect(page.locator(".compare-table-panel")).toContainText("N/A");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator("body")).toBeVisible();
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+  expect(overflow).toBe(false);
+});
