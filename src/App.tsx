@@ -657,11 +657,11 @@ export function App() {
     AAPL: "#687789",
     MSFT: "#3878e5",
     GOOGL: "#487ce4",
-    GOOG: "#487ce4",
+    GOOG: "#2b9a6b",
     AMD: "#d55353",
     AMZN: "#c78b2c",
     META: "#397de3",
-    PLTR: "#687789",
+    PLTR: "#3c4252",
     MU: "#715bc6",
     TSLA: "#d84e50",
   };
@@ -836,8 +836,8 @@ export function App() {
               <span
                 className="stock-avatar"
                 style={{
-                  color: stockColors[c.ticker] ?? "#5376e5",
-                  background: (stockColors[c.ticker] ?? "#5376e5") + "18",
+                  color: "#fff",
+                  background: stockColors[c.ticker] ?? "#5376e5",
                 }}
               >
                 {c.ticker.slice(0, 2)}
@@ -1014,7 +1014,7 @@ export function App() {
             <div className="company-intro">
               <div
                 className="company-monogram"
-                style={{ background: color + "16", color }}
+                style={{ background: color, color: "#fff" }}
               >
                 {ticker.slice(0, 2)}
               </div>

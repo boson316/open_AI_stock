@@ -63,12 +63,12 @@ export function FinancialChart({
     return () => observer.disconnect();
   }, [hasData]);
   const option: EChartsOption = {
-    backgroundColor: dark ? "#1a2230" : "#ffffff",
+    backgroundColor: dark ? "#181d2e" : "#ffffff",
     color: ["#5c7aed", "#9ba9cc", "#c4aa7f", "#6aafa8", "#8e82ba", "#df9ca5"],
     textStyle: {
       color: dark ? "#a4b1c9" : "#8b97ac",
       fontFamily: "system-ui",
-      fontSize: 10,
+      fontSize: 12,
     },
     tooltip: {
       trigger: "axis",
@@ -79,7 +79,7 @@ export function FinancialChart({
     },
     legend: {
       top: 4,
-      textStyle: { color: dark ? "#a4b1c9" : "#8b97ac", fontSize: 10 },
+      textStyle: { color: dark ? "#b4c0d6" : "#5d6684", fontSize: 12 },
       type: "scroll",
     },
     grid: { left: 57, right: dualAxis ? 58 : 17, top: 58, bottom: 56 },
@@ -90,7 +90,7 @@ export function FinancialChart({
       axisTick: { show: false },
       axisLabel: {
         hideOverlap: true,
-        fontSize: 9,
+        fontSize: 11,
         formatter: (v: string) => v.slice(2, 7).replace("-", "/"),
       },
     },
@@ -115,7 +115,7 @@ export function FinancialChart({
         height: 10,
         bottom: 8,
         borderColor: "transparent",
-        backgroundColor: dark ? "#263247" : "#f0f3fa",
+        backgroundColor: dark ? "#232a42" : "#f0f3fa",
         fillerColor: "#5c7aed18",
         handleSize: 0,
         showDetail: false,

@@ -105,7 +105,7 @@ select {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 9px 11px;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 input:focus,
 select:focus {
@@ -126,7 +126,7 @@ code {
   color: var(--muted);
 }
 .small {
-  font-size: 11px;
+  font-size: 13px;
 }
 .accent {
   color: var(--positive);
@@ -146,7 +146,7 @@ code {
   gap: 8px;
   padding: 10px 13px;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 550;
   white-space: nowrap;
   cursor: pointer;
@@ -197,7 +197,7 @@ code {
 }
 .brand small {
   display: block;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 2px;
   font-weight: 500;
   color: #7d8da9;
@@ -217,7 +217,7 @@ code {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
+  font-size: 12px;
   padding: 25px 12px 18px;
   color: #a5b1c6;
 }
@@ -247,7 +247,7 @@ code {
   min-height: 38px;
   border-radius: 8px;
   color: #8e9bb3;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .side-navigation a:hover {
   background: #ffffff06;
@@ -272,12 +272,12 @@ code {
   align-items: center;
   gap: 8px;
   padding: 23px 12px 13px;
-  font-size: 11px;
+  font-size: 13px;
   color: #d6dfef;
   font-weight: 550;
 }
 .count-badge {
-  font-size: 9px;
+  font-size: 12px;
   color: #7d8da9;
   background: #1e293b;
   padding: 2px 5px;
@@ -295,7 +295,7 @@ code {
   border-radius: 5px;
   padding: 5px 9px;
   color: #6f819f;
-  font-size: 9px;
+  font-size: 12px;
 }
 .watchlist-filter .selected {
   background: #253047;
@@ -331,7 +331,7 @@ code {
   width: 32px;
   flex-shrink: 0;
   border-radius: 9px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 750;
   letter-spacing: -0.4px;
 }
@@ -343,12 +343,12 @@ code {
   flex: 1;
 }
 .watchlist-name strong {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   color: #d7e0f1;
 }
 .watchlist-name small {
-  font-size: 9px;
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -356,14 +356,14 @@ code {
   max-width: 121px;
 }
 .watchlist-currency {
-  font-size: 8px;
+  font-size: 11px;
   color: #526684;
 }
 .favorite-indicator {
   color: #6b80ab;
 }
 .watchlist-empty {
-  font-size: 10px;
+  font-size: 12px;
   padding: 15px;
   color: #8192ae;
 }
@@ -381,17 +381,17 @@ code {
 .source-badge strong {
   display: block;
   color: #c3cee3;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
 }
 .source-badge small {
   display: block;
-  font-size: 8px;
+  font-size: 11px;
   color: #6c7c97;
   margin-top: 5px;
 }
 .sidebar-bottom > a {
-  font-size: 9px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -429,7 +429,7 @@ code {
   align-items: center;
   gap: 13px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 .desktop-location strong {
@@ -445,7 +445,7 @@ code {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   white-space: nowrap;
 }
@@ -484,7 +484,7 @@ code {
   min-width: 0;
   flex: 1;
   width: 100%;
-  font-size: 11px;
+  font-size: 13px;
   height: 100%;
 }
 .search-wrap kbd {
@@ -492,7 +492,7 @@ code {
   margin-right: 9px;
   border: 1px solid var(--line);
   border-radius: 4px;
-  font-size: 9px;
+  font-size: 12px;
   padding: 3px 5px;
   color: #a0a8b8;
 }
@@ -514,7 +514,7 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   padding: 5px 7px 8px;
 }
@@ -530,7 +530,7 @@ code {
   text-align: left;
   padding: 9px 7px;
   border-radius: 7px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .search-results > button:hover {
   background: var(--tint);
@@ -541,21 +541,21 @@ code {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .search-results > button strong {
-  font-size: 11px;
+  font-size: 13px;
   min-width: 45px;
 }
 .search-results > button small {
-  font-size: 9px;
+  font-size: 12px;
   color: var(--muted);
   white-space: nowrap;
 }
 .search-results > p {
   padding: 20px;
-  font-size: 12px;
+  font-size: 13.5px;
   color: var(--muted);
 }
 .search-dismiss {
@@ -603,7 +603,7 @@ code {
   padding: 12px 10px;
   border-radius: 7px;
   text-align: left;
-  font-size: 12px;
+  font-size: 13.5px;
   cursor: pointer;
 }
 .action-menu button:hover,
@@ -662,11 +662,11 @@ main {
   flex-wrap: wrap;
   gap: 9px;
   margin-top: 7px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .ticker-pill {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: #697791;
   background: #e8edf5;
@@ -701,7 +701,7 @@ main {
 }
 .data-status {
   text-align: right;
-  font-size: 9px;
+  font-size: 12px;
   color: var(--muted);
   line-height: 1.7;
 }
@@ -712,7 +712,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 9px;
+  font-size: 12px;
   color: #af8b50;
 }
 .status.ok {
@@ -726,7 +726,7 @@ main {
 }
 .export-main {
   padding: 10px 12px;
-  font-size: 10px;
+  font-size: 12px;
 }
 .page-tabs {
   display: flex;
@@ -745,7 +745,7 @@ main {
   flex-shrink: 0;
   padding: 0 0 15px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13.5px;
   line-height: 24px;
   white-space: nowrap;
 }
@@ -784,7 +784,7 @@ main {
 }
 .tabs button {
   min-width: 56px;
-  font-size: 10px;
+  font-size: 12px;
   padding: 6px 13px;
   border-radius: 5px;
   color: var(--muted);
@@ -800,7 +800,7 @@ main {
   gap: 8px;
 }
 .toolbar-filters select {
-  font-size: 10px;
+  font-size: 12px;
   padding: 7px 9px;
   background: transparent;
   border-color: var(--line);
@@ -820,7 +820,7 @@ main {
   font-size: 17px;
 }
 .section-heading p {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--muted);
   margin-top: 4px;
 }
@@ -828,7 +828,7 @@ main {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 9px;
+  font-size: 12px;
   color: var(--muted);
 }
 .dashboard-kpis {
@@ -857,7 +857,7 @@ main {
   justify-content: space-between;
   align-items: center;
   gap: 5px;
-  font-size: 11px;
+  font-size: 13px;
   color: #798497;
 }
 .metric-card-label > svg {
@@ -880,7 +880,7 @@ main {
   gap: 7px;
   padding-top: 10px;
   border-top: 1px solid var(--line);
-  font-size: 8px;
+  font-size: 11px;
   color: #a0a9b9;
 }
 .metric-card-foot > span:last-child {
@@ -911,11 +911,11 @@ main {
   font-variant-numeric: tabular-nums;
 }
 .trend-period {
-  font-size: 9px;
+  font-size: 12px;
   color: #a0aabb;
 }
 .trend-heading .small {
-  font-size: 11px;
+  font-size: 13px;
 }
 .chart-focus {
   display: flex;
@@ -926,7 +926,7 @@ main {
   margin-bottom: 2px;
 }
 .chart-focus button {
-  font-size: 9px;
+  font-size: 12px;
   white-space: nowrap;
   color: var(--muted);
   padding: 6px 8px;
@@ -947,11 +947,11 @@ main {
   margin-bottom: 7px;
 }
 .trend-panel > .chart h3 {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
 }
 .trend-panel > .chart .small {
-  font-size: 9px;
+  font-size: 12px;
 }
 .chart-provenance {
   display: flex;
@@ -959,7 +959,7 @@ main {
   align-items: center;
   border-top: 1px solid var(--line);
   padding: 13px 23px;
-  font-size: 9px;
+  font-size: 12px;
   color: var(--muted);
 }
 .chart-provenance > span {
@@ -977,7 +977,7 @@ main {
   display: flex;
   gap: 5px;
   align-items: center;
-  font-size: 9px;
+  font-size: 12px;
   color: var(--accent);
 }
 .overview-aside {
@@ -995,10 +995,10 @@ main {
   padding: 21px 0 12px;
 }
 .compact-panel-heading h3 {
-  font-size: 13px;
+  font-size: 14.5px;
 }
 .compact-panel-heading > span {
-  font-size: 8px;
+  font-size: 11px;
   color: var(--muted);
 }
 .snapshot-row {
@@ -1016,13 +1016,13 @@ main {
   padding-bottom: 20px;
 }
 .snapshot-row > span {
-  font-size: 11px;
+  font-size: 13px;
   color: #7d879a;
 }
 .snapshot-row small {
   display: block;
   color: #a3adbf;
-  font-size: 8px;
+  font-size: 11px;
   margin-top: 5px;
 }
 .snapshot-row strong {
@@ -1059,16 +1059,16 @@ main {
   margin-bottom: 12px;
 }
 .coverage-panel h3 {
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .coverage-panel p {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   margin-top: 7px;
 }
 .coverage-panel > button {
   margin-top: 15px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--accent);
   display: flex;
   gap: 6px;
@@ -1099,10 +1099,10 @@ main {
   align-items: center;
 }
 .insight-title h3 {
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .tag {
-  font-size: 8px;
+  font-size: 11px;
   padding: 3px 6px;
   background: var(--bg);
   border: 1px solid var(--line);
@@ -1111,7 +1111,7 @@ main {
   white-space: nowrap;
 }
 .insight-panel p {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--muted);
   margin-top: 6px;
 }
@@ -1128,14 +1128,14 @@ main {
   display: flex;
   justify-content: space-between;
   padding: 17px 0;
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 550;
 }
 .all-metrics > summary > span {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   font-weight: 400;
 }
@@ -1168,17 +1168,17 @@ main {
   color: #91a1bd;
 }
 .price-callout > div > span {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text);
 }
 .price-callout small {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   margin-top: 6px;
 }
 .price-callout .button {
-  font-size: 10px;
+  font-size: 12px;
 }
 .section-title {
   display: flex;
@@ -1188,7 +1188,7 @@ main {
   margin: 26px 0 17px;
 }
 .section-title .eyebrow {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 1.8px;
   color: var(--muted);
   display: block;
@@ -1216,10 +1216,10 @@ main {
   margin-bottom: 15px;
 }
 .panel-head h3 {
-  font-size: 13px;
+  font-size: 14.5px;
 }
 .panel-head .small {
-  font-size: 9px;
+  font-size: 12px;
   display: block;
   margin-top: 5px;
 }
@@ -1230,7 +1230,7 @@ main {
   flex-shrink: 0;
 }
 .tools select {
-  font-size: 9px;
+  font-size: 12px;
   padding: 6px;
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -1243,7 +1243,7 @@ main {
   min-height: 25px;
   color: var(--muted);
   padding: 4px;
-  font-size: 9px;
+  font-size: 12px;
 }
 .tools button:hover {
   color: var(--accent);
@@ -1276,7 +1276,7 @@ main {
 .chart-export-menu button {
   justify-content: flex-start;
   padding: 9px 10px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .chart-export-menu button:hover {
   background: var(--bg);
@@ -1289,7 +1289,7 @@ main {
   justify-content: center;
   text-align: center;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13.5px;
   gap: 9px;
   background: linear-gradient(transparent 99%, var(--line) 99%);
   background-size: 100% 65px;
@@ -1310,7 +1310,7 @@ main {
   background: var(--tint);
   border: 1px solid #7e99f027;
   padding: 14px 17px;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.85;
   color: #6680b0;
   border-radius: 10px;
@@ -1320,7 +1320,7 @@ main {
   margin-top: 3px;
 }
 .notice p {
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 4px;
 }
 .notice.error {
@@ -1337,7 +1337,7 @@ main {
 }
 .basis-notice {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   border-bottom: 1px solid var(--line);
   padding: 12px 0 0;
 }
@@ -1353,7 +1353,7 @@ main {
 }
 .basis-notice p {
   padding: 10px 0 4px;
-  font-size: 10px;
+  font-size: 12px;
   max-width: 950px;
 }
 .sector-note {
@@ -1377,7 +1377,7 @@ main {
   flex-shrink: 0;
 }
 .sector-note .eyebrow {
-  font-size: 8px;
+  font-size: 11px;
   color: var(--accent);
   letter-spacing: 1px;
 }
@@ -1387,13 +1387,13 @@ main {
 }
 .sector-note p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .sector-note details {
   margin-top: 14px;
 }
 .sector-note summary {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--accent);
 }
 .bank-grid {
@@ -1406,7 +1406,7 @@ main {
   padding: 15px;
   border: 1px solid var(--line);
   border-radius: 9px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .bank-grid strong {
   display: block;
@@ -1416,7 +1416,7 @@ main {
 }
 .bank-grid small {
   display: block;
-  font-size: 9px;
+  font-size: 12px;
   color: var(--muted);
 }
 .mini-metrics {
@@ -1432,7 +1432,7 @@ main {
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 17px;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--muted);
 }
 .mini-metrics strong {
@@ -1444,7 +1444,7 @@ main {
 }
 .prose {
   padding: 23px;
-  font-size: 12px;
+  font-size: 13.5px;
   line-height: 1.85;
   margin-bottom: 19px;
 }
@@ -1457,14 +1457,14 @@ main {
 .prose ul {
   padding-left: 20px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .prose li {
   margin: 8px 0;
 }
 .prose summary {
   font-weight: 600;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 .rule-grid {
   display: grid;
@@ -1477,11 +1477,11 @@ main {
   border-top: 1px solid var(--line);
 }
 .rule-grid h3 {
-  font-size: 12px;
+  font-size: 13.5px;
   margin-bottom: 6px;
 }
 .rule-grid p {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--muted);
 }
 .score {
@@ -1505,7 +1505,7 @@ main {
   font-size: 14px;
 }
 .import-panel p {
-  font-size: 11px;
+  font-size: 13px;
   margin: 9px 0;
 }
 .import-panel code {
@@ -1513,7 +1513,7 @@ main {
   background: var(--bg);
   display: inline-block;
   border-radius: 5px;
-  font-size: 10px;
+  font-size: 12px;
 }
 .import-form {
   display: flex;
@@ -1540,7 +1540,7 @@ main {
   margin: 18px 0;
 }
 .valuation-head p {
-  font-size: 10px;
+  font-size: 12px;
 }
 .assumption-grid {
   display: grid;
@@ -1549,7 +1549,7 @@ main {
   margin: 20px 0;
 }
 .assumption-grid label {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .assumption-grid input {
@@ -1575,7 +1575,7 @@ table {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 th,
@@ -1597,7 +1597,7 @@ th:first-child {
 th small {
   display: block;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 12px;
   margin-top: 4px;
 }
 thead th {
@@ -1607,7 +1607,7 @@ thead th {
   z-index: 3;
   color: var(--muted);
   font-weight: 500;
-  font-size: 10px;
+  font-size: 12px;
 }
 thead th:first-child {
   background: var(--bg);
@@ -1617,12 +1617,12 @@ thead th:first-child {
 .table-group th:first-child {
   background: var(--tint);
   color: var(--accent);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 550;
   text-align: left;
 }
 .table-scroll td button {
-  font-size: 11px;
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
 .table-scroll td button:not(:disabled):hover {
@@ -1642,13 +1642,13 @@ footer {
   margin-top: 32px;
   padding: 20px 0 24px;
   color: #99a3b5;
-  font-size: 9px;
+  font-size: 12px;
 }
 footer > span:first-child {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: #8b97ac;
 }
@@ -1669,7 +1669,7 @@ footer > span:first-child {
   max-height: 85vh;
   overflow: auto;
   padding: 25px;
-  font-size: 12px;
+  font-size: 13.5px;
   box-shadow: 0 30px 100px #0002;
 }
 .modal .panel-head {
@@ -1703,7 +1703,7 @@ footer > span:first-child {
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: 9px;
-  font-size: 11px;
+  font-size: 13px;
   margin: 17px 0;
 }
 .fact-detail dt {
@@ -1716,13 +1716,13 @@ footer > span:first-child {
 .fact-detail code {
   display: block;
   margin: 8px 0;
-  font-size: 10px;
+  font-size: 12px;
   padding: 7px;
   border-radius: 5px;
   background: var(--bg);
 }
 .fact-detail > a {
-  font-size: 11px;
+  font-size: 13px;
   display: inline-block;
   margin-top: 8px;
 }
@@ -1815,7 +1815,7 @@ footer > span:first-child {
     font-size: 28px;
   }
   .chart-focus button {
-    font-size: 8px;
+    font-size: 11px;
     padding: 6px;
   }
   .chart .panel-head {
@@ -1825,7 +1825,7 @@ footer > span:first-child {
     left: 210px;
   }
   .company-meta {
-    font-size: 9px;
+    font-size: 12px;
     gap: 7px;
   }
   .chart-grid {
@@ -1840,7 +1840,7 @@ footer > span:first-child {
     min-width: auto;
   }
   .desktop-location {
-    font-size: 10px;
+    font-size: 12px;
     gap: 8px;
   }
   .company-overview {
@@ -1913,13 +1913,13 @@ footer > span:first-child {
     font-size: 28px;
   }
   .metric-card-label {
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .metric-card-foot {
-    font-size: 9px;
+    font-size: 12px;
   }
   .subtle-label {
-    font-size: 8px;
+    font-size: 11px;
   }
   .search-wrap {
     max-width: 350px;
@@ -2001,7 +2001,7 @@ footer > span:first-child {
     width: 14px;
   }
   .search-wrap input {
-    font-size: 10px;
+    font-size: 12px;
   }
   .header-tools {
     gap: 2px;
@@ -2050,7 +2050,7 @@ footer > span:first-child {
   }
   .company-meta {
     gap: 6px;
-    font-size: 9px;
+    font-size: 12px;
     margin-top: 5px;
   }
   .company-meta a span {
@@ -2070,12 +2070,12 @@ footer > span:first-child {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    font-size: 9px;
+    font-size: 12px;
     align-items: center;
     max-width: calc(100% - 45px);
   }
   .data-status p {
-    font-size: 9px;
+    font-size: 12px;
   }
   .company-right .data-status p:last-child {
     display: none;
@@ -2093,7 +2093,7 @@ footer > span:first-child {
     padding: 0 17px;
   }
   .page-tabs > button {
-    font-size: 11px;
+    font-size: 13px;
     padding-bottom: 12px;
     line-height: 20px;
   }
@@ -2116,7 +2116,7 @@ footer > span:first-child {
     align-items: center;
     gap: 5px;
     color: #9aa4b7;
-    font-size: 9px;
+    font-size: 12px;
     min-width: 52px;
     min-height: 40px;
     padding: 2px 4px;
@@ -2147,7 +2147,7 @@ footer > span:first-child {
   .tabs button {
     flex: 1;
     min-height: 29px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .toolbar-filters {
     width: 100%;
@@ -2156,7 +2156,7 @@ footer > span:first-child {
   .toolbar-filters select {
     flex: 1;
     min-width: 0;
-    font-size: 9px;
+    font-size: 12px;
     padding: 7px 5px;
   }
   .section-heading {
@@ -2166,7 +2166,7 @@ footer > span:first-child {
     font-size: 17px;
   }
   .section-heading p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .subtle-label {
     display: none;
@@ -2180,7 +2180,7 @@ footer > span:first-child {
     border-radius: 11px;
   }
   .metric-card-label {
-    font-size: 10px;
+    font-size: 12px;
     gap: 2px;
   }
   .metric-card-label > svg {
@@ -2191,7 +2191,7 @@ footer > span:first-child {
     margin: 12px 0 13px;
   }
   .metric-card-foot {
-    font-size: 8px;
+    font-size: 11px;
     gap: 3px;
     padding-top: 9px;
   }
@@ -2208,13 +2208,13 @@ footer > span:first-child {
     font-size: 31px;
   }
   .trend-heading .small {
-    font-size: 10px;
+    font-size: 12px;
   }
   .chart-focus {
     margin-left: auto;
   }
   .chart-focus button {
-    font-size: 9px;
+    font-size: 12px;
     padding: 6px 8px;
   }
   .trend-panel > .chart {
@@ -2228,14 +2228,14 @@ footer > span:first-child {
   .trend-panel > .chart .panel-head > div:first-child > span {
     max-width: 140px;
     line-height: 1.7;
-    font-size: 8px;
+    font-size: 11px;
   }
   .trend-panel > .chart h3 {
-    font-size: 10px;
+    font-size: 12px;
   }
   .trend-panel > .chart .tools select {
     max-width: 75px;
-    font-size: 8px;
+    font-size: 11px;
     padding: 5px;
   }
   .trend-panel > .chart .tools button {
@@ -2243,10 +2243,10 @@ footer > span:first-child {
   }
   .chart-provenance {
     padding: 12px 16px;
-    font-size: 8px;
+    font-size: 11px;
   }
   .chart-provenance button {
-    font-size: 8px;
+    font-size: 11px;
   }
   .overview-aside {
     grid-template-columns: 1fr;
@@ -2261,7 +2261,7 @@ footer > span:first-child {
     padding: 13px 0;
   }
   .snapshot-row > span {
-    font-size: 10px;
+    font-size: 12px;
   }
   .snapshot-row strong {
     font-size: 18px;
@@ -2278,10 +2278,10 @@ footer > span:first-child {
     align-self: start;
   }
   .coverage-panel h3 {
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .coverage-panel p {
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 5px;
   }
   .coverage-panel > button {
@@ -2307,13 +2307,13 @@ footer > span:first-child {
     gap: 5px;
   }
   .insight-title h3 {
-    font-size: 11px;
+    font-size: 13px;
   }
   .insight-title .tag {
-    font-size: 7px;
+    font-size: 11px;
   }
   .insight-panel p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .insight-panel > button {
     padding: 2px;
@@ -2323,7 +2323,7 @@ footer > span:first-child {
     padding: 0 16px;
   }
   .all-metrics > summary {
-    font-size: 11px;
+    font-size: 13px;
   }
   .additional-metrics {
     gap: 9px;
@@ -2332,7 +2332,7 @@ footer > span:first-child {
     padding: 12px 10px;
   }
   .additional-metrics .metric-card-label {
-    font-size: 9px;
+    font-size: 12px;
   }
   .additional-metrics .metric-card strong {
     font-size: 21px;
@@ -2347,10 +2347,10 @@ footer > span:first-child {
     padding-top: 20px;
   }
   .price-callout > div > span {
-    font-size: 11px;
+    font-size: 13px;
   }
   .price-callout small {
-    font-size: 9px;
+    font-size: 12px;
   }
   .price-callout > button {
     margin-left: 32px;
@@ -2368,17 +2368,17 @@ footer > span:first-child {
     flex-wrap: wrap;
   }
   .panel-head h3 {
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .panel-head .small {
-    font-size: 8px;
+    font-size: 11px;
     line-height: 1.8;
   }
   .tools {
     gap: 2px;
   }
   .tools select {
-    font-size: 8px;
+    font-size: 11px;
     max-width: 80px;
   }
   .tools > button svg {
@@ -2386,10 +2386,10 @@ footer > span:first-child {
   }
   .chart-empty {
     height: 270px;
-    font-size: 11px;
+    font-size: 13px;
   }
   .chart-empty .small {
-    font-size: 10px;
+    font-size: 12px;
   }
   .section-title {
     margin-top: 23px;
@@ -2398,32 +2398,32 @@ footer > span:first-child {
     font-size: 17px;
   }
   .section-title .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
   }
   .notice {
-    font-size: 10px;
+    font-size: 12px;
     padding: 13px;
     gap: 9px;
   }
   .notice p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .basis-notice {
-    font-size: 9px;
+    font-size: 12px;
     padding-top: 12px;
   }
   .basis-notice p {
-    font-size: 9px;
+    font-size: 12px;
   }
   .prose {
     padding: 18px;
-    font-size: 11px;
+    font-size: 13px;
   }
   .prose ul {
-    font-size: 11px;
+    font-size: 13px;
   }
   .prose h3 {
-    font-size: 13px;
+    font-size: 14.5px;
   }
   .rule-grid {
     grid-template-columns: 1fr;
@@ -2435,7 +2435,7 @@ footer > span:first-child {
   .mini-metrics > span {
     min-width: calc(50% - 10px);
     padding: 15px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .mini-metrics strong {
     font-size: 21px;
@@ -2453,16 +2453,16 @@ footer > span:first-child {
     width: 19px;
   }
   .sector-note h3 {
-    font-size: 13px;
+    font-size: 14.5px;
   }
   .sector-note p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .sector-note .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
   }
   .sector-note summary {
-    font-size: 10px;
+    font-size: 12px;
   }
   .bank-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2470,32 +2470,32 @@ footer > span:first-child {
   }
   .bank-grid > div {
     padding: 12px 9px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .bank-grid strong {
     font-size: 17px;
   }
   .bank-grid small {
-    font-size: 8px;
+    font-size: 11px;
   }
   .import-panel {
     padding: 18px;
     gap: 16px;
   }
   .import-panel h3 {
-    font-size: 13px;
+    font-size: 14.5px;
   }
   .import-panel p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .import-panel code {
-    font-size: 8px;
-  }
-  .import-form input:not([type="checkbox"]) {
     font-size: 11px;
   }
+  .import-form input:not([type="checkbox"]) {
+    font-size: 13px;
+  }
   .import-form .checkbox {
-    font-size: 10px;
+    font-size: 12px;
     align-items: flex-start;
   }
   .valuation-head {
@@ -2503,10 +2503,10 @@ footer > span:first-child {
     gap: 10px;
   }
   .valuation-head p {
-    font-size: 9px;
+    font-size: 12px;
   }
   .valuation-head .checkbox {
-    font-size: 9px;
+    font-size: 12px;
     white-space: nowrap;
   }
   .assumption-grid {
@@ -2514,13 +2514,13 @@ footer > span:first-child {
     gap: 12px;
   }
   .assumption-grid label {
-    font-size: 9px;
+    font-size: 12px;
   }
   .statement > .panel-head {
     padding: 17px 16px;
   }
   .statement > .panel-head h3 {
-    font-size: 12px;
+    font-size: 13.5px;
   }
   th,
   td {
@@ -2529,13 +2529,13 @@ footer > span:first-child {
   }
   th:first-child {
     min-width: 150px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .table-scroll {
     max-height: 64vh;
   }
   .table-scroll td button {
-    font-size: 10px;
+    font-size: 12px;
   }
   footer {
     margin-top: 24px;
@@ -2543,11 +2543,11 @@ footer > span:first-child {
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 10px;
-    font-size: 8px;
+    font-size: 11px;
   }
   footer > span:first-child {
     width: 100%;
-    font-size: 10px;
+    font-size: 12px;
   }
   .modal-backdrop {
     padding: 12px;
@@ -2557,7 +2557,7 @@ footer > span:first-child {
     max-height: 90dvh;
     border-radius: 18px 18px 10px 10px;
     padding: 21px 19px;
-    font-size: 11px;
+    font-size: 13px;
   }
   .modal .panel-head {
     top: -21px;
@@ -2567,13 +2567,13 @@ footer > span:first-child {
   }
   .fact-detail dl {
     grid-template-columns: 66px 1fr;
-    font-size: 10px;
+    font-size: 12px;
   }
   .fact-detail code {
-    font-size: 9px;
+    font-size: 12px;
   }
   .fact-detail > strong {
-    font-size: 13px;
+    font-size: 14.5px;
   }
 }
 @media (max-width: 370px) {
@@ -2587,7 +2587,7 @@ footer > span:first-child {
     font-size: 18px;
   }
   .search-wrap input {
-    font-size: 9px;
+    font-size: 12px;
   }
   .header-tools {
     gap: 0;

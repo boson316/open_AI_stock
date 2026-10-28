@@ -1,0 +1,172 @@
+/* 新版主題層：淺色卡片、靛紫主色、圓形頭像；僅覆蓋視覺，不改版面結構。 */
+:root {
+  --bg: #f4f5fa;
+  --surface: #fff;
+  --text: #1a1f3d;
+  --muted: #646d8c;
+  --line: #e7e9f2;
+  --accent: #4f46e5;
+  --tint: #eef0ff;
+  --sidebar: #fff;
+  --positive: #0e9f78;
+  --negative: #e0485a;
+  --radius: 18px;
+  --shadow: 0 1px 2px rgb(26 31 61 / 5%), 0 8px 24px rgb(26 31 61 / 5%);
+}
+:root[data-theme="dark"] {
+  --bg: #0f1320;
+  --surface: #181d2e;
+  --text: #eceffa;
+  --muted: #a0a9c4;
+  --line: #28304a;
+  --accent: #8b8cff;
+  --tint: #272c52;
+  --sidebar: #131728;
+  --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 8px 24px rgb(0 0 0 / 25%);
+}
+body {
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+h1 { font-size: 28px; letter-spacing: -0.6px; }
+h2 { font-size: 21px; }
+p { line-height: 1.7; }
+
+/* 卡片 */
+.panel,
+.metric-card,
+.notice,
+.price-callout,
+.chart,
+.snapshot-panel,
+.insight-panel,
+.trend-panel,
+.compact-panel-heading + * {
+  border-radius: var(--radius);
+}
+.panel,
+.metric-card,
+.price-callout,
+.snapshot-panel,
+.insight-panel,
+.trend-panel {
+  border-color: transparent;
+  box-shadow: var(--shadow);
+}
+.metric-card {
+  padding: 22px 22px 16px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.metric-card:hover {
+  transform: translateY(-2px);
+  border-color: transparent;
+  box-shadow: 0 2px 4px rgb(79 70 229 / 8%), 0 14px 32px rgb(79 70 229 / 12%);
+}
+.metric-card > strong {
+  font-size: 32px;
+  letter-spacing: -1px;
+  color: var(--text);
+}
+.metric-card-label { color: var(--muted); font-weight: 500; }
+.metric-card-foot { color: var(--muted); border-top-color: var(--line); }
+.notice {
+  background: var(--tint);
+  border: 0;
+  color: var(--text);
+}
+
+/* 側欄：改為淺色 */
+.sidebar {
+  background: var(--sidebar);
+  color: var(--muted);
+  border-right: 1px solid var(--line);
+  width: 252px;
+}
+.workspace { margin-left: 252px; }
+.brand { color: var(--text); }
+.brand small { color: var(--muted); font-size: 9px; }
+.brand-icon {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  box-shadow: 0 6px 16px rgb(79 70 229 / 35%);
+}
+.workspace-label,
+.watchlist-heading,
+.watchlist-name strong,
+.source-badge strong { color: var(--text); }
+.workspace-dot { border-color: var(--muted); }
+.side-navigation { border-bottom-color: var(--line); }
+.side-navigation a { color: var(--muted); border-radius: 12px; font-size: 14px; }
+.side-navigation a:hover { background: var(--tint); color: var(--accent); }
+.side-navigation a.active { background: var(--tint); color: var(--accent); font-weight: 600; }
+.side-navigation a.active > svg { color: var(--accent); }
+.nav-active-dot { background: var(--accent); }
+.count-badge { background: var(--tint); color: var(--accent); }
+.watchlist-filter button { color: var(--muted); border-radius: 999px; }
+.watchlist-filter .selected { background: var(--accent); color: #fff; }
+.watchlist-stock { border-radius: 14px; }
+.watchlist-stock:hover { background: var(--bg); }
+.watchlist-stock.selected { background: var(--tint); }
+.watchlist-name small,
+.watchlist-currency,
+.watchlist-empty,
+.source-badge small,
+.sidebar-bottom > a,
+.favorite-indicator { color: var(--muted); }
+.sidebar-bottom { border-top-color: var(--line); }
+.source-badge { color: var(--accent); }
+.watchlist { scrollbar-color: var(--line) transparent; }
+
+/* 圓形頭像 */
+.stock-avatar { border-radius: 50%; width: 38px; height: 38px; font-size: 12px; box-shadow: 0 2px 6px rgb(26 31 61 / 18%); }
+.company-monogram { border-radius: 50%; width: 60px; height: 60px; font-size: 22px; box-shadow: 0 6px 18px rgb(26 31 61 / 20%); }
+
+/* 頂部列與標題 */
+.topbar {
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--line);
+}
+main { max-width: 1280px; }
+
+/* 分頁：膠囊式 */
+.page-tabs { gap: 8px; border-bottom: 0; padding: 4px 0 14px; }
+.page-tabs > button {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  line-height: 20px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--muted);
+}
+.page-tabs > button.active { background: var(--accent); color: #fff; }
+.page-tabs > button.active:after { display: none; }
+.tabs { background: var(--line); border-radius: 999px; padding: 4px; }
+.tabs button { border-radius: 999px; font-size: 13px; padding: 7px 18px; }
+.tabs button.selected { color: var(--accent); }
+
+/* 控制項與按鈕 */
+select, input { border-radius: 12px; }
+.toolbar-filters select { font-size: 13px; padding: 8px 12px; background: var(--surface); border-radius: 999px; }
+.button { border-radius: 999px; }
+.button:not(.secondary) { background: var(--accent); color: #fff; }
+.icon-button { border-radius: 12px; }
+
+/* 手機 */
+@media (max-width: 760px) {
+  main { padding-left: 16px; padding-right: 16px; }
+  h1 { font-size: 24px; }
+  .page-tabs { margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+  .metric-card > strong { font-size: 27px; }
+  .bottom-navigation {
+    left: 12px; right: 12px; bottom: 10px;
+    border: 0; border-radius: 22px;
+    background: var(--surface);
+    box-shadow: 0 8px 30px rgb(26 31 61 / 18%);
+  }
+  .bottom-navigation button { font-size: 11px; color: var(--muted); border-radius: 14px; }
+  .bottom-navigation button.active { background: var(--tint); color: var(--accent); }
+  .bottom-navigation button.active svg { fill: none; }
+  .sidebar { width: 280px; }
+  .workspace { margin-left: 0; }
+}
