@@ -471,3 +471,98 @@ test("default company is TSM and the screener filters by TTM gross margin using 
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)).toBe(false);
 });
+
+test("valuation page shows the provided external river chart with real values, and explains missing tickers", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await page.unroute("**/data/catalog.json");
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  const ext = await (await page.request.get("data/external-valuation.json")).json();
+  await page.getByRole("tab", { name: "估值研究", exact: true }).click();
+  await expect(page.getByText("外部提供的估值資料（非 SEC 官方）")).toBeVisible();
+  await expect(page.getByText(/TSM：價格、TTM EPS、本益比與價格帶皆為每 ADR 美元/)).toBeVisible(); // TSM 為 ADR 口徑
+  for (const ticker of ["NVDA", "MSFT"]) {
+    await page.getByRole("button", { name: `切換至 ${ticker}`, exact: true }).click();
+    await expect(page.locator(".ticker-pill")).toHaveText(ticker);
+    const waiting = page.waitForEvent("download");
+    await page.getByRole("button", { name: `本益比河流圖（${ticker}）匯出 CSV`, exact: true }).click();
+    const chunks = [];
+    for await (const chunk of (await (await waiting).createReadStream())!) chunks.push(chunk);
+    const rows = Buffer.concat(chunks).toString("utf8").replace(/^\uFEFF/, "").trim().split(/\r?\n/).map((r) => r.split('","').map((c) => c.replace(/^"|"$/g, "")));
+    const pts = ext.companies[ticker] as { date: string }[];
+    const lastDate = pts.at(-1)!.date;
+    const cutoff = `${Number(lastDate.slice(0, 4)) - 5}${lastDate.slice(4)}`; // 預設近 5 年
+    expect(rows.length - 1).toBe(pts.filter((r) => r.date >= cutoff).length);
+    expect(rows.length - 1).toBeGreaterThanOrEqual(20);
+    const priceCol = rows[0].findIndex((h) => h === "收盤價");
+    const last = ext.companies[ticker].at(-1);
+    expect(Number(rows.at(-1)![priceCol])).toBeCloseTo(last.price, 2);
+    expect(rows.slice(1).every((r) => r[priceCol] !== "")).toBe(true);
+  }
+  await page.getByRole("button", { name: "切換至 AAPL", exact: true }).click();
+  await expect(page.locator(".ticker-pill")).toHaveText("AAPL");
+  await expect(page.getByText("AAPL 沒有外部估值資料")).toBeVisible();
+});
+
+test("research modules: snapshot, valuation tools, 13F, market, statements supplement and reconciliation render real data", async ({ page }) => {
+  test.setTimeout(120000);
+  await page.unroute("**/data/catalog.json");
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  const research = await (await page.request.get("data/research.json")).json();
+  await page.getByRole("button", { name: "切換至 NVDA", exact: true }).click();
+  await expect(page.locator(".ticker-pill")).toHaveText("NVDA");
+  await expect(page.getByText("市場行情與研究觀察")).toBeVisible();
+  await expect(page.locator(".quote").first()).toHaveText(String(research.companies.NVDA.close));
+
+  await page.getByRole("tab", { name: "估值研究", exact: true }).click();
+  await expect(page.getByText("跌幅價位表")).toBeVisible();
+  await expect(page.getByRole("heading", { name: /ROIC 與 WACC/ })).toBeVisible();
+  await expect(page.getByText("三情境估值")).toBeVisible();
+
+  await page.getByRole("tab", { name: "13F 大師", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "大師 × 個股持股矩陣" })).toBeVisible();
+  const buffett = research.guru_holdings.filter((h: { manager: string }) => h.manager === "buffett");
+  await expect(page.locator(".guru-holdings li")).toHaveCount(buffett.length);
+
+  await page.getByRole("tab", { name: "台美估值", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "台美估值指標" })).toBeVisible();
+  await expect(page.locator(".etf-card")).toHaveCount(research.etf.length);
+
+  await page.getByRole("tab", { name: "完整財務報表", exact: true }).click();
+  await expect(page.getByText("補充指標（近四季，外部資料）")).toBeVisible();
+  await page.getByRole("tab", { name: "資料與方法", exact: true }).click();
+  await expect(page.locator(".reconciliation tbody tr")).toHaveCount(research.reconciliation.mismatches.length);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const tab of ["13F 大師", "台美估值"]) {
+    await page.getByRole("tab", { name: tab, exact: true }).click();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1), tab).toBe(false);
+  }
+});
+
+test("portfolio stays in the browser: no network upload, computes weights, survives reload", async ({ page }) => {
+  test.setTimeout(90000);
+  await page.unroute("**/data/catalog.json");
+  const posts: string[] = [];
+  page.on("request", (r) => {
+    if (r.method() !== "GET") posts.push(r.url());
+  });
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  await page.getByRole("tab", { name: "我的持股", exact: true }).click();
+  await expect(page.getByText("只存在你的瀏覽器")).toBeVisible();
+  await page.getByRole("button", { name: /新增一列/ }).click();
+  await page.getByLabel("第 1 列代號").fill("NVDA");
+  await page.getByLabel("NVDA 股數").fill("100");
+  await page.getByLabel("NVDA 總成本").fill("15000");
+  await page.getByLabel("現金", { exact: true }).fill("20000");
+  await expect(page.getByText("穿透後的個股曝險")).toBeVisible();
+  await page.reload();
+  await page.getByRole("tab", { name: "我的持股", exact: true }).click();
+  await expect(page.getByLabel("第 1 列代號")).toHaveValue("NVDA");
+  await expect(page.getByLabel("現金", { exact: true })).toHaveValue("20000");
+  expect(posts).toEqual([]);
+});

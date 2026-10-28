@@ -217,3 +217,11 @@ select, input { border-radius: 12px; }
   .filter-grid { grid-template-columns: 1fr; }
   .filter-row { grid-template-columns: 1fr 70px 14px 70px 16px; }
 }
+
+/* 側欄項目變多：整欄可捲動，觀察清單保留足夠高度，矮螢幕時導覽較緊湊 */
+.sidebar { overflow-y: auto; scrollbar-width: thin; }
+.sidebar .watchlist { min-height: 240px; flex-shrink: 0; flex-grow: 1; }
+@media (max-height: 900px) {
+  .side-navigation { gap: 0; padding-bottom: 12px; }
+  .side-navigation a { min-height: 32px; padding-top: 6px; padding-bottom: 6px; }
+}

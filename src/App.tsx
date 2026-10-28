@@ -26,11 +26,21 @@ import {
   ShieldCheck,
   Sun,
   Upload,
+  Users,
+  Globe,
+  Wallet,
   X,
 } from "lucide-react";
 import { RuleAnalysis } from "./components/RuleAnalysis";
 import { Compare } from "./components/Compare";
 import { Screener } from "./components/Screener";
+import { ExternalValuationPanel } from "./components/ExternalValuation";
+import { ValuationTools } from "./components/ValuationTools";
+import { StockSnapshot } from "./components/StockSnapshot";
+import { Gurus } from "./components/Gurus";
+import { Market } from "./components/Market";
+import { Portfolio } from "./components/Portfolio";
+import { Reconciliation, Supplement } from "./components/Supplement";
 import {
   buildAnalysisPack,
   buildCombinedPack,
@@ -66,6 +76,9 @@ const sections = [
   { id: "screener", label: "選股篩選", icon: Search },
   { id: "compare", label: "多股比較", icon: Layers3 },
   { id: "valuation", label: "估值研究", icon: Activity },
+  { id: "gurus", label: "13F 大師", icon: Users },
+  { id: "market", label: "台美估值", icon: Globe },
+  { id: "portfolio", label: "我的持股", icon: Wallet },
   { id: "statements", label: "完整財務報表", icon: FileText },
   { id: "sources", label: "資料與方法", icon: CircleHelp },
 ];
@@ -217,7 +230,11 @@ export function App() {
           throw Error("目錄格式無效");
         setCatalog(c);
         // 預設開啟台積電；目錄沒有 TSM 時維持原本的備援公司。
-        if (c.companies.some((x) => x.ticker === "TSM" && x.status === "available"))
+        if (
+          c.companies.some(
+            (x) => x.ticker === "TSM" && x.status === "available",
+          )
+        )
           setTicker("TSM");
       })
       .catch((e) => {
@@ -674,7 +691,9 @@ export function App() {
         packs.push({ dataset: d, quarters: normalize(d.facts) });
       }
       downloadText("stocks-ai-analysis-pack.md", buildCombinedPack(packs));
-      setPackStatus(`已下載 ${packs.length} 檔 AI 分析包（stocks-ai-analysis-pack.md）`);
+      setPackStatus(
+        `已下載 ${packs.length} 檔 AI 分析包（stocks-ai-analysis-pack.md）`,
+      );
     } catch (e) {
       setPackStatus("");
       setError(`匯出失敗：${(e as Error).message}`);
@@ -715,6 +734,9 @@ export function App() {
     screener: "選股篩選",
     compare: "多股比較",
     valuation: "估值",
+    gurus: "13F 大師",
+    market: "台美估值",
+    portfolio: "我的持股",
     statements: "財報明細",
     sources: "資料來源",
   };
@@ -1467,6 +1489,11 @@ export function App() {
                     {remainingMetrics.map(metricCard)}
                   </div>
                 </details>
+                <StockSnapshot
+                  base={base}
+                  ticker={ticker}
+                  onGurus={() => navigate("gurus")}
+                />
                 <section className="price-callout">
                   <div>
                     <ChartCandlestick size={20} />
@@ -1855,24 +1882,32 @@ export function App() {
                       對數 Y 軸
                     </label>
                   </div>
-                  <FinancialChart
-                    title="本益比估值河流圖"
-                    dates={riverDates.map((r) => r.date)}
+                  <ExternalValuationPanel
+                    base={base}
+                    ticker={ticker}
                     dark={dark}
-                    unit="美元／股"
-                    initialType="line"
-                    log={log}
-                    series={[
-                      ...[10, 25, 50, 75, 90].map((q, i) => ({
-                        name: `PE ${q} 分位估值`,
-                        values: riverDates.map((r) => r.bands[i]),
-                      })),
-                      {
-                        name: "歷史收盤價",
-                        values: riverDates.map((r) => r.price),
-                      },
-                    ]}
                   />
+                  <ValuationTools base={base} ticker={ticker} />
+                  {riverDates.length > 0 && (
+                    <FinancialChart
+                      title="本益比估值河流圖（你匯入的股價）"
+                      dates={riverDates.map((r) => r.date)}
+                      dark={dark}
+                      unit="美元／股"
+                      initialType="line"
+                      log={log}
+                      series={[
+                        ...[10, 25, 50, 75, 90].map((q, i) => ({
+                          name: `PE ${q} 分位估值`,
+                          values: riverDates.map((r) => r.bands[i]),
+                        })),
+                        {
+                          name: "歷史收盤價",
+                          values: riverDates.map((r) => r.price),
+                        },
+                      ]}
+                    />
+                  )}
                   {riverDates.length > 0 && (
                     <FinancialChart
                       title="股價 × TTM EPS 疊圖"
@@ -1990,8 +2025,38 @@ export function App() {
                       </table>
                     </div>
                   </div>
+                  <Supplement base={base} ticker={ticker} />
                 </section>
               </>
+            )}
+            {section === "gurus" && (
+              <Gurus
+                base={base}
+                catalog={catalog}
+                onSelect={(t) => {
+                  selectCompany(t);
+                  navigate("overview");
+                }}
+              />
+            )}
+            {section === "market" && (
+              <Market
+                base={base}
+                dark={dark}
+                onSelect={(t) => {
+                  selectCompany(t);
+                  navigate("overview");
+                }}
+              />
+            )}
+            {section === "portfolio" && (
+              <Portfolio
+                base={base}
+                onSelect={(t) => {
+                  selectCompany(t);
+                  navigate("overview");
+                }}
+              />
             )}
             {section === "sources" && (
               <>
@@ -2000,6 +2065,7 @@ export function App() {
                     eyebrow="RESEARCH INTEGRITY"
                     title="研究風險與資料來源"
                   />
+                  <Reconciliation base={base} />
                   <div className="chart-grid">
                     <div className="panel prose">
                       <h3>財務健康評分</h3>

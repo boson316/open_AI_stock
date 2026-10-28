@@ -35,6 +35,8 @@ type Props = {
   dualAxis?: boolean;
   secondaryUnit?: string;
   height?: number;
+  /** 類別軸不是日期時（例如國家名稱）設為 true，直接顯示原字串。 */
+  plainAxis?: boolean;
 };
 export function FinancialChart({
   title,
@@ -47,6 +49,7 @@ export function FinancialChart({
   dualAxis = false,
   secondaryUnit = "美元／股",
   height = 310,
+  plainAxis = false,
 }: Props) {
   const ref = useRef<ReactECharts>(null),
     box = useRef<HTMLElement>(null);
@@ -91,7 +94,8 @@ export function FinancialChart({
       axisLabel: {
         hideOverlap: true,
         fontSize: 11,
-        formatter: (v: string) => v.slice(2, 7).replace("-", "/"),
+        formatter: (v: string) =>
+          plainAxis ? v : v.slice(2, 7).replace("-", "/"),
       },
     },
     yAxis: dualAxis

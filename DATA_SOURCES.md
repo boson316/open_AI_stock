@@ -67,3 +67,13 @@ META 2022 與 TSLA 2023 的 CapEx 年度比較數後來有修訂，但未取得�
 
 - 毛利：GrossProfit 標籤、官方 8-K/6-K 直接披露，或 `profit.py` 審核過的 Alphabet、NVIDIA、Amazon、Meta「營收 − CostOfRevenue」（同期間、同 accession、同單位；`tag=calculated:revenue-minus-cost`，保存兩筆來源）。`coverage.py` 檢查同期間單位一致、毛利不超過營收、不等於營業利益、標籤屬於審核清單。
 - 現金流：見 PROJECT_STATUS.md。`handoff/reference/official-source-table-inspection.json` 保存官方表格擷取（含個別與合併報表，須篩選合併）。
+
+## 外部研究資料（使用者提供，非 SEC 官方）
+
+`public/data/external-valuation.json`（`scripts/import_external_valuation.py`）與 `public/data/research.json`（`scripts/import_research.py`）取自使用者提供的研究資料（截至 2026-10-14／10-15 收盤），用於官方財報沒有的欄位：季末收盤價與本益比河流圖、行情與 52 週區間、估值倍數、資本回饋、現金與負債、ROE／ROIC、情境假設、13F 持股、台美市場估值、ETF 持股與總經背景。
+
+- 與官方重疊的 324 筆季度財報數字已逐筆核對：314 筆一致、10 筆不一致（AMD 毛利 4 季、AMZN 營業利益 2 季、META 營業利益 1 季、MU FQ4'26 EPS、TSM 25Q4 淨利與 EPS）。差異公開列在「資料來源」頁，畫面一律以官方值為準。
+- TSM：外部價格、TTM EPS 與本益比為每 ADR 美元（1 ADR = 5 股普通股）；外部季度 EPS 為新臺幣普通股，口徑不同已移除；外部市值單位不一致不顯示。不與官方新臺幣普通股 EPS 混算。
+- 不收錄：個人帳戶與持股、依記憶整理的 2022 年跌幅。
+- 「我的持股」只存在使用者瀏覽器 localStorage，不上傳、不在公開網站出現；沒有收盤價的代號不估計市值。
+- 前端讀取時驗證結構與數值，不通過整份拒絕；不會自動更新，價格為截止日資料。

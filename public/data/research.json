@@ -1,0 +1,3976 @@
+{
+  "version": 1,
+  "as_of": "2026-10-15",
+  "kind": "user_provided_external",
+  "note": "使用者提供的研究資料整理（stockanalysis.com／S&P Global Market Intelligence、Insider Monkey、InsiderSet、Valuesider、Multpl、Siblis Research 與新聞），2026-10-15 前後擷取；非 SEC 官方資料。與官方重疊的財報欄位以官方為準，差異見 reconciliation。",
+  "companies": {
+    "GOOGL": {
+      "name_zh": "Alphabet（Google 母公司）",
+      "latest_q": "26Q2",
+      "price": 352.72,
+      "price_asof": "10/13 收盤",
+      "close": 347.64,
+      "close_asof": "2026-10-14 收盤",
+      "hi52": 408.61,
+      "lo52": 240.51,
+      "pe": 17.7,
+      "fwd_pe": 26.18,
+      "pb": 6.93,
+      "ps": 9.68,
+      "pfcf": null,
+      "mcap_100m_usd": 43623.19,
+      "pe_n": 20,
+      "pe_min": 17.1,
+      "pe_max": 28.6,
+      "pe_median": 23.0,
+      "pe_rank": 5,
+      "basis": null
+    },
+    "AMZN": {
+      "name_zh": "亞馬遜",
+      "latest_q": "26Q2",
+      "price": 259.53,
+      "price_asof": "10/13 收盤",
+      "close": 254.08,
+      "close_asof": "2026-10-14 收盤",
+      "hi52": 287.2,
+      "lo52": 196.0,
+      "pe": 20.87,
+      "fwd_pe": 28.36,
+      "pb": 5.07,
+      "ps": 3.31,
+      "pfcf": null,
+      "mcap_100m_usd": 28080.01,
+      "pe_n": 17,
+      "pe_min": 18.9,
+      "pe_max": 246.5,
+      "pe_median": 45.3,
+      "pe_rank": 6,
+      "basis": null
+    },
+    "NVDA": {
+      "name_zh": "輝達",
+      "latest_q": "FQ2'27",
+      "price": 228.52,
+      "price_asof": "10/13 收盤",
+      "close": 221.3,
+      "close_asof": "2026-10-14 收盤",
+      "hi52": 243.37,
+      "lo52": 164.27,
+      "pe": 28.9,
+      "fwd_pe": 20.82,
+      "pb": 24.1,
+      "ps": 16.54,
+      "pfcf": 39.45,
+      "mcap_100m_usd": 55180.72,
+      "pe_n": 20,
+      "pe_min": 26.0,
+      "pe_max": 142.8,
+      "pe_median": 51.6,
+      "pe_rank": 5,
+      "basis": null
+    },
+    "TSM": {
+      "name_zh": "台積電（ADR）",
+      "latest_q": "26Q2",
+      "price": 445.12,
+      "price_asof": "10/13 收盤",
+      "close": 430.0,
+      "close_asof": "2026-10-14 收盤",
+      "hi52": 487.47,
+      "lo52": 266.82,
+      "pe": 28.78,
+      "fwd_pe": 19.61,
+      "pb": 9.86,
+      "ps": 14.07,
+      "pfcf": 54.65,
+      "mcap_100m_usd": null,
+      "pe_n": 20,
+      "pe_min": 11.7,
+      "pe_max": 28.2,
+      "pe_median": 22.4,
+      "pe_rank": 100,
+      "basis": "股價、本益比為美元 ADR（1 ADR = 5 股普通股）；財報為新臺幣"
+    },
+    "PLTR": {
+      "name_zh": "Palantir",
+      "latest_q": "26Q2",
+      "price": 208.67,
+      "price_asof": "10/13 收盤（頁面標 10/14）",
+      "close": 200.97,
+      "close_asof": "2026-10-14 收盤",
+      "hi52": 212.94,
+      "lo52": 106.37,
+      "pe": 178.47,
+      "fwd_pe": 73.85,
+      "pb": 51.3,
+      "ps": 45.44,
+      "pfcf": 83.29,
+      "mcap_100m_usd": 4805.16,
+      "pe_n": 12,
+      "pe_min": 92.7,
+      "pe_max": 421.5,
+      "pe_median": 205.9,
+      "pe_rank": 50,
+      "basis": null
+    },
+    "MSFT": {
+      "name_zh": "微軟",
+      "latest_q": "FQ4'26",
+      "price": 541.15,
+      "price_asof": "10/12 收盤（頁面 Current 欄）",
+      "close": 533.69,
+      "close_asof": "2026-10-14 收盤",
+      "hi52": 553.72,
+      "lo52": 349.2,
+      "pe": 30.15,
+      "fwd_pe": 20.14,
+      "pb": 9.09,
+      "ps": 8.35,
+      "pfcf": 41.37,
+      "mcap_100m_usd": 40426.15,
+      "pe_n": 20,
+      "pe_min": 20.7,
+      "pe_max": 37.7,
+      "pe_median": 31.6,
+      "pe_rank": 35,
+      "basis": null
+    },
+    "META": {
+      "name_zh": "Meta Platforms",
+      "latest_q": "26Q2",
+      "price": 742.96,
+      "price_asof": "頁面 Current 欄（標 10/13）",
+      "close": 737.54,
+      "close_asof": "2026-10-14 收盤",
+      "hi52": 779.82,
+      "lo52": 520.26,
+      "pe": 28.0,
+      "fwd_pe": 17.16,
+      "pb": 7.25,
+      "ps": 6.27,
+      "pfcf": 34.9,
+      "mcap_100m_usd": 19424.73,
+      "pe_n": 20,
+      "pe_min": 12.7,
+      "pe_max": 32.6,
+      "pe_median": 23.8,
+      "pe_rank": 90,
+      "basis": null
+    },
+    "MU": {
+      "name_zh": "美光",
+      "latest_q": "FQ4'26",
+      "price": 914.13,
+      "price_asof": "10/14 收盤",
+      "close": 914.13,
+      "close_asof": "2026-10-14 收盤",
+      "hi52": 1255.0,
+      "lo52": 186.25,
+      "pe": 12.3,
+      "fwd_pe": 6.64,
+      "pb": 7.47,
+      "ps": 8.13,
+      "pfcf": 18.35,
+      "mcap_100m_usd": 10342.68,
+      "pe_n": 13,
+      "pe_min": 7.3,
+      "pe_max": 136.2,
+      "pe_median": 17.4,
+      "pe_rank": 23,
+      "basis": null
+    },
+    "AMD": {
+      "name_zh": "超微（AMD）",
+      "latest_q": "26Q2",
+      "price": 594.24,
+      "price_asof": "10/13 收盤（頁面 Current 欄）",
+      "close": 570.82,
+      "close_asof": "2026-10-14 收盤",
+      "hi52": 658.52,
+      "lo52": 188.22,
+      "pe": 151.67,
+      "fwd_pe": 59.82,
+      "pb": 14.43,
+      "ps": 20.59,
+      "pfcf": 101.21,
+      "mcap_100m_usd": 9885.13,
+      "pe_n": 18,
+      "pe_min": 32.3,
+      "pe_max": 798.7,
+      "pe_median": 79.9,
+      "pe_rank": 78,
+      "basis": null
+    }
+  },
+  "quarterly": {
+    "AMD": [
+      {
+        "quarter": "25Q3",
+        "end": "2025-09-27",
+        "pretax": 14.33,
+        "acq": 0.0,
+        "sec": -10.71,
+        "buyback": -4.6,
+        "div": 0.0,
+        "cash": 72.43,
+        "debt": 38.7,
+        "net_cash": 33.73,
+        "roe": 7.78,
+        "roa": 4.18,
+        "roic": 1.95,
+        "pe": 78.28,
+        "pb": 4.26,
+        "ev_ebitda": 42.75,
+        "de": 0.06,
+        "cr": 2.31,
+        "fcf_yield": 1.44
+      },
+      {
+        "quarter": "25Q4",
+        "end": "2025-12-27",
+        "pretax": 20.2,
+        "acq": -0.44,
+        "sec": -26.33,
+        "buyback": -1.6,
+        "div": 0.0,
+        "cash": 105.52,
+        "debt": 40.06,
+        "net_cash": 65.46,
+        "roe": 10.47,
+        "roa": 5.7,
+        "roic": 2.4,
+        "pe": 80.74,
+        "pb": 5.56,
+        "ev_ebitda": 51.75,
+        "de": 0.06,
+        "cr": 2.85,
+        "fcf_yield": 1.43
+      },
+      {
+        "quarter": "26Q1",
+        "end": "2026-03-28",
+        "pretax": 15.7,
+        "acq": 0.0,
+        "sec": -21.76,
+        "buyback": -3.55,
+        "div": 0.0,
+        "cash": 123.47,
+        "debt": 38.71,
+        "net_cash": 84.76,
+        "roe": 8.61,
+        "roa": 4.71,
+        "roic": 2.24,
+        "pe": 65.74,
+        "pb": 5.11,
+        "ev_ebitda": 43.72,
+        "de": 0.06,
+        "cr": 2.73,
+        "fcf_yield": 2.08
+      },
+      {
+        "quarter": "26Q2",
+        "end": "2026-06-27",
+        "pretax": 22.17,
+        "acq": -1.29,
+        "sec": -16.7,
+        "buyback": -2.07,
+        "div": 0.0,
+        "cash": 131.11,
+        "debt": 42.76,
+        "net_cash": 88.35,
+        "roe": 14.0,
+        "roa": 6.06,
+        "roic": 3.14,
+        "pe": 132.19,
+        "pb": 12.65,
+        "ev_ebitda": 88.49,
+        "de": 0.06,
+        "cr": 2.61,
+        "fcf_yield": 0.99
+      }
+    ],
+    "AMZN": [
+      {
+        "quarter": "25Q3",
+        "end": "2025-09-30",
+        "pretax": 15.59,
+        "acq": -7.86,
+        "sec": 89.41,
+        "buyback": 0.0,
+        "div": 0.0,
+        "cash": 941.97,
+        "debt": 1604.38,
+        "net_cash": -662.41,
+        "roe": 24.1,
+        "roa": 7.06,
+        "roic": 3.59,
+        "pe": 30.62,
+        "pb": 6.34,
+        "ev_ebitda": 17.13,
+        "de": 0.43,
+        "cr": 1.01,
+        "fcf_yield": 0.45
+      },
+      {
+        "quarter": "25Q4",
+        "end": "2025-12-31",
+        "pretax": 12.25,
+        "acq": -14.03,
+        "sec": -73.73,
+        "buyback": 0.0,
+        "div": 0.0,
+        "cash": 1230.29,
+        "debt": 1785.47,
+        "net_cash": -555.18,
+        "roe": 21.72,
+        "roa": 7.27,
+        "roic": 4.04,
+        "pe": 31.77,
+        "pb": 6.0,
+        "ev_ebitda": 17.39,
+        "de": 0.43,
+        "cr": 1.05,
+        "fcf_yield": 0.31
+      },
+      {
+        "quarter": "26Q1",
+        "end": "2026-03-31",
+        "pretax": 21.93,
+        "acq": -154.08,
+        "sec": -55.7,
+        "buyback": 0.0,
+        "div": 0.0,
+        "cash": 1430.89,
+        "debt": 2355.4,
+        "net_cash": -924.51,
+        "roe": 28.38,
+        "roa": 6.88,
+        "roic": 3.62,
+        "pe": 24.62,
+        "pb": 5.06,
+        "ev_ebitda": 14.7,
+        "de": 0.53,
+        "cr": 1.18,
+        "fcf_yield": -0.11
+      },
+      {
+        "quarter": "26Q2",
+        "end": "2026-06-30",
+        "pretax": 40.3,
+        "acq": -243.59,
+        "sec": -18.1,
+        "buyback": 0.0,
+        "div": 0.0,
+        "cash": 1229.88,
+        "debt": 2516.35,
+        "net_cash": -1286.47,
+        "roe": 50.44,
+        "roa": 6.82,
+        "roic": 3.5,
+        "pe": 18.95,
+        "pb": 4.65,
+        "ev_ebitda": 15.73,
+        "de": 0.46,
+        "cr": 1.03,
+        "fcf_yield": -0.45
+      }
+    ],
+    "GOOGL": [
+      {
+        "quarter": "25Q3",
+        "end": "2025-09-30",
+        "pretax": 42.98,
+        "acq": -10.72,
+        "sec": -12.7,
+        "buyback": -115.04,
+        "div": -25.36,
+        "cash": 984.96,
+        "debt": 441.95,
+        "net_cash": 543.01,
+        "roe": 37.32,
+        "roa": 15.04,
+        "roic": 7.7,
+        "pe": 23.68,
+        "pb": 7.61,
+        "ev_ebitda": 20.14,
+        "de": 0.11,
+        "cr": 1.75,
+        "fcf_yield": 2.5
+      },
+      {
+        "quarter": "25Q4",
+        "end": "2025-12-31",
+        "pretax": 34.36,
+        "acq": -1.67,
+        "sec": -232.33,
+        "buyback": -54.99,
+        "div": -25.36,
+        "cash": 1268.43,
+        "debt": 669.96,
+        "net_cash": 598.47,
+        "roe": 34.36,
+        "roa": 15.88,
+        "roic": 9.2,
+        "pe": 28.61,
+        "pb": 9.11,
+        "ev_ebitda": 24.78,
+        "de": 0.16,
+        "cr": 2.01,
+        "fcf_yield": 1.94
+      },
+      {
+        "quarter": "26Q1",
+        "end": "2026-03-31",
+        "pretax": 70.44,
+        "acq": -336.21,
+        "sec": 69.02,
+        "buyback": 0.0,
+        "div": -25.42,
+        "cash": 1268.4,
+        "debt": 958.76,
+        "net_cash": 309.64,
+        "roe": 56.0,
+        "roa": 15.28,
+        "roic": 7.99,
+        "pe": 21.69,
+        "pb": 7.26,
+        "ev_ebitda": 21.14,
+        "de": 0.2,
+        "cr": 1.92,
+        "fcf_yield": 1.85
+      },
+      {
+        "quarter": "26Q2",
+        "end": "2026-06-30",
+        "pretax": 115.82,
+        "acq": -0.76,
+        "sec": -370.7,
+        "buyback": 0.0,
+        "div": -26.89,
+        "cash": 2424.74,
+        "debt": 1207.91,
+        "net_cash": 1216.83,
+        "roe": 80.19,
+        "roa": 12.54,
+        "roic": 6.82,
+        "pe": 17.77,
+        "pb": 6.77,
+        "ev_ebitda": 24.84,
+        "de": 0.19,
+        "cr": 2.72,
+        "fcf_yield": 1.23
+      }
+    ],
+    "META": [
+      {
+        "quarter": "25Q3",
+        "end": "2025-09-30",
+        "pretax": 42.28,
+        "acq": -7.53,
+        "sec": -11.82,
+        "buyback": -84.62,
+        "div": -13.3,
+        "cash": 444.48,
+        "debt": 510.6,
+        "net_cash": -66.12,
+        "roe": 5.57,
+        "roa": 17.15,
+        "roic": 1.29,
+        "pe": 31.52,
+        "pb": 9.51,
+        "ev_ebitda": 18.57,
+        "de": 0.26,
+        "cr": 1.98,
+        "fcf_yield": 2.43
+      },
+      {
+        "quarter": "25Q4",
+        "end": "2025-12-31",
+        "pretax": 42.33,
+        "acq": -34.16,
+        "sec": -89.83,
+        "buyback": -42.72,
+        "div": -13.38,
+        "cash": 815.92,
+        "debt": 850.81,
+        "net_cash": -34.89,
+        "roe": 44.28,
+        "roa": 18.47,
+        "roic": 10.55,
+        "pe": 27.52,
+        "pb": 7.66,
+        "ev_ebitda": 16.39,
+        "de": 0.39,
+        "cr": 2.6,
+        "fcf_yield": 2.77
+      },
+      {
+        "quarter": "26Q1",
+        "end": "2026-03-31",
+        "pretax": 38.63,
+        "acq": -3.72,
+        "sec": -143.46,
+        "buyback": -44.23,
+        "div": -13.46,
+        "cash": 811.8,
+        "debt": 867.69,
+        "net_cash": -55.89,
+        "roe": 46.47,
+        "roa": 15.02,
+        "roic": 9.73,
+        "pe": 20.5,
+        "pb": 5.94,
+        "ev_ebitda": 13.27,
+        "de": 0.36,
+        "cr": 2.35,
+        "fcf_yield": 3.33
+      },
+      {
+        "quarter": "26Q2",
+        "end": "2026-06-30",
+        "pretax": 30.85,
+        "acq": -1.02,
+        "sec": -188.8,
+        "buyback": -42.81,
+        "div": -13.53,
+        "cash": 902.6,
+        "debt": 1123.18,
+        "net_cash": -220.58,
+        "roe": 25.11,
+        "roa": 12.53,
+        "roic": 6.72,
+        "pe": 21.0,
+        "pb": 5.47,
+        "ev_ebitda": 12.81,
+        "de": 0.43,
+        "cr": 2.23,
+        "fcf_yield": 2.87
+      }
+    ],
+    "MSFT": [
+      {
+        "quarter": "FQ1'26",
+        "end": "2025-09-30",
+        "pretax": 44.16,
+        "acq": -5.78,
+        "sec": -83.78,
+        "buyback": -56.5,
+        "div": -61.69,
+        "cash": 1020.12,
+        "debt": 1203.75,
+        "net_cash": -183.63,
+        "roe": 31.42,
+        "roa": 15.12,
+        "roic": 8.27,
+        "pe": 36.7,
+        "pb": 10.6,
+        "ev_ebitda": 23.25,
+        "de": 0.33,
+        "cr": 1.4,
+        "fcf_yield": 2.03
+      },
+      {
+        "quarter": "FQ2'26",
+        "end": "2025-12-31",
+        "pretax": 59.36,
+        "acq": -4.55,
+        "sec": 82.63,
+        "buyback": -74.15,
+        "div": -67.62,
+        "cash": 894.56,
+        "debt": 1232.78,
+        "net_cash": -338.22,
+        "roe": 40.81,
+        "roa": 14.7,
+        "roic": 7.57,
+        "pe": 30.14,
+        "pb": 9.2,
+        "ev_ebitda": 20.6,
+        "de": 0.32,
+        "cr": 1.39,
+        "fcf_yield": 2.15
+      },
+      {
+        "quarter": "FQ3'26",
+        "end": "2026-03-31",
+        "pretax": 47.46,
+        "acq": -2.58,
+        "sec": 63.28,
+        "buyback": -46.27,
+        "div": -67.56,
+        "cash": 782.28,
+        "debt": 1254.32,
+        "net_cash": -472.04,
+        "roe": 31.57,
+        "roa": 14.12,
+        "roic": 7.0,
+        "pe": 21.95,
+        "pb": 6.63,
+        "ev_ebitda": 15.08,
+        "de": 0.3,
+        "cr": 1.28,
+        "fcf_yield": 2.65
+      },
+      {
+        "quarter": "FQ4'26",
+        "end": "2026-06-30",
+        "pretax": 48.94,
+        "acq": -4.52,
+        "sec": -81.61,
+        "buyback": -45.79,
+        "div": -67.58,
+        "cash": 768.43,
+        "debt": 1288.13,
+        "net_cash": -519.7,
+        "roe": 33.4,
+        "roa": 13.98,
+        "roic": 6.9,
+        "pe": 20.72,
+        "pb": 6.26,
+        "ev_ebitda": 14.5,
+        "de": 0.29,
+        "cr": 1.23,
+        "fcf_yield": 2.42
+      }
+    ],
+    "MU": [
+      {
+        "quarter": "FQ1'26",
+        "end": "2025-11-27",
+        "pretax": 44.48,
+        "acq": null,
+        "sec": 0.13,
+        "buyback": -6.67,
+        "div": -1.34,
+        "cash": 120.15,
+        "debt": 124.93,
+        "net_cash": -4.78,
+        "roe": 37.11,
+        "roa": 18.18,
+        "roic": 8.87,
+        "pe": 21.76,
+        "pb": 4.41,
+        "ev_ebitda": 11.79,
+        "de": 0.21,
+        "cr": 2.46,
+        "fcf_yield": 1.8
+      },
+      {
+        "quarter": "FQ2'26",
+        "end": "2026-02-26",
+        "pretax": 67.71,
+        "acq": null,
+        "sec": -4.32,
+        "buyback": -5.28,
+        "div": -1.32,
+        "cash": 166.27,
+        "debt": 107.98,
+        "net_cash": 58.29,
+        "roe": 84.01,
+        "roa": 43.03,
+        "roic": 21.24,
+        "pe": 19.4,
+        "pb": 6.46,
+        "ev_ebitda": 12.71,
+        "de": 0.15,
+        "cr": 2.9,
+        "fcf_yield": 2.2
+      },
+      {
+        "quarter": "FQ3'26",
+        "end": "2026-05-28",
+        "pretax": 80.14,
+        "acq": null,
+        "sec": -24.2,
+        "buyback": -2.17,
+        "div": -1.71,
+        "cash": 301.28,
+        "debt": 63.76,
+        "net_cash": 237.52,
+        "roe": 130.47,
+        "roa": 70.7,
+        "roic": 37.83,
+        "pe": 20.64,
+        "pb": 10.34,
+        "ev_ebitda": 15.17,
+        "de": 0.06,
+        "cr": 3.43,
+        "fcf_yield": 2.51
+      },
+      {
+        "quarter": "FQ4'26",
+        "end": "2026-09-03",
+        "pretax": 81.66,
+        "acq": null,
+        "sec": -310.9,
+        "buyback": -3.65,
+        "div": -1.73,
+        "cash": 734.53,
+        "debt": 51.79,
+        "net_cash": 682.74,
+        "roe": 126.14,
+        "roa": 66.29,
+        "roic": 41.11,
+        "pe": 12.74,
+        "pb": 7.82,
+        "ev_ebitda": 9.72,
+        "de": 0.04,
+        "cr": 3.31,
+        "fcf_yield": 5.45
+      }
+    ],
+    "NVDA": [
+      {
+        "quarter": "FQ3'26",
+        "end": "2025-10-26",
+        "pretax": 66.55,
+        "acq": -6.93,
+        "sec": -66.95,
+        "buyback": -148.85,
+        "div": -2.44,
+        "cash": 606.08,
+        "debt": 108.22,
+        "net_cash": 497.86,
+        "roe": 116.55,
+        "roa": 59.64,
+        "roic": 49.23,
+        "pe": 45.63,
+        "pb": 38.07,
+        "ev_ebitda": 39.75,
+        "de": 0.09,
+        "cr": 4.47,
+        "fcf_yield": 1.71
+      },
+      {
+        "quarter": "FQ4'26",
+        "end": "2026-01-25",
+        "pretax": 73.98,
+        "acq": -1.65,
+        "sec": -164.12,
+        "buyback": -59.54,
+        "div": -2.42,
+        "cash": 625.56,
+        "debt": 114.12,
+        "net_cash": 511.44,
+        "roe": 124.44,
+        "roa": 60.2,
+        "roic": 43.09,
+        "pe": 37.98,
+        "pb": 28.99,
+        "ev_ebitda": 33.85,
+        "de": 0.07,
+        "cr": 3.91,
+        "fcf_yield": 2.12
+      },
+      {
+        "quarter": "FQ1'27",
+        "end": "2026-04-26",
+        "pretax": 85.65,
+        "acq": -0.87,
+        "sec": -245.85,
+        "buyback": -214.41,
+        "div": -2.43,
+        "cash": 531.72,
+        "debt": 128.14,
+        "net_cash": 403.58,
+        "roe": 132.26,
+        "roa": 57.41,
+        "roic": 34.19,
+        "pe": 31.7,
+        "pb": 25.89,
+        "ev_ebitda": 30.26,
+        "de": 0.07,
+        "cr": 3.44,
+        "fcf_yield": 2.35
+      },
+      {
+        "quarter": "FQ2'27",
+        "end": "2026-07-26",
+        "pretax": 74.32,
+        "acq": -2.11,
+        "sec": -57.92,
+        "buyback": -221.34,
+        "div": -60.47,
+        "cash": 624.69,
+        "debt": 388.6,
+        "net_cash": 236.09,
+        "roe": 112.5,
+        "roa": 54.97,
+        "roic": 29.52,
+        "pe": 25.97,
+        "pb": 21.88,
+        "ev_ebitda": 24.69,
+        "de": 0.17,
+        "cr": 4.59,
+        "fcf_yield": 2.54
+      }
+    ],
+    "PLTR": [
+      {
+        "quarter": "25Q3",
+        "end": "2025-09-30",
+        "pretax": 40.68,
+        "acq": 0.0,
+        "sec": 1.89,
+        "buyback": null,
+        "div": 0.0,
+        "cash": 64.38,
+        "debt": 2.35,
+        "net_cash": 62.03,
+        "roe": 30.0,
+        "roa": 12.7,
+        "roic": 104.21,
+        "pe": 395.09,
+        "pb": 64.71,
+        "ev_ebitda": 487.67,
+        "de": 0.04,
+        "cr": 6.43,
+        "fcf_yield": 0.41
+      },
+      {
+        "quarter": "25Q4",
+        "end": "2025-12-31",
+        "pretax": 44.17,
+        "acq": 0.0,
+        "sec": -9.45,
+        "buyback": null,
+        "div": 0.0,
+        "cash": 71.77,
+        "debt": 2.29,
+        "net_cash": 69.48,
+        "roe": 34.51,
+        "roa": 16.91,
+        "roic": 110.38,
+        "pe": 260.71,
+        "pb": 56.58,
+        "ev_ebitda": 289.93,
+        "de": 0.03,
+        "cr": 7.11,
+        "fcf_yield": 0.5
+      },
+      {
+        "quarter": "26Q1",
+        "end": "2026-03-31",
+        "pretax": 54.43,
+        "acq": 0.0,
+        "sec": -0.19,
+        "buyback": null,
+        "div": 0.0,
+        "cash": 80.26,
+        "debt": 2.12,
+        "net_cash": 78.14,
+        "roe": 43.7,
+        "roa": 19.74,
+        "roic": 116.0,
+        "pe": 153.34,
+        "pb": 40.89,
+        "ev_ebitda": 169.95,
+        "de": 0.03,
+        "cr": 6.91,
+        "fcf_yield": 0.77
+      },
+      {
+        "quarter": "26Q2",
+        "end": "2026-06-30",
+        "pretax": 55.87,
+        "acq": 0.0,
+        "sec": -14.68,
+        "buyback": null,
+        "div": 0.0,
+        "cash": 94.09,
+        "debt": 2.11,
+        "net_cash": 91.98,
+        "roe": 46.24,
+        "roa": 20.84,
+        "roic": 125.82,
+        "pe": 92.72,
+        "pb": 28.3,
+        "ev_ebitda": 102.15,
+        "de": 0.02,
+        "cr": 7.23,
+        "fcf_yield": 1.2
+      }
+    ],
+    "TSM": [
+      {
+        "quarter": "25Q3",
+        "end": "2025-09-30",
+        "pretax": 53.07,
+        "acq": null,
+        "sec": null,
+        "buyback": 0.0,
+        "div": -1166.97,
+        "cash": 27510.36,
+        "debt": 10290.87,
+        "net_cash": 17219.49,
+        "roe": 37.44,
+        "roa": 17.43,
+        "roic": 13.64,
+        "pe": 21.53,
+        "pb": 6.72,
+        "ev_ebitda": 12.99,
+        "de": 0.2,
+        "cr": 2.69,
+        "fcf_yield": 2.64
+      },
+      {
+        "quarter": "25Q4",
+        "end": "2025-12-31",
+        "pretax": 56.63,
+        "acq": null,
+        "sec": null,
+        "buyback": 0.0,
+        "div": -1296.63,
+        "cash": 30684.95,
+        "debt": 10684.17,
+        "net_cash": 20000.78,
+        "roe": 37.2,
+        "roa": 18.45,
+        "roic": 13.77,
+        "pe": 23.68,
+        "pb": 7.45,
+        "ev_ebitda": 14.74,
+        "de": 0.2,
+        "cr": 2.51,
+        "fcf_yield": 2.49
+      },
+      {
+        "quarter": "26Q1",
+        "end": "2026-03-31",
+        "pretax": 60.65,
+        "acq": null,
+        "sec": null,
+        "buyback": 0.0,
+        "div": -1296.63,
+        "cash": 33835.96,
+        "debt": 10943.7,
+        "net_cash": 22892.26,
+        "roe": 40.45,
+        "roa": 19.86,
+        "roic": 15.59,
+        "pe": 23.91,
+        "pb": 7.69,
+        "ev_ebitda": 15.3,
+        "de": 0.18,
+        "cr": 2.49,
+        "fcf_yield": 2.31
+      },
+      {
+        "quarter": "26Q2",
+        "end": "2026-06-30",
+        "pretax": 67.89,
+        "acq": null,
+        "sec": null,
+        "buyback": 0.0,
+        "div": -1555.95,
+        "cash": 35180.1,
+        "debt": 10685.59,
+        "net_cash": 24494.51,
+        "roe": 45.57,
+        "roa": 21.25,
+        "roic": 16.39,
+        "pe": 28.19,
+        "pb": 9.65,
+        "ev_ebitda": 19.02,
+        "de": 0.17,
+        "cr": 2.46,
+        "fcf_yield": 1.83
+      }
+    ]
+  },
+  "roic": {
+    "GOOGL": {
+      "beta": 1.21,
+      "beta_src": "stockanalysis.com 統計頁 Beta (5Y)",
+      "beta_asof": "2026-10-19",
+      "erp": 4.5,
+      "kd_spread": 1.0,
+      "tax": 21,
+      "note": "ROIC 低於 WACC：資本支出大增、新設施尚未全面貢獻收益，且資料商口徑可能把大額現金計入資本（未查證）。要看的是之後幾季 ROIC 會不會隨 AI 雲端收入回升。",
+      "debt_weight": 0.0269,
+      "roic_latest": 6.82,
+      "roic_avg4": 7.93,
+      "roic_quarter": "26Q2",
+      "debt_weight_note": null
+    },
+    "AMZN": {
+      "beta": 1.46,
+      "beta_src": "stockanalysis.com 統計頁 Beta (5Y)",
+      "beta_asof": "2026-10-19",
+      "erp": 4.5,
+      "kd_spread": 1.0,
+      "tax": 21,
+      "note": "ROIC 明顯低於 WACC：近四季本業資本報酬都停在低個位數，債務與資本支出同步擴張。這是你持股裡資本效率最弱的一檔；AWS 成長若不能轉成更高的報酬率，升息環境下估值最缺支撐。",
+      "debt_weight": 0.0822,
+      "roic_latest": 3.5,
+      "roic_avg4": 3.69,
+      "roic_quarter": "26Q2",
+      "debt_weight_note": null
+    },
+    "NVDA": {
+      "beta": 2.22,
+      "beta_src": "stockanalysis.com 統計頁 Beta (5Y)",
+      "beta_asof": "2026-10-19",
+      "erp": 4.5,
+      "kd_spread": 1.0,
+      "tax": 21,
+      "note": "ROIC 遠高於 WACC，是你持股中資本效率最好的大型股之一；但近四季呈下降趨勢，因為資本基礎（含新增債務）擴張得比獲利快。Beta 偏高，WACC 也跟著被墊高。",
+      "debt_weight": 0.007,
+      "roic_latest": 29.52,
+      "roic_avg4": 39.01,
+      "roic_quarter": "FQ2'27",
+      "debt_weight_note": null
+    },
+    "TSM": {
+      "beta": 1.24,
+      "beta_src": "stockanalysis.com 統計頁 Beta (5Y)",
+      "beta_asof": "2026-10-19",
+      "erp": 4.5,
+      "kd_spread": 1.0,
+      "tax": 20,
+      "note": "ROIC 高於 WACC 且近四季上升；淨現金厚、債務占比極低，WACC 幾乎等於股東要求報酬。ROIC 取自新台幣財報，WACC 用美元利率估算，只能比量級（新台幣利率較低，實際資金成本可能更低）。",
+      "debt_weight": 0.0169,
+      "roic_latest": 16.39,
+      "roic_avg4": 14.85,
+      "roic_quarter": "26Q2",
+      "debt_weight_note": "TSM 市值單位來源標示不一致，依數量級視為億美元；債務占比 < 2%，影響極小。"
+    },
+    "PLTR": {
+      "beta": 1.6,
+      "beta_src": "stockanalysis.com 統計頁 Beta (5Y)",
+      "beta_asof": "2026-10-19",
+      "erp": 4.5,
+      "kd_spread": 1.0,
+      "tax": 21,
+      "note": "ROIC 極高，主因是資本基礎很小（輕資產軟體，資本支出極低），不能和重資產公司直接比；這個高報酬已經反映在極高的本益比裡。",
+      "debt_weight": 0.0004,
+      "roic_latest": 125.82,
+      "roic_avg4": 114.1,
+      "roic_quarter": "26Q2",
+      "debt_weight_note": null
+    },
+    "MSFT": {
+      "beta": 1.1,
+      "beta_src": "stockanalysis.com 統計頁 Beta (5Y)",
+      "beta_asof": "2026-10-19",
+      "erp": 4.5,
+      "kd_spread": 1.0,
+      "tax": 21,
+      "note": "ROIC 低於 WACC 且逐季下降：AI 資本支出擴大了資本基礎，收益還沒跟上。優點是收入來源最分散、自由現金流穩定，Beta 也是九檔裡最低的。",
+      "debt_weight": 0.0309,
+      "roic_latest": 6.9,
+      "roic_avg4": 7.44,
+      "roic_quarter": "FQ4'26",
+      "debt_weight_note": null
+    },
+    "META": {
+      "beta": 1.19,
+      "beta_src": "stockanalysis.com 統計頁 Beta (5Y)",
+      "beta_asof": "2026-10-19",
+      "erp": 4.5,
+      "kd_spread": 1.0,
+      "tax": 21,
+      "note": "ROIC 低於 WACC，且單季波動大（25Q3 明顯偏低，原因未查證），看近四季平均較穩。資本支出占營收比重高，債務擴大中。",
+      "debt_weight": 0.0547,
+      "roic_latest": 6.72,
+      "roic_avg4": 7.07,
+      "roic_quarter": "26Q2",
+      "debt_weight_note": null
+    },
+    "MU": {
+      "beta": 2.23,
+      "beta_src": "stockanalysis.com 統計頁 Beta (5Y)",
+      "beta_asof": "2026-10-19",
+      "erp": 4.5,
+      "kd_spread": 1.0,
+      "tax": 21,
+      "note": "ROIC 遠高於 WACC 且快速上升，反映記憶體景氣高峰；記憶體是循環股，高峰的 ROIC 不能外推，景氣反轉時會快速下滑。Beta 高，WACC 也高。",
+      "debt_weight": 0.005,
+      "roic_latest": 41.11,
+      "roic_avg4": 27.26,
+      "roic_quarter": "FQ4'26",
+      "debt_weight_note": null
+    },
+    "AMD": {
+      "beta": 2.45,
+      "beta_src": "stockanalysis.com 統計頁 Beta (5Y)",
+      "beta_asof": "2026-10-19",
+      "erp": 4.5,
+      "kd_spread": 1.0,
+      "tax": 21,
+      "note": "ROIC 遠低於 WACC：資本基礎含大量併購商譽（推測，未查證），股價靠的是未來獲利成長而非目前的資本報酬。Beta 是九檔裡最高，WACC 也最高。",
+      "debt_weight": 0.0043,
+      "roic_latest": 3.14,
+      "roic_avg4": 2.43,
+      "roic_quarter": "26Q2",
+      "debt_weight_note": null
+    }
+  },
+  "rf_us10y": 5.09,
+  "scenarios": {
+    "AMD": [
+      {
+        "scenario": "cons",
+        "label": "保守",
+        "eps_cagr": 30,
+        "exit_pe": 30,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "TTM 本益比偏高，基期 EPS 很小，結果對假設極敏感"
+      },
+      {
+        "scenario": "mid",
+        "label": "中性",
+        "eps_cagr": 45,
+        "exit_pe": 40,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "TTM 本益比偏高，基期 EPS 很小，結果對假設極敏感"
+      },
+      {
+        "scenario": "opt",
+        "label": "樂觀",
+        "eps_cagr": 60,
+        "exit_pe": 50,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "TTM 本益比偏高，基期 EPS 很小，結果對假設極敏感"
+      }
+    ],
+    "AMZN": [
+      {
+        "scenario": "cons",
+        "label": "保守",
+        "eps_cagr": 12,
+        "exit_pe": 25,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "TTM 本益比低於預估本益比，基期改用較低的預估 EPS；AWS 成長與資本支出回收速度決定情境"
+      },
+      {
+        "scenario": "mid",
+        "label": "中性",
+        "eps_cagr": 18,
+        "exit_pe": 30,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "TTM 本益比低於預估本益比，基期改用較低的預估 EPS；AWS 成長與資本支出回收速度決定情境"
+      },
+      {
+        "scenario": "opt",
+        "label": "樂觀",
+        "eps_cagr": 24,
+        "exit_pe": 35,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "TTM 本益比低於預估本益比，基期改用較低的預估 EPS；AWS 成長與資本支出回收速度決定情境"
+      }
+    ],
+    "GOOGL": [
+      {
+        "scenario": "cons",
+        "label": "保守",
+        "eps_cagr": 8,
+        "exit_pe": 18,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "TTM 本益比低於預估本益比，TTM EPS 可能含一次性投資收益，基期改用較低的預估 EPS"
+      },
+      {
+        "scenario": "mid",
+        "label": "中性",
+        "eps_cagr": 12,
+        "exit_pe": 22,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "TTM 本益比低於預估本益比，TTM EPS 可能含一次性投資收益，基期改用較低的預估 EPS"
+      },
+      {
+        "scenario": "opt",
+        "label": "樂觀",
+        "eps_cagr": 16,
+        "exit_pe": 25,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "TTM 本益比低於預估本益比，TTM EPS 可能含一次性投資收益，基期改用較低的預估 EPS"
+      }
+    ],
+    "META": [
+      {
+        "scenario": "cons",
+        "label": "保守",
+        "eps_cagr": 5,
+        "exit_pe": 17,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "廣告循環加上資本支出壓力"
+      },
+      {
+        "scenario": "mid",
+        "label": "中性",
+        "eps_cagr": 12,
+        "exit_pe": 22,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "廣告循環加上資本支出壓力"
+      },
+      {
+        "scenario": "opt",
+        "label": "樂觀",
+        "eps_cagr": 18,
+        "exit_pe": 25,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "廣告循環加上資本支出壓力"
+      }
+    ],
+    "MSFT": [
+      {
+        "scenario": "cons",
+        "label": "保守",
+        "eps_cagr": 8,
+        "exit_pe": 25,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "成熟、獲利穩定，歷史倍數較有參考性"
+      },
+      {
+        "scenario": "mid",
+        "label": "中性",
+        "eps_cagr": 13,
+        "exit_pe": 29,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "成熟、獲利穩定，歷史倍數較有參考性"
+      },
+      {
+        "scenario": "opt",
+        "label": "樂觀",
+        "eps_cagr": 17,
+        "exit_pe": 32,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "成熟、獲利穩定，歷史倍數較有參考性"
+      }
+    ],
+    "MU": [
+      {
+        "scenario": "cons",
+        "label": "保守",
+        "eps_cagr": -30,
+        "exit_pe": 8,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "循環股：目前獲利可能接近高峰，保守情境假設獲利回落"
+      },
+      {
+        "scenario": "mid",
+        "label": "中性",
+        "eps_cagr": 0,
+        "exit_pe": 11,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "循環股：目前獲利可能接近高峰，保守情境假設獲利回落"
+      },
+      {
+        "scenario": "opt",
+        "label": "樂觀",
+        "eps_cagr": 15,
+        "exit_pe": 14,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "循環股：目前獲利可能接近高峰，保守情境假設獲利回落"
+      }
+    ],
+    "NVDA": [
+      {
+        "scenario": "cons",
+        "label": "保守",
+        "eps_cagr": 15,
+        "exit_pe": 22,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "資料中心需求；退出倍數壓縮是主要風險"
+      },
+      {
+        "scenario": "mid",
+        "label": "中性",
+        "eps_cagr": 28,
+        "exit_pe": 28,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "資料中心需求；退出倍數壓縮是主要風險"
+      },
+      {
+        "scenario": "opt",
+        "label": "樂觀",
+        "eps_cagr": 38,
+        "exit_pe": 34,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "資料中心需求；退出倍數壓縮是主要風險"
+      }
+    ],
+    "PLTR": [
+      {
+        "scenario": "cons",
+        "label": "保守",
+        "eps_cagr": 25,
+        "exit_pe": 50,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "本益比過高，歷史倍數參考性低，三情境都靠高成長"
+      },
+      {
+        "scenario": "mid",
+        "label": "中性",
+        "eps_cagr": 40,
+        "exit_pe": 70,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "本益比過高，歷史倍數參考性低，三情境都靠高成長"
+      },
+      {
+        "scenario": "opt",
+        "label": "樂觀",
+        "eps_cagr": 55,
+        "exit_pe": 90,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "本益比過高，歷史倍數參考性低，三情境都靠高成長"
+      }
+    ],
+    "TSM": [
+      {
+        "scenario": "cons",
+        "label": "保守",
+        "eps_cagr": 10,
+        "exit_pe": 16,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "EPS 以台幣計；報酬率與幣別無關，但不含匯率影響"
+      },
+      {
+        "scenario": "mid",
+        "label": "中性",
+        "eps_cagr": 18,
+        "exit_pe": 21,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "EPS 以台幣計；報酬率與幣別無關，但不含匯率影響"
+      },
+      {
+        "scenario": "opt",
+        "label": "樂觀",
+        "eps_cagr": 24,
+        "exit_pe": 24,
+        "years": 3,
+        "hurdle": 4.0,
+        "prem": 4.0,
+        "basis": "EPS 以台幣計；報酬率與幣別無關，但不含匯率影響"
+      }
+    ]
+  },
+  "risk": {
+    "PLTR": {
+      "label": "Palantir",
+      "group": "較可能重傷",
+      "rate_risk": "最大（本益比約 178 倍）",
+      "ai_exposure": "高：估值靠 AI 題材",
+      "buffer": "淨現金，但估值無緩衝"
+    },
+    "AMD": {
+      "label": "AMD",
+      "group": "較可能重傷",
+      "rate_risk": "大（本益比約 152 倍）",
+      "ai_exposure": "高",
+      "buffer": "淨現金小、ROIC 低"
+    },
+    "MU": {
+      "label": "Micron",
+      "group": "較可能重傷",
+      "rate_risk": "小（本益比約 12 倍）",
+      "ai_exposure": "很高：記憶體景氣高峰",
+      "buffer": "淨現金最多之一"
+    },
+    "NVDA": {
+      "label": "NVIDIA",
+      "group": "公司穩、股價波動大",
+      "rate_risk": "中（本益比 5 年低檔）",
+      "ai_exposure": "最直接：營收就是 AI 資本支出",
+      "buffer": "淨現金一年少一半多"
+    },
+    "TSM": {
+      "label": "TSMC",
+      "group": "公司穩、股價波動大",
+      "rate_risk": "中（本益比 5 年最高）",
+      "ai_exposure": "高：幫所有 AI 晶片代工",
+      "buffer": "淨現金厚；另有台海風險"
+    },
+    "META": {
+      "label": "Meta",
+      "group": "現金流最脆弱",
+      "rate_risk": "中",
+      "ai_exposure": "高：資本支出占營收約 50%",
+      "buffer": "淨負債且擴大中"
+    },
+    "AMZN": {
+      "label": "Amazon",
+      "group": "現金流最脆弱",
+      "rate_risk": "中偏大（負債最多）",
+      "ai_exposure": "中",
+      "buffer": "淨負債最高、FCF 為負"
+    },
+    "GOOGL": {
+      "label": "Google",
+      "group": "相對抗跌",
+      "rate_risk": "小（本益比失真偏低）",
+      "ai_exposure": "中",
+      "buffer": "淨現金最厚"
+    },
+    "MSFT": {
+      "label": "Microsoft",
+      "group": "相對抗跌",
+      "rate_risk": "中",
+      "ai_exposure": "中：收入來源最分散",
+      "buffer": "淨負債，但 FCF 穩定"
+    }
+  },
+  "commentary": {
+    "ALL": [
+      {
+        "kind": "method",
+        "text": "資料來源：財報狗需要登入，無法由本頁自動擷取，因此全部資料取自美國側的 stockanalysis.com（資料商為 S&P Global Market Intelligence，2026-10-15 擷取）。項目對應財報狗的獲利能力、現金流量、ROE、本益比等，但不是財報狗的原始數字。"
+      },
+      {
+        "kind": "method",
+        "text": "獲利率：毛利率、營益率、稅後淨利率、FCF 率由損益與現金流量金額重新計算，並與頁面數值比對（誤差 ≤ 0.05 個百分點）；稅前淨利率直接取頁面數值。FCF = 營業現金流 − 資本支出（逐季驗證相符）。金額單位為億（美元；TSMC為新台幣）。"
+      },
+      {
+        "kind": "method",
+        "text": "ROE：採頁面定義，即單季稅後淨利 ×4 ÷ 季初季末平均股東權益。頁面表格的 ROE/ROA/ROIC 整列在擷取時錯位一格，已用『淨利 ×4 ÷ 平均權益（市值 ÷ PB 反推）』逐檔重算驗證後校正：多數差在 0.1 個百分點內，PLTR 約 0.3、AMD 最大約 0.7；TSMC因幣別換算未重算。"
+      },
+      {
+        "kind": "method",
+        "text": "本益比河流圖：以季末收盤價 ÷ 頁面本益比反推 TTM EPS，再乘上該股近 20 季（約 5 年）自身本益比的 P10/P30/P50/P70/P90 分位數畫出區間。這是季頻、非日頻，EPS 為負的季度留空；與財報狗以固定倍數畫的河流圖不同。"
+      },
+      {
+        "kind": "method",
+        "text": "價格與時間：『目前本益比/股價』取自頁面 Current 欄（日期見各股），與台灣時間 10/15 01:07 的截圖盤中價略有差異。財年與季度標示：Microsoft 7 月、NVIDIA 1 月、Micron 8 月結束，圖上以季末月份對齊。本頁為資料整理，不構成投資建議。"
+      },
+      {
+        "kind": "obs",
+        "text": "最新一季營益率（高→低）：Micron 80.7%、NVIDIA 66.2%、TSMC 60.3%、Palantir 47.1%、Microsoft 45.1%、Meta 34.8%、Google 34.0%、AMD 17.3%、Amazon 13.7%。"
+      },
+      {
+        "kind": "obs",
+        "text": "最新一季資本支出占營收（高→低）：Meta 49.5%、Microsoft 39.8%、TSMC 39.0%、Google 37.5%、Amazon 27.0%、Micron 20.5%、AMD 7.0%、NVIDIA 2.8%、Palantir 0.8%。Meta、Microsoft、TSMC、Google 都在 37–50% 的區間。"
+      },
+      {
+        "kind": "obs",
+        "text": "最新一季自由現金流率（高→低）：Palantir 62.1%、Micron 60.6%、TSMC 22.6%、NVIDIA 22.2%、Microsoft 21.8%、AMD 13.5%、Meta 2.9%、Amazon −4.4%、Google −4.9%。Google 與Amazon是唯二轉負的。"
+      },
+      {
+        "kind": "obs",
+        "text": "稅後淨利不能直接比：Google、Amazon有龐大業外收益（淨利遠高於營業利益），Meta 受稅項影響（25Q3 淨利率 5.3%、26Q1 47.5%），Microsoft FQ2、NVIDIA FQ1 也有明顯業外收益。比較獲利體質請看毛利率與營益率。"
+      },
+      {
+        "kind": "obs",
+        "text": "本益比（目前→預估，低→高）：Micron 12.3→6.6、Google 17.7→26.2、Amazon 20.9→28.4、Meta 28.0→17.2、TSMC 28.8→19.6、NVIDIA 28.9→20.8、Microsoft 30.1→20.1、AMD 151.7→59.8、Palantir 178.5→73.8。Google、Amazon 的預估反而高於目前，是因為 TTM EPS 被一次性收益墊高；其他檔預估低於目前，反映市場預期獲利繼續成長（預期不等於已發生）。"
+      },
+      {
+        "kind": "obs",
+        "text": "兩檔 ETF：SMH 持股中有你清單內的 NVDA、TSM、AMD、MU 四檔，合計 39.31%；EWT 的TSMC權重 21.75%。詳見最後兩個分頁。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "九檔同吃 AI 熱潮，體質卻差很多：Micron、NVIDIA、TSMC靠高毛利賺錢；Google、Amazon、Meta、Microsoft則把現金大量砸進資本支出，自由現金流被壓縮。"
+      }
+    ],
+    "AMD": [
+      {
+        "kind": "caveat",
+        "text": "頁面缺 25Q2 的現金流量資料；25Q2 曾有庫存/出口管制相關費用（毛利率 43.2%），不在近四季內，但會影響 TTM 與歷史本益比。"
+      },
+      {
+        "kind": "intro",
+        "text": "AMD 設計 CPU（EPYC、Ryzen）、GPU（Instinct、Radeon）與 FPGA；資料中心營收 26Q2 67.2億美元（25Q3 為 43.4億美元），占營收 58%。"
+      },
+      {
+        "kind": "obs",
+        "text": "營收 92.5億美元→115億美元（26Q2 季增 12.5%）；毛利率 54.5%→56.0%、營益率 13.7%→17.3%、稅後淨利率 13.4%→19.9%。"
+      },
+      {
+        "kind": "obs",
+        "text": "26Q2 稅前淨利率 22.2% 比營益率 17.3% 高 4.9 個百分點（業外收益，來源未查證）。"
+      },
+      {
+        "kind": "obs",
+        "text": "FCF 19.0億美元→15.6億美元，FCF 率 20.6%→13.5%；CapEx 2.6億美元→8.1億美元（約 3.1 倍），26Q2 營業現金流 23.7億美元低於 26Q1 的 29.6億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "ROE 7.8%→14.0%、ROIC 僅 3.1%，資本效率遠低於同頁的 NVDA、MU。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值：目前本益比 151.7（近 20 季有值中位數 79.9）、預估 59.8、P/FCF 101.2、PS 20.6；股價自 6/30 的 521.58 漲到 594.24，10/14 單日 −5.34%（截圖）。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "營收與資料中心穩步成長，但營益率僅 17.3%、FCF 率回落到 13.5%；本益比 151.7、P/FCF 101.2，估值偏高。"
+      }
+    ],
+    "AMZN": [
+      {
+        "kind": "caveat",
+        "text": "ROE 50.4% 受業外淨利推升；ROIC 3.5%、ROA 6.8% 才是本業資本報酬，且 ROIC 沒有改善（25Q3 3.6%）。"
+      },
+      {
+        "kind": "intro",
+        "text": "Amazon是全球最大的電商與雲端（AWS）業者，另有廣告、Prime 訂閱、第三方賣家服務與物流。26Q2 營收 2,006億美元，其中 AWS 422億美元（25Q3 為 330億美元）、廣告 198億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "毛利率 50.8%→52.3%、營益率 11.1%→13.7%；單季營業利益 199億美元→275億美元。同期 AWS 營收 330億美元→422億美元（+28%）。"
+      },
+      {
+        "kind": "obs",
+        "text": "淨利失真：26Q2 稅後淨利 626億美元，是營業利益 275億美元的 2.3 倍；稅前淨利率 40.3% vs 營益率 13.7%。業外收益來源未查證（可能與被投資公司股權的評價有關）。"
+      },
+      {
+        "kind": "obs",
+        "text": "CapEx 351億美元→542億美元（占營收 19.5%→27.0%）；FCF 25Q4 為 +149億美元，26Q1、26Q2 轉為 −182億美元、−88.2億美元；近四季 FCF 合計 −116億美元（營業現金流 1,614億美元、CapEx 1,730億美元）。"
+      },
+      {
+        "kind": "obs",
+        "text": "投資現金流 −261億美元→−792億美元；其中併購（Cash Acquisitions）26Q1 −154億美元、26Q2 −244億美元（標的本次未查證）。"
+      },
+      {
+        "kind": "obs",
+        "text": "26Q1 融資現金流 +528億美元；總債務 1,604億美元→2,516億美元，帳上現金與投資 1,230億美元，淨負債 1,286億美元（頁面口徑，未逐項拆分是否含租賃負債）。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值：目前本益比 20.9（近 20 季有值的中位數 45.3，但早年獲利很低使歷史本益比偏高）；預估本益比 28.4 高於追蹤本益比，同樣暗示 TTM EPS 被一次性收益墊高。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "AWS 與廣告推升營益率到 13.7%，但單季 CapEx 達 542億美元，近四季自由現金流為負；淨利被業外收益灌高。"
+      }
+    ],
+    "EWT": [
+      {
+        "kind": "caveat",
+        "text": "持股明細頁日期為 2026-10-08（台積電 TSMC 21.90%），與主表（21.75%）日期不同，圖表採主表前十大；ETF 沒有『近四季財報』，本頁改看持股、費用與估值。"
+      },
+      {
+        "kind": "intro",
+        "text": "iShares MSCI Taiwan ETF（EWT）追蹤 MSCI Taiwan 25/50 指數，持有 82 檔持股，由 BlackRock 發行，費用率 0.59%，規模約 125 億美元，每年 12 月配息一次（殖利率 2.51%）。"
+      },
+      {
+        "kind": "obs",
+        "text": "集中度：台積電 TSMC 21.75%、聯發科 MediaTek 6.54%、台達電 Delta 3.80%、日月光投控 ASE 3.11%、鴻海 Hon Hai 3.04%；前十大幾乎都是半導體與電子供應鏈（南亞 Nan Ya 2.40% 是少數例外），所以 EWT 的漲跌與 AI 半導體高度連動。"
+      },
+      {
+        "kind": "obs",
+        "text": "績效與位階：一年總報酬 81.47%（含配息）；52 週區間 59.96–118.47，10/14 盤中 112.42，距高點 −5.1%、位於區間 90% 處；截圖時間（台灣 10/15 01:07）為 111.10（−2.08%）。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值與收益：頁面本益比 33.84（口徑為 ETF 持股加權，細節未查證）、殖利率 2.51%（最近一次每股 2.816 美元，2025-12-19 發放）。"
+      },
+      {
+        "kind": "obs",
+        "text": "與你清單的關係：EWT 持有的是台股 2330 台積電 TSMC，不是 TSM ADR；兩者是同一家公司，但 EWT 另外帶入聯發科 MediaTek 等其他台股，以及新台幣匯率風險。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "EWT 其實是『台積電 TSMC＋電子供應鏈』的集中押注：台積電 TSMC 21.75%、前十大 48.90%，一年漲 81.47%、現價離 52 週高點 5.1%。"
+      }
+    ],
+    "GOOGL": [
+      {
+        "kind": "caveat",
+        "text": "ROE 80.2% 同樣來自業外淨利；同期 ROIC 只有 6.8%、ROA 12.5%（頁面數字，兩者並未隨淨利暴增），評估本業效率請看 ROIC 與營益率。"
+      },
+      {
+        "kind": "caveat",
+        "text": "『投資損益』等業外項目細節與股票發行用途未逐項查證；財報狗未使用（見總覽說明）。"
+      },
+      {
+        "kind": "intro",
+        "text": "Alphabet 是 Google 的母公司，收入來自搜尋與 YouTube 廣告、快速成長的 Google Cloud，以及訂閱、Android/Pixel 裝置與 Waymo 等新事業。GOOG（C 股，無投票權）與 GOOGL（A 股）是同一家公司，財報數字完全相同，以下用 GOOGL 的財報。26Q2 營收 1,198億美元，其中搜尋 633億美元、Google Cloud 248億美元（去年同期 136億美元）。"
+      },
+      {
+        "kind": "obs",
+        "text": "本業獲利率爬升：毛利率 59.6%→61.6%、營益率 30.5%→34.0%（26Q1 高點 36.1%），單季營業利益 312億美元→408億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "淨利失真：26Q2 稅後淨利 1,121億美元，是營業利益 408億美元的 2.7 倍；稅前淨利率 115.8%（超過 100%），代表有龐大業外收益，EPS 9.11因此被墊高。收益來源本次未查證（常見原因是持有股權的評價利益，需對照財報附註）。"
+      },
+      {
+        "kind": "obs",
+        "text": "資本支出快速墊高：單季 CapEx 240億美元→449億美元（占營收 23.4%→37.5%），自由現金流由 +246億美元轉為 26Q2 −58.5億美元（FCF 率 −4.9%）；近四季 FCF 合計 533億美元，營業現金流 1,857億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "靠外部資金補位：26Q2 融資現金流 +612億美元（頁面顯示含約 305億美元的股票發行），總債務 442億美元→1,208億美元，買回庫藏股自 26Q1 起歸零；帳上現金與投資 2,425億美元，淨現金 1,217億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值位階：目前本益比 17.7（近 20 季中位數 23.0，僅高於約 5% 的歷史季度），但 TTM EPS 被業外收益墊高；預估本益比 26.2反而更高。河流圖上『股價落在最低區間以下』是 EPS 墊高造成的錯覺。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "本業穩健但資本支出暴增：營益率 34.0%，26Q2 自由現金流已轉負；淨利被業外收益灌高，不能直接拿去算本益比。"
+      }
+    ],
+    "GURU": [
+      {
+        "kind": "caveat",
+        "text": "13F 只揭露美國上市的多單與選擇權，在季末後約 45 天公布；這裡是 6/30 的持股，之後的變化看不到。Q3 13F 預計 11 月中旬公布。"
+      },
+      {
+        "kind": "caveat",
+        "text": "Insider Monkey 未登入只顯示前五大，「沒看到」不等於「沒持有」；Dorsey、Bill Miller 只有加減碼、沒有比重。比重欄的「活動」百分比口徑未說明，視為持股變化方向參考。"
+      },
+      {
+        "kind": "obs",
+        "text": "GOOG／GOOGL 是最多人持有的一檔：李錄合計約 48%、巴菲特 9.41%（+46%）、Klarman 8.95%（+17%）、Tepper 8.46%。Ackman 出清是為了換錢買 Microsoft。"
+      },
+      {
+        "kind": "obs",
+        "text": "AMZN：Klarman 16.48%、Tepper 15.43% 都是第一大；Ackman 減碼約 1/4，但仍是第四大。"
+      },
+      {
+        "kind": "obs",
+        "text": "Tepper 大砍 Micron 42%（仍占 14.57%）、加碼 TSM 25%；同季新建 Apple 賣權、出清 Microsoft，換股很快。"
+      },
+      {
+        "kind": "obs",
+        "text": "避險訊號：Howard Marks 的 Oaktree 新建 S&P 500 賣權、加碼 QQQ 賣權 56%（選擇權以名目金額計，比重被放大）。"
+      },
+      {
+        "kind": "obs",
+        "text": "Uber 是意外的共識：Ackman 12.72%（第一大）、Tepper 7.19%（+22%）、Dorsey 加碼。"
+      },
+      {
+        "kind": "obs",
+        "text": "集中持股的價值派幾乎沒有重押 NVIDIA 與 Palantir；Burry 最後一份 13F（2025 Q3）是兩者的賣權。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "AMZN、GOOG 是這群投資人最集中的兩檔，也是你最大的兩個部位；但他們同時持有大量非 AI 部位，你沒有。"
+      }
+    ],
+    "META": [
+      {
+        "kind": "caveat",
+        "text": "頁面報價不一致：比率表 Current 欄為 742.96，同頁頂部 10/13 收盤為 762.50，本頁以 Current 欄計算本益比。ROE 25Q3 僅 5.6%（稅項），之後 44.3%、46.5%、25.1%。"
+      },
+      {
+        "kind": "intro",
+        "text": "Meta 以 Facebook、Instagram、WhatsApp 的廣告為主要收入來源，另有 Reality Labs（AR/VR 與智慧眼鏡）持續投入。"
+      },
+      {
+        "kind": "obs",
+        "text": "營收 512億美元→608億美元（26Q1 季減 6.0% 後，26Q2 季增 8.0%）；營益率 40.1%→34.8%，26Q2 營業利益 212億美元低於 26Q1 的 229億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "淨利率起伏來自稅項：25Q3 稅後淨利僅 27.1億美元（淨利率 5.3%），稅前淨利率卻有 42.3%，落差約 37 個百分點在稅；26Q1 淨利率 47.5% 反而高於稅前 38.6%（稅務利益）。具體稅項內容未查證。"
+      },
+      {
+        "kind": "obs",
+        "text": "CapEx 188億美元→301億美元（占營收 36.7%→49.5%）；26Q2 FCF 僅 17.5億美元（FCF 率 2.9%），近四季 FCF 410億美元、營業現金流 1,303億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "現金與投資 444億美元→903億美元，總債務 511億美元→1,123億美元，淨負債 221億美元；融資現金流 25Q4 +251億美元、26Q2 +160億美元（同期總債務增加）。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值：目前本益比 28.0（近 20 季中位數 23.8），預估 17.2；追蹤 EPS 含 25Q3 被稅項壓低的一季（EPS 1.05），所以追蹤本益比被墊高。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "毛利率穩定在 81–82%，但營益率降到 34.8%、CapEx 占營收 49.5%，26Q2 自由現金流只剩 17.5億美元。"
+      }
+    ],
+    "MSFT": [
+      {
+        "kind": "caveat",
+        "text": "ROE 31.4%–40.8% 受 FQ2 業外收益墊高；ROIC 由 8.3% 降到 6.9%。"
+      },
+      {
+        "kind": "intro",
+        "text": "Microsoft的收入來自 Azure/Intelligent Cloud、Microsoft 365 與 Dynamics 等生產力軟體、Windows、LinkedIn 與遊戲。財年於 6 月底結束：FQ1'26 = 2025/07–09，FQ4'26 = 2026/04–06；FQ4'26 Intelligent Cloud 營收 393億美元（FQ1 為 309億美元）。"
+      },
+      {
+        "kind": "obs",
+        "text": "營收 777億美元→900億美元（FQ4 季增 8.6%）；毛利率 69.0%→67.2%、營益率 48.9%→45.1%（連降 3.8 個百分點）。"
+      },
+      {
+        "kind": "obs",
+        "text": "FQ2'26 稅後淨利 385億美元（淨利率 47.3%），稅前淨利率 59.4% 比營益率 47.1% 高 12.3 個百分點，屬業外收益（來源未查證）。"
+      },
+      {
+        "kind": "obs",
+        "text": "CapEx 194億美元→358億美元（占營收 25.0%→39.8%），FCF 率 33.0%→21.8%（FQ2 低點 7.2%）；近四季 FCF 670億美元、營業現金流 1,829億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "投資現金流 −346億美元→−548億美元；每季股利約 61.7億美元–67.6億美元、買回 45.8億美元–74.2億美元；現金與投資 1,020億美元→768億美元，總債務 1,204億美元→1,288億美元，淨負債 520億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值：目前本益比 30.1（財年末 FQ4 時為 20.72，股價自 372.32 漲到 541.15，+45%）；預估 20.1；近 20 季中位數 31.6。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "營收穩健成長，但營益率由 48.9% 降到 45.1%，CapEx 升至營收 39.8%，FCF 率降到 21.8%。"
+      }
+    ],
+    "MU": [
+      {
+        "kind": "caveat",
+        "text": "毛利率 86.8% 屬極端水準，記憶體景氣高點歷史上難以持續；10/14 前後新聞提到 CXMT 4F² DRAM 競爭疑慮與股價連跌（前述新聞整理）。"
+      },
+      {
+        "kind": "intro",
+        "text": "Micron是 DRAM、NAND 與 HBM 記憶體大廠。財年於 8 月底結束：FQ1'26 季末 2025/11/27，FQ4'26 季末 2026/9/3（約 2026/06–09）。"
+      },
+      {
+        "kind": "obs",
+        "text": "營收 136億美元→542億美元（季增 74.9%、73.7%、30.8%）；毛利率 56.0%→86.8%、營益率 45.0%→80.7%、稅後淨利率 38.4%→69.5%。"
+      },
+      {
+        "kind": "obs",
+        "text": "FQ4'26 營業現金流 440億美元、CapEx 111億美元，FCF 329億美元（FCF 率 60.6%）；近四季 FCF 590億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "現金與投資由 120億美元暴增到 735億美元，總債務降到 51.8億美元，淨現金 683億美元；FQ4 投資現金流 −420億美元，其中有價證券淨買入 311億美元、CapEx 111億美元；同季融資現金流 +113億美元（來源未查證）。"
+      },
+      {
+        "kind": "obs",
+        "text": "ROE 37.1%→126.1%（FQ3 130.5%），ROIC 8.9%→41.1%。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值：目前本益比 12.3（近 20 季有值的 13 季中位數 17.4）、預估 6.6、P/FCF 18.4。低本益比在景氣循環股常出現在獲利高點（一般性解讀，非預測）。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "營收四季成長近 4 倍、毛利率 86.8%，記憶體景氣處在極端高點；本益比 12.3、預估 6.6偏低，反映市場擔心高點難以持續（解讀）。"
+      }
+    ],
+    "NVDA": [
+      {
+        "kind": "caveat",
+        "text": "FQ2'27 稅前淨利率 74.3% 仍高於營益率 66.2%（業外約 +8 個百分點）；下一次財報約 11/18（尚未確認）。"
+      },
+      {
+        "kind": "intro",
+        "text": "NVIDIA是 AI 運算 GPU 與網路晶片龍頭，營收以資料中心為主。財年於每年 1 月底結束，本頁 FQ2'27 = 2026/05–07（季末 7/26）；FQ3'26 = 2025/08–10。"
+      },
+      {
+        "kind": "obs",
+        "text": "營收 570億美元→962億美元（近四季合計 3,030億美元），單季季增 17.9%–19.8%；毛利率 73.4%→75.0%、營益率 63.2%→66.2%。"
+      },
+      {
+        "kind": "obs",
+        "text": "稅後淨利率 56.0%→62.0%；FQ1'27 稅前淨利率 85.7% 遠高於營益率 65.6%，約 20 個百分點來自業外收益（來源未查證）。"
+      },
+      {
+        "kind": "obs",
+        "text": "FCF 近四季合計 1,270億美元；但 FQ2'27 營業現金流只有 241億美元（前一季 503億美元），FCF 率由 59.5% 掉到 22.2%，FCF 只有淨利的 36%。原因本次未查證（需看營運資金變動）。"
+      },
+      {
+        "kind": "obs",
+        "text": "資本回饋與債務：FQ2'27 買回 221億美元、股利 60.5億美元（前一季僅 2.4億美元，股利一次拉高）；總債務由 128億美元升至 389億美元，淨現金 498億美元→236億美元。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值：目前本益比 28.9在近 20 季屬最低區（中位數 51.6，最低 26.0）、預估 20.8；ROE 113%–132% 反映極高獲利與相對小的股東權益。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "營收由 570億美元成長到 962億美元（+69%）、毛利率穩在 75%；但 FQ2'27 營業現金流腰斬、債務大增，現金流品質要留意。"
+      }
+    ],
+    "PLTR": [
+      {
+        "kind": "caveat",
+        "text": "EPS 只到小數兩位（美分），TTM EPS 誤差大，本益比僅供量級參考；頁面季末本益比與現值本益比的 EPS 基礎略有出入，河流圖『最新』點採頁面現值本益比。"
+      },
+      {
+        "kind": "intro",
+        "text": "Palantir 提供大數據與 AI 決策平台（Gotham、Foundry、AIP），客戶是政府與企業。軟體型模式，毛利率高、資本支出極低。"
+      },
+      {
+        "kind": "obs",
+        "text": "營收 11.8億美元→19.4億美元（季增 19.1%、16.1%、18.5%）；毛利率 82.5%→84.7%、營益率 33.3%→47.1%。"
+      },
+      {
+        "kind": "obs",
+        "text": "稅後淨利率 40.3%→54.9%；稅前淨利率比營益率高 3.3–8.7 個百分點（可能是約 94.1億美元現金與投資的利息收入，為推測）。"
+      },
+      {
+        "kind": "obs",
+        "text": "FCF 5.0億美元→12.0億美元，FCF 率 42.4%→62.1%，CapEx 不到營收 1%；FCF 大於淨利（FCF/淨利 102%–126%）。"
+      },
+      {
+        "kind": "obs",
+        "text": "投資現金流的起伏主要是買賣有價證券（26Q2 買入約 14.7億美元），不是營運擴張支出。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值：頁面本益比 178.5（近 12 季有值的中位數 205.9）、預估 73.8、PS 45.4、P/FCF 83.3；股價自 6/30 的 116.67 漲到 208.67（+79%）。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "營收季增約 16–19%、營益率升到 47.1%、FCF 率 62%，但本益比 178.5、P/FCF 83.3，股價已預支高成長。"
+      }
+    ],
+    "RISK": [
+      {
+        "kind": "caveat",
+        "text": "價位表以 10/14 收盤與近 52 週高點計算；對應本益比用頁面反推的 TTM EPS 估算，Google、Amazon 因業外收益而偏低失真；ETF 沒有本益比換算。"
+      },
+      {
+        "kind": "obs",
+        "text": "較可能重傷：Palantir、AMD（估值最高，升息加題材退燒會雙殺）；Micron 財務強，但景氣循環會讓股價先跌。"
+      },
+      {
+        "kind": "obs",
+        "text": "現金流最脆弱：Amazon、Meta（負債增加、自由現金流接近零或為負，升息加重壓力）。"
+      },
+      {
+        "kind": "obs",
+        "text": "民生股生意抗跌，但估值不抗跌：Costco 本益比約 47、Walmart 約 42；XLP（Beta 0.48、本益比 25.6）比較貼近「抗跌」。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "AI 泡沫若破，九檔都會跌；差別在估值緩衝、負債，以及收入是不是全靠 AI 資本支出。"
+      }
+    ],
+    "SMH": [
+      {
+        "kind": "caveat",
+        "text": "SMH 持股明細日期 2026-10-13，頁面主表價格為 10/14 收盤；ETF 沒有『近四季財報』，本頁改看持股、費用與估值。"
+      },
+      {
+        "kind": "intro",
+        "text": "VanEck Semiconductor ETF（SMH）追蹤 MVIS US Listed Semiconductor 25 指數，持有 26 檔美國上市半導體公司（含台積電 TSMC ADR），費用率 0.35%，規模約 727 億美元，季配息（殖利率 0.20%）。"
+      },
+      {
+        "kind": "obs",
+        "text": "集中度：輝達 NVIDIA 19.77% 一檔就占約五分之一，前十大 67.74%、前十五大 88.10%；你清單內的 NVDA、TSM、AMD、MU 合計 39.31%，所以你的個股部位與 SMH 高度重疊，並不是分散。"
+      },
+      {
+        "kind": "obs",
+        "text": "其餘重要持股：博通 Broadcom 5.41%、德州儀器 TI 4.72%、應用材料 Applied Materials 4.65%、邁威爾 Marvell 4.63%、科磊 KLA 4.56%、ASML 4.45%、科林研發 Lam Research 4.30%、亞德諾 Analog Devices 4.27%、英特爾 Intel 4.18%、SK 海力士 SK hynix 3.99%、高通 3.63%。"
+      },
+      {
+        "kind": "obs",
+        "text": "績效與位階：一年總報酬 66.74%；52 週區間 315.05–671.83，10/14 收盤 564.74（−3.98%）、盤後 554.03（−1.90%），位於區間 70% 處。前述新聞整理提到 10/14 費城半導體指數 −4.30%、連 6 日下跌。"
+      },
+      {
+        "kind": "obs",
+        "text": "估值：頁面本益比 31.37、預估本益比 17.91（預估 EPS 約為追蹤 EPS 的 1.75 倍，隱含市場預期獲利大幅成長，預期不等於已發生）。"
+      },
+      {
+        "kind": "obs",
+        "text": "與 EWT 比較：SMH 費用率較低（0.35% vs 0.59%）、成分為美國上市股、殖利率低（0.20% vs 2.51%）、一年報酬略低（66.74% vs 81.47%）。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "SMH 持股中有你清單內的 NVDA、TSM、AMD、MU 四檔（合計 39.31%）；10/14 收盤 564.74（−3.98%），距 52 週高點 −15.9%。"
+      }
+    ],
+    "TSM": [
+      {
+        "kind": "caveat",
+        "text": "本頁股價與本益比為美元 ADR；ADR 與台股 2330 之間的價差未分析。10/14 ADR 收盤約 430 美元（−3.4%，新聞），本頁估值用頁面 10/13 收盤 445.12。ROE 因幣別換算未用同法重算，僅做量級檢查。"
+      },
+      {
+        "kind": "intro",
+        "text": "TSMC是全球最大晶圓代工廠，客戶涵蓋NVIDIA、蘋果、AMD 等。財報以新台幣計價，ADR（TSM，1 ADR = 5 股普通股）以美元報價：本頁財報金額單位為『億新台幣』，股價與本益比為美元 ADR。"
+      },
+      {
+        "kind": "obs",
+        "text": "營收 9,899億新台幣→12,704億新台幣（季增 5.7%、8.4%、12.0%）；毛利率 59.5%→67.7%、營益率 50.6%→60.3%、稅後淨利率 45.7%→55.6%。"
+      },
+      {
+        "kind": "obs",
+        "text": "26Q2 稅前淨利率 67.9% 高於營益率 60.3%（業外約 +7.5 個百分點）；稅後淨利 7,066億新台幣、EPS 27.25元。"
+      },
+      {
+        "kind": "obs",
+        "text": "CapEx 2,875億新台幣→4,960億新台幣（占營收 29.0%→39.0%）；近四季 FCF 11,436億新台幣，投資現金流 −2,598億新台幣→−4,928億新台幣。"
+      },
+      {
+        "kind": "obs",
+        "text": "現金與投資 35,180億新台幣 vs 總債務 10,686億新台幣，淨現金 24,495億新台幣；單季現金股利支出 1,167億新台幣→1,556億新台幣。"
+      },
+      {
+        "kind": "obs",
+        "text": "ROE 37.4%→45.6%；目前本益比 28.8（近 20 季中位數 22.4）創新高；預估本益比 19.6（取自同站統計頁，10/14 收盤價基準，與其他估值的價格基準可能略有差異）。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "毛利率、營益率連續四季上升（67.7% / 60.3%），CapEx 升到營收的 39%；目前本益比 28.8為近 20 季最高。"
+      }
+    ],
+    "VAL": [
+      {
+        "kind": "caveat",
+        "text": "各指標的資料來源與日期不同（見表格），台股殖利率為網友估算、預估本益比為粗估，僅供比較方向。估值指標不適合抓進出場時機，比較適合判斷未來幾年的預期報酬與部位大小。"
+      },
+      {
+        "kind": "obs",
+        "text": "席勒本益比（同為 Siblis 口徑）：台股 46.7、美股 35.9。台股一年內從 27.6 跳上來，是 28 個市場中最高；美股一年只動了 1.3。"
+      },
+      {
+        "kind": "obs",
+        "text": "近四季本益比兩邊幾乎一樣（26.2 vs 26.1），但台股的 CAPE 遠高於本益比，代表台股現在的獲利遠高於過去 10 年平均——貴不貴，取決於 AI 獲利能不能延續。"
+      },
+      {
+        "kind": "obs",
+        "text": "股票 vs 公債：台股盈餘殖利率約 3.8%，仍高於台灣 10 年期公債約 2%；美股盈餘殖利率約 3.8%，卻低於美國 10 年期公債 5.09%。美股的股票風險溢酬是負的。"
+      },
+      {
+        "kind": "obs",
+        "text": "美股原版席勒本益比 40.5，1881 年以來只有 1999–2000 年網路泡沫更高（最高 44.2）；現金殖利率 1.06% 是歷史最低。"
+      },
+      {
+        "kind": "obs",
+        "text": "「高於歷史平均」這張圖要注意期間：台股多用近 5 年平均，美股多用 100 年以上的平均，美股的溢價因此看起來更大。"
+      },
+      {
+        "kind": "takeaway",
+        "text": "台股和美股的估值指標幾乎全部在高檔，但貴的方式不同：台股是「獲利暴衝、估值也跟著衝」，美股是「股票報酬已經比公債還低」。"
+      }
+    ]
+  },
+  "gurus": [
+    {
+      "id": "ackman",
+      "name": "Bill Ackman",
+      "fund": "Pershing Square",
+      "quarter": "2026 Q2",
+      "aum_b": 19.47,
+      "style": "集中價值",
+      "url": "https://www.insidermonkey.com/hedge-fund/pershing+square/13/",
+      "note": "前五大以外需登入；QSR 9.62% 取自你的筆記"
+    },
+    {
+      "id": "klarman",
+      "name": "Seth Klarman",
+      "fund": "Baupost Group",
+      "quarter": "2026 Q2",
+      "aum_b": 5.42,
+      "style": "集中價值",
+      "url": "https://www.insidermonkey.com/hedge-fund/baupost-group/7/",
+      "note": "只看得到前五大"
+    },
+    {
+      "id": "tepper",
+      "name": "David Tepper",
+      "fund": "Appaloosa",
+      "quarter": "2026 Q2",
+      "aum_b": 7.73,
+      "style": "宏觀／事件，換股快",
+      "url": "https://www.insidermonkey.com/hedge-fund/appaloosa-management-lp/24/",
+      "note": "前五大取自 Insider Monkey；其餘加減碼取自 InsiderSet"
+    },
+    {
+      "id": "buffett",
+      "name": "Warren Buffett 巴菲特",
+      "fund": "Berkshire Hathaway",
+      "quarter": "2026 Q2",
+      "aum_b": 299.25,
+      "style": "集中價值",
+      "url": "https://www.insidermonkey.com/hedge-fund/berkshire-hathaway/1/",
+      "note": "只看得到前五大"
+    },
+    {
+      "id": "lilu",
+      "name": "李錄 Li Lu",
+      "fund": "Himalaya Capital",
+      "quarter": "2026 Q2",
+      "aum_b": null,
+      "style": "極度集中價值",
+      "url": "https://valuesider.com/insights/2026-q2/li-lu-goog-outsized-position",
+      "note": "比重取自 Valuesider，加減碼取自 InsiderSet"
+    },
+    {
+      "id": "dorsey",
+      "name": "Pat Dorsey",
+      "fund": "Dorsey Asset Mgmt",
+      "quarter": "2026 Q2",
+      "aum_b": null,
+      "style": "護城河型成長",
+      "url": "https://www.insiderset.com/investor/pat-dorsey-dorsey-asset-management/activity/q2-2026",
+      "note": "只有加減碼，沒有比重"
+    },
+    {
+      "id": "miller",
+      "name": "Bill Miller",
+      "fund": "Miller Value Partners",
+      "quarter": "2026 Q2",
+      "aum_b": null,
+      "style": "逆向價值",
+      "url": "https://www.insiderset.com/news/bill-miller-miller-value-partners-q2-2026-13f-portfolio-changes-000016",
+      "note": "只有重大加減碼"
+    },
+    {
+      "id": "greenblatt",
+      "name": "Joel Greenblatt",
+      "fund": "Gotham Asset Mgmt",
+      "quarter": "2026 Q2",
+      "aum_b": 42.96,
+      "style": "量化價值、分散",
+      "url": "https://www.insidermonkey.com/hedge-fund/gotham-asset-management/12/",
+      "note": "只看得到前五大"
+    },
+    {
+      "id": "asness",
+      "name": "Cliff Asness",
+      "fund": "AQR Capital",
+      "quarter": "2026 Q2",
+      "aum_b": 286.85,
+      "style": "量化、極度分散",
+      "url": "https://www.insidermonkey.com/hedge-fund/aqr+capital+management/71/",
+      "note": "只看得到前五大"
+    },
+    {
+      "id": "fisher",
+      "name": "Ken Fisher",
+      "fund": "Fisher Asset Mgmt",
+      "quarter": "2026 Q2",
+      "aum_b": 335.83,
+      "style": "大型分散",
+      "url": "https://www.insidermonkey.com/hedge-fund/fisher+asset+management/11/",
+      "note": "只看得到前五大"
+    },
+    {
+      "id": "gates",
+      "name": "Bill Gates 基金會",
+      "fund": "Gates Foundation Trust",
+      "quarter": "2026 Q2",
+      "aum_b": 34.42,
+      "style": "長期、工業與基建",
+      "url": "https://www.insidermonkey.com/hedge-fund/bill-%26-melinda-gates-foundation-trust/421/",
+      "note": "只看得到前五大"
+    },
+    {
+      "id": "marks",
+      "name": "Howard Marks",
+      "fund": "Oaktree Capital",
+      "quarter": "2026 Q2",
+      "aum_b": 7.21,
+      "style": "信用與逆向",
+      "url": "https://www.insidermonkey.com/hedge-fund/oaktree-capital-management/133/",
+      "note": "只看得到前五大；選擇權以名目金額計"
+    },
+    {
+      "id": "rogers",
+      "name": "John W. Rogers Jr.",
+      "fund": "Ariel Investments",
+      "quarter": "2026 Q2",
+      "aum_b": 10.03,
+      "style": "中小型價值",
+      "url": "https://www.insidermonkey.com/hedge-fund/ariel-investments/34/",
+      "note": "只看得到前五大"
+    },
+    {
+      "id": "burry",
+      "name": "Michael Burry",
+      "fund": "Scion Asset Mgmt",
+      "quarter": "2025 Q3（最後一份）",
+      "aum_b": 1.38,
+      "style": "逆向、看空",
+      "url": "https://sherwood.news/markets/michael-burry-de-registers-his-hedge-fund-scion-asset-management-as-he-warns/",
+      "note": "2025 年 11 月撤銷註冊，不再申報 13F；選擇權以名目金額計"
+    }
+  ],
+  "guru_holdings": [
+    {
+      "manager": "ackman",
+      "ticker": "UBER",
+      "name": "Uber",
+      "weight": 12.72,
+      "chg": 15,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "ackman",
+      "ticker": "BN",
+      "name": "Brookfield",
+      "weight": 12.58,
+      "chg": -4,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "ackman",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "weight": 11.89,
+      "chg": 10,
+      "action": "加碼",
+      "option": null,
+      "note": "賣 Google 換錢買 Microsoft"
+    },
+    {
+      "manager": "ackman",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "weight": 10.49,
+      "chg": -26,
+      "action": "減碼",
+      "option": null,
+      "note": "減碼約 1/4，仍是第四大"
+    },
+    {
+      "manager": "ackman",
+      "ticker": "HHH",
+      "name": "Howard Hughes",
+      "weight": 10.23,
+      "chg": 48,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "ackman",
+      "ticker": "QSR",
+      "name": "Restaurant Brands",
+      "weight": 9.62,
+      "chg": null,
+      "action": "—",
+      "option": null,
+      "note": "比重取自你的筆記"
+    },
+    {
+      "manager": "ackman",
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "weight": null,
+      "chg": null,
+      "action": "出清",
+      "option": null,
+      "note": "用來換買 Microsoft"
+    },
+    {
+      "manager": "ackman",
+      "ticker": "V",
+      "name": "Visa",
+      "weight": null,
+      "chg": null,
+      "action": "新建",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "ackman",
+      "ticker": "MA",
+      "name": "Mastercard",
+      "weight": null,
+      "chg": null,
+      "action": "新建",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "ackman",
+      "ticker": "SPGI",
+      "name": "S&P Global",
+      "weight": null,
+      "chg": null,
+      "action": "新建",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "ackman",
+      "ticker": "NFLX",
+      "name": "Netflix",
+      "weight": null,
+      "chg": null,
+      "action": "新建",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "klarman",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "weight": 16.48,
+      "chg": 21,
+      "action": "加碼",
+      "option": null,
+      "note": "第一大"
+    },
+    {
+      "manager": "klarman",
+      "ticker": "ELV",
+      "name": "Elevance Health",
+      "weight": 9.11,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "klarman",
+      "ticker": "QSR",
+      "name": "Restaurant Brands",
+      "weight": 9.04,
+      "chg": -17,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "klarman",
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "weight": 8.95,
+      "chg": 17,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "klarman",
+      "ticker": "FERG",
+      "name": "Ferguson",
+      "weight": 6.36,
+      "chg": 1,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "tepper",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "weight": 15.43,
+      "chg": 16,
+      "action": "加碼",
+      "option": null,
+      "note": "第一大"
+    },
+    {
+      "manager": "tepper",
+      "ticker": "MU",
+      "name": "Micron",
+      "weight": 14.57,
+      "chg": -42,
+      "action": "減碼",
+      "option": null,
+      "note": "大幅獲利了結"
+    },
+    {
+      "manager": "tepper",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "weight": 10.2,
+      "chg": 25,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "tepper",
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "weight": 8.46,
+      "chg": 7,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "tepper",
+      "ticker": "UBER",
+      "name": "Uber",
+      "weight": 7.19,
+      "chg": 22,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "tepper",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "weight": 4.08,
+      "chg": 3.6,
+      "action": "加碼",
+      "option": null,
+      "note": "比重取自 InsiderSet，口徑略不同"
+    },
+    {
+      "manager": "tepper",
+      "ticker": "META",
+      "name": "Meta",
+      "weight": null,
+      "chg": null,
+      "action": "加碼",
+      "option": null,
+      "note": "加 238,500 股"
+    },
+    {
+      "manager": "tepper",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "weight": null,
+      "chg": null,
+      "action": "出清",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "tepper",
+      "ticker": "AMD",
+      "name": "AMD",
+      "weight": null,
+      "chg": null,
+      "action": "減碼",
+      "option": null,
+      "note": "減 23,900 股"
+    },
+    {
+      "manager": "tepper",
+      "ticker": "BABA",
+      "name": "Alibaba",
+      "weight": null,
+      "chg": -42,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "tepper",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "weight": null,
+      "chg": null,
+      "action": "新建",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "tepper",
+      "ticker": "BA",
+      "name": "Boeing",
+      "weight": null,
+      "chg": null,
+      "action": "新建",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "tepper",
+      "ticker": "AAL",
+      "name": "American Airlines",
+      "weight": null,
+      "chg": null,
+      "action": "新建",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "tepper",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "weight": null,
+      "chg": null,
+      "action": "新建",
+      "option": "賣權",
+      "note": "名目約 2.4 億美元，看空"
+    },
+    {
+      "manager": "buffett",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "weight": 22.04,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "buffett",
+      "ticker": "AXP",
+      "name": "American Express",
+      "weight": 17.14,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "buffett",
+      "ticker": "KO",
+      "name": "Coca-Cola",
+      "weight": 10.86,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "buffett",
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "weight": 9.41,
+      "chg": 46,
+      "action": "加碼",
+      "option": null,
+      "note": "大幅加碼"
+    },
+    {
+      "manager": "buffett",
+      "ticker": "BAC",
+      "name": "Bank of America",
+      "weight": 9.2,
+      "chg": -6,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "lilu",
+      "ticker": "GOOGL",
+      "name": "Alphabet A",
+      "weight": 24.55,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": "第一大"
+    },
+    {
+      "manager": "lilu",
+      "ticker": "GOOG",
+      "name": "Alphabet C",
+      "weight": 23.39,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": "股數不變"
+    },
+    {
+      "manager": "lilu",
+      "ticker": "PDD",
+      "name": "拼多多 PDD",
+      "weight": 22.17,
+      "chg": null,
+      "action": "加碼",
+      "option": null,
+      "note": "加 615 萬股"
+    },
+    {
+      "manager": "lilu",
+      "ticker": "BRK-B",
+      "name": "Berkshire",
+      "weight": null,
+      "chg": null,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "lilu",
+      "ticker": "BAC",
+      "name": "Bank of America",
+      "weight": null,
+      "chg": null,
+      "action": "出清",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "lilu",
+      "ticker": "OXY",
+      "name": "Occidental",
+      "weight": null,
+      "chg": null,
+      "action": "出清",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "lilu",
+      "ticker": "SPGI",
+      "name": "S&P Global",
+      "weight": null,
+      "chg": null,
+      "action": "出清",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "lilu",
+      "ticker": "MCO",
+      "name": "Moody's",
+      "weight": null,
+      "chg": null,
+      "action": "出清",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "dorsey",
+      "ticker": "BKNG",
+      "name": "Booking",
+      "weight": null,
+      "chg": null,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "dorsey",
+      "ticker": "UBER",
+      "name": "Uber",
+      "weight": null,
+      "chg": null,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "dorsey",
+      "ticker": "META",
+      "name": "Meta",
+      "weight": null,
+      "chg": null,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "dorsey",
+      "ticker": "SPGI",
+      "name": "S&P Global",
+      "weight": null,
+      "chg": null,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "dorsey",
+      "ticker": "APP",
+      "name": "AppLovin",
+      "weight": null,
+      "chg": null,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "dorsey",
+      "ticker": "ASML",
+      "name": "ASML",
+      "weight": null,
+      "chg": null,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "dorsey",
+      "ticker": "AER",
+      "name": "AerCap",
+      "weight": null,
+      "chg": null,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "miller",
+      "ticker": "META",
+      "name": "Meta",
+      "weight": null,
+      "chg": -97.78,
+      "action": "減碼",
+      "option": null,
+      "note": "幾乎出清"
+    },
+    {
+      "manager": "greenblatt",
+      "ticker": "SPY",
+      "name": "S&P 500 ETF",
+      "weight": 19.8,
+      "chg": 27,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "greenblatt",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "weight": 1.93,
+      "chg": -1,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "greenblatt",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "weight": 1.87,
+      "chg": -3,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "greenblatt",
+      "ticker": "IEF",
+      "name": "7–10 年公債 ETF",
+      "weight": 0.78,
+      "chg": 3,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "asness",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "weight": 2.61,
+      "chg": 18,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "asness",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "weight": 1.75,
+      "chg": 21,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "asness",
+      "ticker": "MU",
+      "name": "Micron",
+      "weight": 1.54,
+      "chg": -16,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "asness",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "weight": 1.49,
+      "chg": 15,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "asness",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "weight": 0.99,
+      "chg": 26,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "fisher",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "weight": 5.42,
+      "chg": 3,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "fisher",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "weight": 4.96,
+      "chg": 3,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "fisher",
+      "ticker": "IEF",
+      "name": "7–10 年公債 ETF",
+      "weight": 4.53,
+      "chg": 10,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "fisher",
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "weight": 4.26,
+      "chg": 3,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "fisher",
+      "ticker": "CAT",
+      "name": "Caterpillar",
+      "weight": 3.15,
+      "chg": 2,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "gates",
+      "ticker": "BRK-B",
+      "name": "Berkshire",
+      "weight": 21.35,
+      "chg": -14,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "gates",
+      "ticker": "CAT",
+      "name": "Caterpillar",
+      "weight": 19.65,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "gates",
+      "ticker": "CNI",
+      "name": "Canadian National",
+      "weight": 17.95,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "gates",
+      "ticker": "WM",
+      "name": "Waste Management",
+      "weight": 17.3,
+      "chg": -4,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "gates",
+      "ticker": "DE",
+      "name": "Deere",
+      "weight": 6.56,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "marks",
+      "ticker": "SPY",
+      "name": "S&P 500 ETF",
+      "weight": 14.04,
+      "chg": null,
+      "action": "新建",
+      "option": "賣權",
+      "note": "避險／看空，名目金額"
+    },
+    {
+      "manager": "marks",
+      "ticker": "QQQ",
+      "name": "Nasdaq 100 ETF",
+      "weight": 9.04,
+      "chg": 56,
+      "action": "加碼",
+      "option": "賣權",
+      "note": "避險／看空，名目金額"
+    },
+    {
+      "manager": "marks",
+      "ticker": "TRMD",
+      "name": "Torm",
+      "weight": 7.28,
+      "chg": -15,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "marks",
+      "ticker": "EXE",
+      "name": "Expand Energy",
+      "weight": 6.63,
+      "chg": null,
+      "action": "不變",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "marks",
+      "ticker": "GTX",
+      "name": "Garrett Motion",
+      "weight": 3.82,
+      "chg": -48,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "rogers",
+      "ticker": "MSGE",
+      "name": "MSG Entertainment",
+      "weight": 4.28,
+      "chg": -14,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "rogers",
+      "ticker": "OSW",
+      "name": "OneSpaWorld",
+      "weight": 4.19,
+      "chg": -4,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "rogers",
+      "ticker": "CRL",
+      "name": "Charles River",
+      "weight": 3.41,
+      "chg": 5,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "rogers",
+      "ticker": "AMG",
+      "name": "Affiliated Managers",
+      "weight": 3.37,
+      "chg": -7,
+      "action": "減碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "rogers",
+      "ticker": "JLL",
+      "name": "Jones Lang LaSalle",
+      "weight": 3.28,
+      "chg": 4,
+      "action": "加碼",
+      "option": null,
+      "note": ""
+    },
+    {
+      "manager": "burry",
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "weight": 66.04,
+      "chg": null,
+      "action": "新建",
+      "option": "賣權",
+      "note": "看空，名目金額"
+    },
+    {
+      "manager": "burry",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "weight": 13.51,
+      "chg": null,
+      "action": "新建",
+      "option": "賣權",
+      "note": "看空，名目金額"
+    },
+    {
+      "manager": "burry",
+      "ticker": "PFE",
+      "name": "Pfizer",
+      "weight": 11.07,
+      "chg": null,
+      "action": "新建",
+      "option": "買權",
+      "note": ""
+    },
+    {
+      "manager": "burry",
+      "ticker": "HAL",
+      "name": "Halliburton",
+      "weight": 4.45,
+      "chg": null,
+      "action": "新建",
+      "option": "買權",
+      "note": ""
+    },
+    {
+      "manager": "burry",
+      "ticker": "MOH",
+      "name": "Molina Healthcare",
+      "weight": 1.73,
+      "chg": null,
+      "action": "新建",
+      "option": null,
+      "note": ""
+    }
+  ],
+  "market": {
+    "metrics": [
+      {
+        "id": "cape",
+        "metric": "席勒本益比 CAPE（Siblis 同口徑）",
+        "unit": "倍",
+        "tw_now": 46.7,
+        "tw_asof": "2026-09-30",
+        "tw_ref": 27.6,
+        "tw_ref_label": "一年前（2025/9）",
+        "tw_src": "https://siblisresearch.com/data/cape-ratios-by-country/",
+        "us_now": 35.9,
+        "us_asof": "2026-09-30",
+        "us_ref": 34.6,
+        "us_ref_label": "一年前（2025/9）",
+        "us_src": "https://siblisresearch.com/data/cape-ratios-by-country/",
+        "tw_prem": 69.2,
+        "us_prem": 3.8,
+        "note": "兩邊都用 Siblis 的 MSCI 指數口徑才能直接比；台股接近自己的歷史高點 48.9。",
+        "order": 1
+      },
+      {
+        "id": "cape_shiller",
+        "metric": "席勒本益比（Shiller 原版 S&P 500）",
+        "unit": "倍",
+        "tw_now": null,
+        "tw_asof": null,
+        "tw_ref": null,
+        "tw_ref_label": null,
+        "tw_src": null,
+        "us_now": 40.54,
+        "us_asof": "2026-10-16",
+        "us_ref": 17.42,
+        "us_ref_label": "1881 年以來平均",
+        "us_src": "https://www.multpl.com/shiller-pe/table/by-year",
+        "tw_prem": null,
+        "us_prem": 132.7,
+        "note": "歷史最高是 1999 年 12 月的 44.19；台股沒有同一口徑的長期資料。",
+        "order": 2
+      },
+      {
+        "id": "pe",
+        "metric": "本益比（近四季）",
+        "unit": "倍",
+        "tw_now": 26.2,
+        "tw_asof": "2026-10-16",
+        "tw_ref": 19.0,
+        "tw_ref_label": "近 5 年平均",
+        "tw_src": "https://statementdog.com/taiex",
+        "us_now": 26.12,
+        "us_asof": "2026-10-16",
+        "us_ref": 16.24,
+        "us_ref_label": "1871 年以來平均",
+        "us_src": "https://www.multpl.com/s-p-500-pe-ratio",
+        "tw_prem": 37.9,
+        "us_prem": 60.8,
+        "note": "台股 5 年區間 9.4–31.8；兩邊平均的期間不同，比較時要注意。",
+        "order": 3
+      },
+      {
+        "id": "fwd_pe",
+        "metric": "預估本益比（2027 年獲利）",
+        "unit": "倍",
+        "tw_now": 20.0,
+        "tw_asof": "2026-10 粗估",
+        "tw_ref": 14.4,
+        "tw_ref_label": "外資引用的 20 年平均",
+        "tw_src": "https://www.cna.com.tw/news/afe/202609160206.aspx",
+        "us_now": null,
+        "us_asof": null,
+        "us_ref": null,
+        "us_ref_label": null,
+        "us_src": null,
+        "tw_prem": 38.9,
+        "us_prem": null,
+        "note": "台股用近四季本益比 ÷ 瑞銀估 2027 年獲利成長 31% 粗估，非官方數字；美股這次沒查到可靠的同期數字。",
+        "order": 4
+      },
+      {
+        "id": "pb",
+        "metric": "股價淨值比",
+        "unit": "倍",
+        "tw_now": 4.14,
+        "tw_asof": "2026-10-16",
+        "tw_ref": 2.5,
+        "tw_ref_label": "近 5 年平均",
+        "tw_src": "https://statementdog.com/taiex",
+        "us_now": 6.07,
+        "us_asof": "2026-10-16",
+        "us_ref": 3.16,
+        "us_ref_label": "長期平均",
+        "us_src": "https://www.multpl.com/s-p-500-price-to-book",
+        "tw_prem": 65.6,
+        "us_prem": 92.1,
+        "note": "Goodinfo 的台股數字是 3.89，各站計算略有差異；美股以 2025 年 9 月淨值估算。",
+        "order": 5
+      },
+      {
+        "id": "dy",
+        "metric": "現金殖利率",
+        "unit": "%",
+        "tw_now": 1.5,
+        "tw_asof": "2026-05（估）",
+        "tw_ref": 4.75,
+        "tw_ref_label": "2016 年約 4.5–5%",
+        "tw_src": "https://udn.com/news/story/12806/9526712",
+        "us_now": 1.06,
+        "us_asof": "2026-10-16",
+        "us_ref": 4.2,
+        "us_ref_label": "長期平均",
+        "us_src": "https://www.multpl.com/s-p-500-dividend-yield",
+        "tw_prem": 216.7,
+        "us_prem": 296.2,
+        "note": "越低代表越貴。台股為網友估算（約 2 兆配息 ÷ 134 兆市值），非官方；美股 1.06% 是歷史最低。",
+        "order": 6
+      },
+      {
+        "id": "buffett",
+        "metric": "巴菲特指標（總市值 ÷ GDP）",
+        "unit": "%",
+        "tw_now": 575,
+        "tw_asof": "2026-10-16",
+        "tw_ref": 355,
+        "tw_ref_label": "2025 年底",
+        "tw_src": null,
+        "us_now": 244,
+        "us_asof": "2026-06-30",
+        "us_ref": 134.6,
+        "us_ref_label": "長期趨勢線（反推）",
+        "us_src": "https://www.currentmarketvaluation.com/models/buffett-indicator.php",
+        "tw_prem": 62.0,
+        "us_prem": 81.3,
+        "note": "台股含上櫃估算、分母用 2025 年 GDP；兩國經濟結構不同，只適合和自己比。",
+        "order": 7
+      }
+    ],
+    "cape_us": [
+      {
+        "t": 1990,
+        "cape": 17.05,
+        "label": "1990/1/1"
+      },
+      {
+        "t": 1991,
+        "cape": 15.61,
+        "label": "1991/1/1"
+      },
+      {
+        "t": 1992,
+        "cape": 19.77,
+        "label": "1992/1/1"
+      },
+      {
+        "t": 1993,
+        "cape": 20.32,
+        "label": "1993/1/1"
+      },
+      {
+        "t": 1994,
+        "cape": 21.41,
+        "label": "1994/1/1"
+      },
+      {
+        "t": 1995,
+        "cape": 20.22,
+        "label": "1995/1/1"
+      },
+      {
+        "t": 1996,
+        "cape": 24.76,
+        "label": "1996/1/1"
+      },
+      {
+        "t": 1997,
+        "cape": 28.33,
+        "label": "1997/1/1"
+      },
+      {
+        "t": 1998,
+        "cape": 32.86,
+        "label": "1998/1/1"
+      },
+      {
+        "t": 1999,
+        "cape": 40.57,
+        "label": "1999/1/1"
+      },
+      {
+        "t": 2000,
+        "cape": 43.77,
+        "label": "2000/1/1"
+      },
+      {
+        "t": 2001,
+        "cape": 36.98,
+        "label": "2001/1/1"
+      },
+      {
+        "t": 2002,
+        "cape": 30.28,
+        "label": "2002/1/1"
+      },
+      {
+        "t": 2003,
+        "cape": 22.9,
+        "label": "2003/1/1"
+      },
+      {
+        "t": 2004,
+        "cape": 27.66,
+        "label": "2004/1/1"
+      },
+      {
+        "t": 2005,
+        "cape": 26.59,
+        "label": "2005/1/1"
+      },
+      {
+        "t": 2006,
+        "cape": 26.47,
+        "label": "2006/1/1"
+      },
+      {
+        "t": 2007,
+        "cape": 27.21,
+        "label": "2007/1/1"
+      },
+      {
+        "t": 2008,
+        "cape": 24.02,
+        "label": "2008/1/1"
+      },
+      {
+        "t": 2009,
+        "cape": 15.17,
+        "label": "2009/1/1"
+      },
+      {
+        "t": 2010,
+        "cape": 20.53,
+        "label": "2010/1/1"
+      },
+      {
+        "t": 2011,
+        "cape": 22.98,
+        "label": "2011/1/1"
+      },
+      {
+        "t": 2012,
+        "cape": 21.21,
+        "label": "2012/1/1"
+      },
+      {
+        "t": 2013,
+        "cape": 21.9,
+        "label": "2013/1/1"
+      },
+      {
+        "t": 2014,
+        "cape": 24.86,
+        "label": "2014/1/1"
+      },
+      {
+        "t": 2015,
+        "cape": 26.49,
+        "label": "2015/1/1"
+      },
+      {
+        "t": 2016,
+        "cape": 24.21,
+        "label": "2016/1/1"
+      },
+      {
+        "t": 2017,
+        "cape": 28.06,
+        "label": "2017/1/1"
+      },
+      {
+        "t": 2018,
+        "cape": 33.31,
+        "label": "2018/1/1"
+      },
+      {
+        "t": 2019,
+        "cape": 28.38,
+        "label": "2019/1/1"
+      },
+      {
+        "t": 2020,
+        "cape": 30.99,
+        "label": "2020/1/1"
+      },
+      {
+        "t": 2021,
+        "cape": 34.51,
+        "label": "2021/1/1"
+      },
+      {
+        "t": 2022,
+        "cape": 36.94,
+        "label": "2022/1/1"
+      },
+      {
+        "t": 2023,
+        "cape": 28.34,
+        "label": "2023/1/1"
+      },
+      {
+        "t": 2024,
+        "cape": 31.97,
+        "label": "2024/1/1"
+      },
+      {
+        "t": 2025,
+        "cape": 37.14,
+        "label": "2025/1/1"
+      },
+      {
+        "t": 2026,
+        "cape": 39.65,
+        "label": "2026/1/1"
+      },
+      {
+        "t": 2026.8,
+        "cape": 40.54,
+        "label": "2026/10/16"
+      }
+    ],
+    "cape_country": [
+      {
+        "country": "台灣",
+        "cape_2026": 46.7,
+        "cape_2025": 27.6,
+        "order": 1
+      },
+      {
+        "country": "美國",
+        "cape_2026": 35.9,
+        "cape_2025": 34.6,
+        "order": 2
+      },
+      {
+        "country": "日本",
+        "cape_2026": 35.4,
+        "cape_2025": 27.1,
+        "order": 3
+      },
+      {
+        "country": "南韓",
+        "cape_2026": 31.8,
+        "cape_2025": 17.4,
+        "order": 4
+      },
+      {
+        "country": "印度",
+        "cape_2026": 28.7,
+        "cape_2025": 33.8,
+        "order": 5
+      },
+      {
+        "country": "加拿大",
+        "cape_2026": 27.1,
+        "cape_2025": 25.2,
+        "order": 6
+      },
+      {
+        "country": "德國",
+        "cape_2026": 22.9,
+        "cape_2025": 23.9,
+        "order": 7
+      },
+      {
+        "country": "英國",
+        "cape_2026": 19.6,
+        "cape_2025": 19.4,
+        "order": 8
+      },
+      {
+        "country": "法國",
+        "cape_2026": 19.5,
+        "cape_2025": 20.5,
+        "order": 9
+      },
+      {
+        "country": "中國",
+        "cape_2026": 17.1,
+        "cape_2025": 17.3,
+        "order": 10
+      },
+      {
+        "country": "巴西",
+        "cape_2026": 14.9,
+        "cape_2025": 13.8,
+        "order": 11
+      },
+      {
+        "country": "香港",
+        "cape_2026": 10.2,
+        "cape_2025": 11.3,
+        "order": 12
+      },
+      {
+        "country": "土耳其",
+        "cape_2026": 6.8,
+        "cape_2025": 8.0,
+        "order": 13
+      }
+    ],
+    "yields": [
+      {
+        "id": "earn",
+        "label": "盈餘殖利率（1 ÷ 本益比）",
+        "tw": 3.82,
+        "us": 3.83,
+        "note": "股票每投入 100 元，近一年賺回的獲利",
+        "order": 1
+      },
+      {
+        "id": "div",
+        "label": "現金殖利率",
+        "tw": 1.5,
+        "us": 1.06,
+        "note": "台股為網友估算",
+        "order": 2
+      },
+      {
+        "id": "bond10",
+        "label": "10 年期公債殖利率",
+        "tw": 1.97,
+        "us": 5.09,
+        "note": "台灣為 8/7 標售得標利率；美國為 10/16 收盤",
+        "order": 3
+      },
+      {
+        "id": "cape_y",
+        "label": "CAPE 盈餘殖利率（1 ÷ CAPE）",
+        "tw": 2.14,
+        "us": 2.47,
+        "note": "台股用 Siblis，美股用 Shiller 原版",
+        "order": 4
+      }
+    ],
+    "macro": [
+      {
+        "id": "fed",
+        "label": "Fed 利率區間",
+        "value": "3.75%–4.00%",
+        "detail": "9 月升息一碼，2023 年 7 月以來首次；多數委員認為年底前會再升一碼。",
+        "asof": "2026-10-07",
+        "url": "https://www.roic.ai/news/fed-minutes-signal-another-2026-hike-likely-appropriate-but-timing-remains-uncertain-10-07-2026",
+        "order": 1
+      },
+      {
+        "id": "pce",
+        "label": "第四季 PCE 通膨（Fed 預估）",
+        "value": "3.7%",
+        "detail": "核心 PCE 3.4%；目標 2%，離目標還遠。",
+        "asof": "2026-09",
+        "url": "https://www.roic.ai/news/fed-minutes-signal-another-2026-hike-likely-appropriate-but-timing-remains-uncertain-10-07-2026",
+        "order": 2
+      },
+      {
+        "id": "oil",
+        "label": "Brent 今年均價（Fitch 預估）",
+        "value": "83 美元",
+        "detail": "伊朗、胡塞武裝、沙烏地阿美相關消息推動波動；油價主要透過「通膨→利率」影響股票。",
+        "asof": "2026-10-05",
+        "url": "https://www.azernews.az/oil_and_gas/265011.html",
+        "order": 3
+      },
+      {
+        "id": "midterm",
+        "label": "美國期中選舉",
+        "value": "11/3",
+        "detail": "民調：民主黨拿下眾議院機率約 76%；1950 年以來選後 12 個月美股上漲機率約 95%。",
+        "asof": "2026-10-12",
+        "url": "https://www.cmcmarkets.com/en-au/analysis/us-midterms-2026-what-investors-need-to-know",
+        "order": 4
+      },
+      {
+        "id": "capex",
+        "label": "五大雲端業者資本支出",
+        "value": "約 8,000 億美元",
+        "detail": "2026 年；2027 年預估 1.2–1.3 兆美元，部分業者自由現金流可能轉負。",
+        "asof": "2026-10-08",
+        "url": "https://www.fool.com/investing/2026/10/08/the-stock-market-is-facing-a-capex-pickle/",
+        "order": 5
+      }
+    ]
+  },
+  "etf": [
+    {
+      "ticker": "EWT",
+      "name_zh": "iShares 台灣 ETF",
+      "name_en": "iShares MSCI Taiwan ETF",
+      "issuer": "BlackRock",
+      "index": "MSCI Taiwan 25/50",
+      "price": 112.42,
+      "prev_close": 113.46,
+      "price_note": "2026-10-14 美東 10:47 盤中",
+      "expense": 0.59,
+      "aum_b": 12.52,
+      "shares_m": 109.2,
+      "pe": 33.84,
+      "fwd_pe": null,
+      "div_yield": 2.51,
+      "div_ttm": 2.82,
+      "payout": "年配（12 月）",
+      "inception": "2000-06-20",
+      "n_holdings": 82,
+      "wk52_lo": 59.96,
+      "wk52_hi": 118.47,
+      "ret_1y": 81.47,
+      "ret_incep": 7.61,
+      "top10_total": 48.9,
+      "top15_total": null,
+      "overlap_total": 21.75,
+      "holdings_asof": "頁面主表（2026-10-14）；持股明細頁為 2026-10-08",
+      "snap_price": 111.1,
+      "snap_chg": -2.08,
+      "chg_pct": -0.92,
+      "wk52_pos": 90.0,
+      "from_high": -5.1,
+      "close": 112.42,
+      "hi52": 118.47,
+      "lo52": 59.96
+    },
+    {
+      "ticker": "SMH",
+      "name_zh": "VanEck 半導體 ETF",
+      "name_en": "VanEck Semiconductor ETF",
+      "issuer": "VanEck",
+      "index": "MVIS US Listed Semiconductor 25",
+      "price": 564.74,
+      "prev_close": 588.12,
+      "price_note": "2026-10-14 收盤（盤後 554.03，−1.90%）",
+      "expense": 0.35,
+      "aum_b": 72.7,
+      "shares_m": 120.49,
+      "pe": 31.37,
+      "fwd_pe": 17.91,
+      "div_yield": 0.2,
+      "div_ttm": 1.1,
+      "payout": "季配",
+      "inception": "2011-12-20",
+      "n_holdings": 26,
+      "wk52_lo": 315.05,
+      "wk52_hi": 671.83,
+      "ret_1y": 66.74,
+      "ret_incep": 28.36,
+      "top10_total": 67.74,
+      "top15_total": 88.1,
+      "overlap_total": 39.31,
+      "holdings_asof": "2026-10-13",
+      "snap_price": 569.2,
+      "snap_chg": -3.22,
+      "chg_pct": -3.98,
+      "wk52_pos": 70.0,
+      "from_high": -15.9,
+      "close": 564.74,
+      "hi52": 671.83,
+      "lo52": 315.05
+    }
+  ],
+  "etf_holdings": [
+    {
+      "key": "EWT-1",
+      "etf": "EWT",
+      "rank": 1,
+      "name": "台積電 TSMC 2330",
+      "weight": 21.75,
+      "in_scope": 1,
+      "lt_ticker": "TSM",
+      "lt_name": "台積電 TSMC"
+    },
+    {
+      "key": "EWT-2",
+      "etf": "EWT",
+      "rank": 2,
+      "name": "聯發科 MediaTek 2454",
+      "weight": 6.54,
+      "in_scope": 0,
+      "lt_ticker": "2454",
+      "lt_name": "聯發科 MediaTek"
+    },
+    {
+      "key": "EWT-3",
+      "etf": "EWT",
+      "rank": 3,
+      "name": "台達電 Delta 2308",
+      "weight": 3.8,
+      "in_scope": 0,
+      "lt_ticker": null,
+      "lt_name": null
+    },
+    {
+      "key": "EWT-4",
+      "etf": "EWT",
+      "rank": 4,
+      "name": "日月光投控 ASE 3711",
+      "weight": 3.11,
+      "in_scope": 0,
+      "lt_ticker": null,
+      "lt_name": null
+    },
+    {
+      "key": "EWT-5",
+      "etf": "EWT",
+      "rank": 5,
+      "name": "鴻海 Hon Hai 2317",
+      "weight": 3.04,
+      "in_scope": 0,
+      "lt_ticker": null,
+      "lt_name": null
+    },
+    {
+      "key": "EWT-6",
+      "etf": "EWT",
+      "rank": 6,
+      "name": "南亞 Nan Ya 1303",
+      "weight": 2.4,
+      "in_scope": 0,
+      "lt_ticker": null,
+      "lt_name": null
+    },
+    {
+      "key": "EWT-7",
+      "etf": "EWT",
+      "rank": 7,
+      "name": "台光電 EMC 2383",
+      "weight": 2.26,
+      "in_scope": 0,
+      "lt_ticker": null,
+      "lt_name": null
+    },
+    {
+      "key": "EWT-8",
+      "etf": "EWT",
+      "rank": 8,
+      "name": "欣興 Unimicron 3037",
+      "weight": 2.25,
+      "in_scope": 0,
+      "lt_ticker": null,
+      "lt_name": null
+    },
+    {
+      "key": "EWT-9",
+      "etf": "EWT",
+      "rank": 9,
+      "name": "聯電 UMC 2303",
+      "weight": 2.03,
+      "in_scope": 0,
+      "lt_ticker": null,
+      "lt_name": null
+    },
+    {
+      "key": "EWT-10",
+      "etf": "EWT",
+      "rank": 10,
+      "name": "奇鋐 AVC 3017",
+      "weight": 1.73,
+      "in_scope": 0,
+      "lt_ticker": null,
+      "lt_name": null
+    },
+    {
+      "key": "SMH-1",
+      "etf": "SMH",
+      "rank": 1,
+      "name": "輝達 NVIDIA NVDA",
+      "weight": 19.77,
+      "in_scope": 1,
+      "lt_ticker": "NVDA",
+      "lt_name": "輝達 NVIDIA"
+    },
+    {
+      "key": "SMH-2",
+      "etf": "SMH",
+      "rank": 2,
+      "name": "台積電 TSMC TSM (ADR)",
+      "weight": 9.27,
+      "in_scope": 1,
+      "lt_ticker": "TSM",
+      "lt_name": "台積電 TSMC"
+    },
+    {
+      "key": "SMH-3",
+      "etf": "SMH",
+      "rank": 3,
+      "name": "超微 AMD",
+      "weight": 5.57,
+      "in_scope": 1,
+      "lt_ticker": "AMD",
+      "lt_name": "超微 AMD"
+    },
+    {
+      "key": "SMH-4",
+      "etf": "SMH",
+      "rank": 4,
+      "name": "博通 Broadcom AVGO",
+      "weight": 5.41,
+      "in_scope": 0,
+      "lt_ticker": "AVGO",
+      "lt_name": "博通 Broadcom"
+    },
+    {
+      "key": "SMH-5",
+      "etf": "SMH",
+      "rank": 5,
+      "name": "德州儀器 TI TXN",
+      "weight": 4.72,
+      "in_scope": 0,
+      "lt_ticker": "TXN",
+      "lt_name": "德州儀器 TI"
+    },
+    {
+      "key": "SMH-6",
+      "etf": "SMH",
+      "rank": 6,
+      "name": "美光 Micron MU",
+      "weight": 4.7,
+      "in_scope": 1,
+      "lt_ticker": "MU",
+      "lt_name": "美光 Micron"
+    },
+    {
+      "key": "SMH-7",
+      "etf": "SMH",
+      "rank": 7,
+      "name": "應用材料 AMAT",
+      "weight": 4.65,
+      "in_scope": 0,
+      "lt_ticker": "AMAT",
+      "lt_name": "應用材料 AMAT"
+    },
+    {
+      "key": "SMH-8",
+      "etf": "SMH",
+      "rank": 8,
+      "name": "邁威爾 Marvell MRVL",
+      "weight": 4.63,
+      "in_scope": 0,
+      "lt_ticker": "MRVL",
+      "lt_name": "邁威爾 Marvell"
+    },
+    {
+      "key": "SMH-9",
+      "etf": "SMH",
+      "rank": 9,
+      "name": "科磊 KLA KLAC",
+      "weight": 4.56,
+      "in_scope": 0,
+      "lt_ticker": "KLAC",
+      "lt_name": "科磊 KLA"
+    },
+    {
+      "key": "SMH-10",
+      "etf": "SMH",
+      "rank": 10,
+      "name": "艾司摩爾 ASML",
+      "weight": 4.45,
+      "in_scope": 0,
+      "lt_ticker": "ASML",
+      "lt_name": "艾司摩爾 ASML"
+    },
+    {
+      "key": "SMH-11",
+      "etf": "SMH",
+      "rank": 11,
+      "name": "科林研發 Lam LRCX",
+      "weight": 4.3,
+      "in_scope": 0,
+      "lt_ticker": "LRCX",
+      "lt_name": "科林研發 Lam"
+    },
+    {
+      "key": "SMH-12",
+      "etf": "SMH",
+      "rank": 12,
+      "name": "亞德諾 ADI",
+      "weight": 4.27,
+      "in_scope": 0,
+      "lt_ticker": "ADI",
+      "lt_name": "亞德諾 ADI"
+    },
+    {
+      "key": "SMH-13",
+      "etf": "SMH",
+      "rank": 13,
+      "name": "英特爾 Intel INTC",
+      "weight": 4.18,
+      "in_scope": 0,
+      "lt_ticker": "INTC",
+      "lt_name": "英特爾 Intel"
+    },
+    {
+      "key": "SMH-14",
+      "etf": "SMH",
+      "rank": 14,
+      "name": "SK 海力士 SK hynix",
+      "weight": 3.99,
+      "in_scope": 0,
+      "lt_ticker": "SKHY",
+      "lt_name": "SK 海力士"
+    },
+    {
+      "key": "SMH-15",
+      "etf": "SMH",
+      "rank": 15,
+      "name": "高通 Qualcomm QCOM",
+      "weight": 3.63,
+      "in_scope": 0,
+      "lt_ticker": "QCOM",
+      "lt_name": "高通 Qualcomm"
+    }
+  ],
+  "defensive": [
+    {
+      "ticker": "XLP",
+      "name": "必需消費 ETF",
+      "close": 86.06,
+      "pe": 25.56,
+      "fwd_pe": 20.07,
+      "beta": 0.48,
+      "div_yield": 2.55,
+      "note": "持有 Walmart 10.79%、Costco 9.11%、P&G、Coca-Cola 等；費用率 0.08%",
+      "order": 1
+    },
+    {
+      "ticker": "WMT",
+      "name": "Walmart 沃爾瑪",
+      "close": 116.16,
+      "pe": 42.09,
+      "fwd_pe": 38.71,
+      "beta": 0.58,
+      "div_yield": 0.85,
+      "note": "生意抗跌，但估值不便宜",
+      "order": 2
+    },
+    {
+      "ticker": "COST",
+      "name": "Costco 好市多",
+      "close": 982.0,
+      "pe": 47.3,
+      "fwd_pe": 43.04,
+      "beta": 0.87,
+      "div_yield": 0.6,
+      "note": "本益比比你持有的 Amazon、NVIDIA 還高；可買零股",
+      "order": 3
+    },
+    {
+      "ticker": "SGOV",
+      "name": "0–3 個月美國國庫券 ETF",
+      "close": 100.54,
+      "pe": null,
+      "fwd_pe": null,
+      "beta": null,
+      "div_yield": 3.65,
+      "note": "現金停車用，價格幾乎不動；費用率 0.09%",
+      "order": 4
+    }
+  ],
+  "checklist": [
+    {
+      "id": "q1",
+      "n": 1,
+      "q": "企業價值有沒有提高？",
+      "hint": "訂單、收入、利潤率、競爭優勢與每股成果，哪些發生了變化？",
+      "where": "看各公司分頁的四季財報"
+    },
+    {
+      "id": "q2",
+      "n": 2,
+      "q": "股價漲得比價值快多少？",
+      "hint": "分開估計保守、中性、樂觀情境，避免只用一個成長率。",
+      "where": "看下方三情境表"
+    },
+    {
+      "id": "q3",
+      "n": 3,
+      "q": "目前價格要求什麼？",
+      "hint": "需要幾年高成長？退出倍數壓縮後，還有合理報酬嗎？",
+      "where": "看下方「要多快的成長」欄"
+    },
+    {
+      "id": "q4",
+      "n": 4,
+      "q": "即使論點成立，部位是否過大？",
+      "hint": "公司判斷與風險管理分開處理。",
+      "where": "看下方「占總帳戶」欄與穿透曝險"
+    },
+    {
+      "id": "q5",
+      "n": 5,
+      "q": "我賣出後，資金有更好的用途嗎？",
+      "hint": "比較預期報酬、風險與成本，而不是只比較過去漲幅。",
+      "where": "與短天期美債的約 4% 比較"
+    }
+  ],
+  "reconciliation": {
+    "checked": 324,
+    "matched": 314,
+    "mismatches": [
+      {
+        "ticker": "AMD",
+        "quarter": "25Q3",
+        "end": "2025-09-27",
+        "field": "gross_profit",
+        "official": 47.8,
+        "external": 50.4,
+        "unit": "億美元"
+      },
+      {
+        "ticker": "AMD",
+        "quarter": "25Q4",
+        "end": "2025-12-27",
+        "field": "gross_profit",
+        "official": 55.77,
+        "external": 58.37,
+        "unit": "億美元"
+      },
+      {
+        "ticker": "AMD",
+        "quarter": "26Q1",
+        "end": "2026-03-28",
+        "field": "gross_profit",
+        "official": 54.16,
+        "external": 56.77,
+        "unit": "億美元"
+      },
+      {
+        "ticker": "AMD",
+        "quarter": "26Q2",
+        "end": "2026-06-27",
+        "field": "gross_profit",
+        "official": 62.03,
+        "external": 64.63,
+        "unit": "億美元"
+      },
+      {
+        "ticker": "AMZN",
+        "quarter": "25Q3",
+        "end": "2025-09-30",
+        "field": "operating_income",
+        "official": 174.22,
+        "external": 199.22,
+        "unit": "億美元"
+      },
+      {
+        "ticker": "AMZN",
+        "quarter": "25Q4",
+        "end": "2025-12-31",
+        "field": "operating_income",
+        "official": 249.77,
+        "external": 224.77,
+        "unit": "億美元"
+      },
+      {
+        "ticker": "META",
+        "quarter": "26Q2",
+        "end": "2026-06-30",
+        "field": "operating_income",
+        "official": 187.75,
+        "external": 211.75,
+        "unit": "億美元"
+      },
+      {
+        "ticker": "MU",
+        "quarter": "FQ4'26",
+        "end": "2026-09-03",
+        "field": "eps",
+        "official": 32.87,
+        "external": 32.85,
+        "unit": "每股"
+      },
+      {
+        "ticker": "TSM",
+        "quarter": "25Q4",
+        "end": "2025-12-31",
+        "field": "net_income",
+        "official": 5057.44,
+        "external": 4854.65,
+        "unit": "億新臺幣"
+      },
+      {
+        "ticker": "TSM",
+        "quarter": "25Q4",
+        "end": "2025-12-31",
+        "field": "eps",
+        "official": 19.5,
+        "external": 18.72,
+        "unit": "每股"
+      }
+    ],
+    "rule": "同季（結帳日相差 ≤ 7 天）逐欄比對；金額容差 max(0.6 億, 0.3%)，EPS 容差 0.011。不一致時網站一律採官方 SEC 值。"
+  }
+}
