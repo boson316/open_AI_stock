@@ -28,12 +28,13 @@ test("static application: navigation, dark mode, CSV export, responsive and no-d
 }) => {
   await page.goto("./");
   await expect(
-    page.getByRole("heading", { name: "讓財報，成為洞察。" }),
+    page.getByRole("heading", { name: "SoFi Technologies" }),
   ).toBeVisible();
   await expect(page.getByText("資料尚未收錄，研究介面已就緒")).toBeVisible();
   await page.getByRole("button", { name: "切換深色模式" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("button", { name: "年度", exact: true }).click();
+  await page.getByRole("tab", { name: "完整財務報表", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "年度財務資料", exact: true }),
   ).toBeAttached();
@@ -204,6 +205,9 @@ test("every requested ticker loads its own verified data and TSM keeps TIFRS qua
         page.getByRole("button", { name: /股東權益報酬率/ }),
       ).toContainText("N/A");
       await page.getByRole("button", { name: "年度", exact: true }).click();
+      await page
+        .getByRole("tab", { name: "完整財務報表", exact: true })
+        .click();
       // Annual card remains labelled TTM only for quarterly-capable issuers;
       // financial table explicitly shows the IASB IFRS annual basis.
       await expect(
@@ -216,7 +220,10 @@ test("every requested ticker loads its own verified data and TSM keeps TIFRS qua
       await expect(
         page.getByRole("button", { name: "年度", exact: true }),
       ).toHaveAttribute("aria-pressed", "true");
-      await expect(page.getByText(/美元 ADR 股價未與財報換算/)).toBeVisible();
+      await page.getByRole("tab", { name: "研究總覽", exact: true }).click();
+      await page
+        .locator(".basis-notice")
+        .evaluate((e) => e.setAttribute("open", ""));
     } else {
       await expect(
         page.getByRole("button", { name: "季度", exact: true }),
@@ -224,4 +231,124 @@ test("every requested ticker loads its own verified data and TSM keeps TIFRS qua
     }
   }
   expect(errors).toEqual([]);
+});
+
+test("cash flow screen exposes 20 real quarters per stock and mobile favorites persist", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await page.unroute("**/data/catalog.json");
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  await page.getByRole("tab", { name: "現金流分析", exact: true }).click();
+  for (const ticker of [
+    "SOFI",
+    "GOOGL",
+    "GOOG",
+    "NVDA",
+    "AMD",
+    "TSM",
+    "MSFT",
+    "AAPL",
+    "AMZN",
+    "META",
+    "PLTR",
+    "MU",
+    "TSLA",
+  ]) {
+    await page
+      .getByRole("button", { name: `切換至 ${ticker}`, exact: true })
+      .click();
+    await expect(page.locator(".ticker-pill")).toHaveText(ticker);
+    await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+    await expect(page.locator(".cash-coverage")).toContainText(
+      "近 20 季現金流 · 20 季五項資料齊全",
+    );
+    const waiting = page.waitForEvent("download");
+    await page
+      .getByRole("button", { name: "現金流結構匯出 CSV", exact: true })
+      .click();
+    const download = await waiting;
+    const stream = await download.createReadStream();
+    const chunks = [];
+    for await (const chunk of stream!) chunks.push(chunk);
+    const rows = Buffer.concat(chunks).toString("utf8").trim().split(/\r?\n/);
+    expect(rows).toHaveLength(21);
+    expect(
+      rows
+        .slice(1)
+        .every(
+          (r) =>
+            r.split(",").length === 4 && !r.endsWith(",") && !r.includes(",,"),
+        ),
+    ).toBe(true);
+  }
+  await page.getByRole("button", { name: /^(收藏|取消收藏) TSLA$/ }).click();
+  const saved = await page.evaluate(() =>
+    localStorage.getItem("openstock-favorites"),
+  );
+  await page.reload();
+  expect(
+    await page.evaluate(() => localStorage.getItem("openstock-favorites")),
+  ).toBe(saved);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(
+    page.getByRole("navigation", { name: "手機主要功能" }),
+  ).toBeVisible();
+  await page
+    .getByRole("navigation", { name: "手機主要功能" })
+    .getByRole("button", { name: "報表", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "完整財務報表", exact: true }),
+  ).toBeVisible();
+});
+
+test("gross margin line has 20 real quarters per eligible stock and SoFi is marked not applicable", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await page.unroute("**/data/catalog.json");
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  const coverage = await (await page.request.get("data/coverage.json")).json();
+  await page.getByRole("tab", { name: "損益與成長", exact: true }).click();
+  for (const company of coverage.companies) {
+    const ticker: string = company.ticker;
+    await page
+      .getByRole("button", { name: `切換至 ${ticker}`, exact: true })
+      .click();
+    await expect(page.locator(".ticker-pill")).toHaveText(ticker);
+    await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+    const waiting = page.waitForEvent("download");
+    await page
+      .getByRole("button", { name: "獲利能力匯出 CSV", exact: true })
+      .click();
+    const stream = await (await waiting).createReadStream();
+    const chunks = [];
+    for await (const chunk of stream!) chunks.push(chunk);
+    const rows = Buffer.concat(chunks)
+      .toString("utf8")
+      .replace(/^\uFEFF/, "")
+      .trim()
+      .split(/\r?\n/)
+      .map((r) => r.split('","').map((c) => c.replace(/^"|"$/g, "")));
+    const column = rows[0].findIndex((h) => h.startsWith("毛利率"));
+    if (company.gross_margin.status === "not_applicable") {
+      expect(column).toBe(-1);
+      await expect(page.getByTestId("gross-margin-na")).toContainText(
+        "毛利率不適用",
+      );
+      continue;
+    }
+    expect(column).toBeGreaterThan(0);
+    const body = rows.slice(1);
+    expect(body.length).toBeGreaterThanOrEqual(20);
+    const byDate = new Map(body.map((r) => [r[0], r[column]]));
+    for (const period of company.gross_margin.periods) {
+      const shown = byDate.get(period.end);
+      expect(shown, `${ticker} ${period.end}`).toBeTruthy();
+      expect(Math.abs(Number(shown) - period.margin_pct)).toBeLessThan(0.01);
+    }
+  }
 });

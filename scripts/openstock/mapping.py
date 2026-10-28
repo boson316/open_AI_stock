@@ -7,6 +7,7 @@ only in a custom filing extension. Do not substitute interest income for revenue
 METRICS = {
     "revenue": ("USD", ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet"]),
     "gross_profit": ("USD", ["GrossProfit"]),
+    "cost_revenue": ("USD", ["CostOfRevenue", "CostOfGoodsAndServicesSold"]),
     "operating_income": ("USD", ["OperatingIncomeLoss"]),
     "net_income": ("USD", ["NetIncomeLoss", "ProfitLoss"]),
     "eps": ("USD/shares", ["EarningsPerShareDiluted"]),
@@ -89,6 +90,8 @@ def extract(companyfacts, cik, overrides=None, *, currency="USD", standard="US G
                     start=row.get("start"), end=row["end"], filed=row["filed"], accession=accession,
                     tag=tag, form=row["form"],
                     basis=f"{cik}:consolidated-revenue" if bridged else None,
+                    report_fiscal_year=row.get('fy'),
+                    reporting_basis='IFRS (IASB)' if standard=='IFRS' else 'US GAAP',
                     source=f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession.replace('-', '')}/{accession}-index.html"))
             if not bridged:
                 break

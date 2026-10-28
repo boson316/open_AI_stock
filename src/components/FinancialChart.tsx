@@ -34,6 +34,7 @@ type Props = {
   log?: boolean;
   dualAxis?: boolean;
   secondaryUnit?: string;
+  height?: number;
 };
 export function FinancialChart({
   title,
@@ -45,6 +46,7 @@ export function FinancialChart({
   log = false,
   dualAxis = false,
   secondaryUnit = "美元／股",
+  height = 310,
 }: Props) {
   const ref = useRef<ReactECharts>(null),
     box = useRef<HTMLElement>(null);
@@ -61,9 +63,13 @@ export function FinancialChart({
     return () => observer.disconnect();
   }, [hasData]);
   const option: EChartsOption = {
-    backgroundColor: dark ? "#142027" : "#ffffff",
-    color: ["#288a79", "#8095b4", "#c4a169", "#98bfb7", "#64748b", "#d8be95"],
-    textStyle: { color: dark ? "#bac9d0" : "#617078", fontFamily: "system-ui" },
+    backgroundColor: dark ? "#1a2230" : "#ffffff",
+    color: ["#5c7aed", "#9ba9cc", "#c4aa7f", "#6aafa8", "#8e82ba", "#df9ca5"],
+    textStyle: {
+      color: dark ? "#a4b1c9" : "#8b97ac",
+      fontFamily: "system-ui",
+      fontSize: 10,
+    },
     tooltip: {
       trigger: "axis",
       valueFormatter: (value) =>
@@ -73,14 +79,20 @@ export function FinancialChart({
     },
     legend: {
       top: 4,
-      textStyle: { color: dark ? "#bac9d0" : "#617078" },
+      textStyle: { color: dark ? "#a4b1c9" : "#8b97ac", fontSize: 10 },
       type: "scroll",
     },
-    grid: { left: 68, right: dualAxis ? 65 : 22, top: 64, bottom: 68 },
+    grid: { left: 57, right: dualAxis ? 58 : 17, top: 58, bottom: 56 },
     xAxis: {
       type: "category",
       data: dates,
       axisLine: { lineStyle: { color: "#899c9a44" } },
+      axisTick: { show: false },
+      axisLabel: {
+        hideOverlap: true,
+        fontSize: 9,
+        formatter: (v: string) => v.slice(2, 7).replace("-", "/"),
+      },
     },
     yAxis: dualAxis
       ? [
@@ -96,7 +108,19 @@ export function FinancialChart({
           name: unit,
           splitLine: { lineStyle: { color: "#899c9a22" } },
         },
-    dataZoom: [{ type: "inside" }, { type: "slider", height: 16, bottom: 12 }],
+    dataZoom: [
+      { type: "inside" },
+      {
+        type: "slider",
+        height: 10,
+        bottom: 8,
+        borderColor: "transparent",
+        backgroundColor: dark ? "#263247" : "#f0f3fa",
+        fillerColor: "#5c7aed18",
+        handleSize: 0,
+        showDetail: false,
+      },
+    ],
     series: series.map((s, i) => ({
       name: s.name,
       type:
@@ -109,7 +133,7 @@ export function FinancialChart({
       data: s.values,
       barMaxWidth: 30,
       stack: kind === "stack" ? "total" : undefined,
-      areaStyle: kind === "area" ? { opacity: 0.12 } : undefined,
+      areaStyle: kind === "area" ? { opacity: 0.08 } : undefined,
       smooth: false,
       connectNulls: false,
       symbolSize: 5,
@@ -135,7 +159,7 @@ export function FinancialChart({
       url = chart.getDataURL({
         type: "png",
         pixelRatio: 2,
-        backgroundColor: dark ? "#142027" : "#fff",
+        backgroundColor: dark ? "#1a2230" : "#fff",
       });
     const a = document.createElement("a");
     a.href = url;
@@ -200,7 +224,7 @@ export function FinancialChart({
           option={option}
           notMerge
           opts={{ renderer: "canvas" }}
-          style={{ height: 310 }}
+          style={{ height }}
         />
       ) : (
         <div className="chart-empty">

@@ -8,6 +8,9 @@ export type Fact = {
   accession: string;
   tag: string;
   basis?: string | null;
+  reporting_basis?: string | null;
+  report_fiscal_year?: number | null;
+  source_refs?: string[];
   source: string;
   form: string;
   quality: "reported" | "derived";

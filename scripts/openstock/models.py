@@ -14,6 +14,9 @@ class Fact(BaseModel):
     accession: str
     tag: str
     basis: str | None = None
+    report_fiscal_year: int | None = None
+    reporting_basis: str | None = None
+    source_refs: list[str] = Field(default_factory=list)
     source: str
     form: str
     quality: Literal["reported", "derived"] = "reported"

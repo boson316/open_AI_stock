@@ -15,10 +15,10 @@ try {
   const reportResponse = await page.request.get(`${base}data/coverage.json`);
   if (!reportResponse.ok()) throw Error('Live coverage report is unavailable');
   const report = await reportResponse.json();
-  if (!report.complete || report.companies.length !== expected.companies.length) throw Error('Live coverage is incomplete');
+  if (!report.complete || !report.cashflow_complete || !report.gross_margin_complete || report.companies.length !== expected.companies.length) throw Error('Live coverage is incomplete');
   for (const company of expected.companies) {
     const remote = report.companies.find(c => c.ticker === company.ticker);
-    if (!remote?.core_complete || remote.dataset_sha256 !== company.dataset_sha256) throw Error(`Stale live report: ${company.ticker}`);
+    if (!remote?.core_complete || !remote.cashflow?.complete || remote.cashflow.quarters !== 20 || !remote.gross_margin?.complete || remote.gross_margin.status !== company.gross_margin.status || remote.dataset_sha256 !== company.dataset_sha256) throw Error(`Stale live report: ${company.ticker}`);
     const dataResponse = await page.request.get(`${base}data/${company.ticker}.json`);
     if (!dataResponse.ok()) throw Error(`Missing live dataset: ${company.ticker}`);
     const hash = createHash('sha256').update(await dataResponse.body()).digest('hex');

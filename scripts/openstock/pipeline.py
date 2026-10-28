@@ -31,7 +31,11 @@ COMPANIES = {
 
 # Reviewed consolidated revenue concept: customer-contract revenue is only one
 # component of SoFi net revenue. Do not use it as total company revenue.
-COMPANY_MAPPINGS = {"SOFI": {"revenue": ["us-gaap:RevenuesNetOfInterestExpense"]}}
+COMPANY_MAPPINGS = {
+    "SOFI": {"revenue": ["us-gaap:RevenuesNetOfInterestExpense"], "capex": ["us-gaap:PaymentsToAcquireProductiveAssets"]},
+    "NVDA": {"capex": ["us-gaap:PaymentsToAcquireProductiveAssets"]},
+    "AMZN": {"capex": ["us-gaap:PaymentsToAcquireProductiveAssets"]},
+}
 
 
 def atomic_json(path, data):
@@ -49,6 +53,8 @@ def generate(ticker, output, input_path=None, overrides=None, filing=None, suppl
         raise ValueError("CIK does not match selected company")
     currency, standard = ("TWD", "IFRS") if ticker == "TSM" else ("USD", "US GAAP")
     facts = extract(raw, cik, {**COMPANY_MAPPINGS.get(ticker, {}), **(overrides or {})}, currency=currency, standard=standard)
+    if ticker == "TSM":
+        facts = [f for f in facts if f.metric not in {"ocf","icf","financing_cf","capex","sbc"}]
     if supplemental:
         if ticker == "SOFI":
             from .supplemental import fetch_releases
@@ -58,6 +64,12 @@ def generate(ticker, output, input_path=None, overrides=None, filing=None, suppl
             from .us_quarters import fetch_q4
             fetch_releases = lambda client: fetch_q4(client,cik,facts)
         facts += fetch_releases(SECClient())
+        if ticker == "NVDA":
+            from .nvidia_cash import reviewed_facts
+            facts += reviewed_facts(SECClient())
+        if ticker == "TSM":
+            from .tsm_cash import fetch_cashflows
+            facts += fetch_cashflows(SECClient())
         if ticker == "SOFI":
             from .us_quarters import fetch_q4
             facts += fetch_q4(SECClient(),cik,facts)
@@ -69,7 +81,15 @@ def generate(ticker, output, input_path=None, overrides=None, filing=None, suppl
     if ticker == "SOFI":
         # Pre-combination SPAC periods do not describe today's operating company.
         facts = [f for f in facts if str(f.end) >= "2021-06-30"]
+    if ticker == "NVDA":
+        from .nvidia_cash import apply_basis
+        facts=apply_basis(facts)
+    from .profit import add_gross_profit
+    facts = add_gross_profit(facts,cik)
     normalized = quarters(facts)
+    # Publish audited quarter differences with their two official operands so
+    # the static frontend does not have to reconstruct reporting vintages.
+    facts += [f for f in normalized if f.quality=='derived' and f.source_refs]
     if not normalized:
         raise ValueError("No compatible reported financial facts; keeping previous dataset")
     periods = []
@@ -84,10 +104,10 @@ def generate(ticker, output, input_path=None, overrides=None, filing=None, suppl
         updated=datetime.now(timezone.utc).isoformat(), source=url,
         facts=facts, warnings=[
             "資料採 SEC Company Facts；公司自訂、分部及營運指標未完整涵蓋。",
-            "單季累積值僅在相同申報版本、標籤、單位與期間相容時相減；不足時顯示 N/A。",
+            "現金流僅於同申報或穩定同財年申報群組、標籤、單位與會計準則相容時相減；歷史季度可能尚未按最新年度修訂逐季重編。",
             "EPS 不做累積值相減；TTM EPS 採四個已公布單季之和，股數變化可能影響可比性。",
             "自訂標籤須透過明確映射及官方 Inline XBRL 匯入；分部及未映射欄位維持缺值。",
-        ] + (["SoFi 營收採 RevenuesNetOfInterestExpense；排除 2021-06-30 之前 SPAC 期間。"] if ticker == "SOFI" else [])
+        ] + (["資本支出含設備、軟體與其他無形資產，採 Productive Assets 定義。"] if ticker in {"SOFI","NVDA","AMZN"} else []) + (["SoFi 營收採 RevenuesNetOfInterestExpense；排除 2021-06-30 之前 SPAC 期間。"] if ticker == "SOFI" else [])
           + (["TSM 採 IFRS、新臺幣及普通股每股口徑；不可直接與美元 ADR 股價計算 PE/PB。",
               "季度盈餘公告採 TIFRS；20-F 年報採 IFRS (IASB)。兩者部分淨利與 EPS 不同，不能混合還原季度或計算 ROE/ROA。",
               "年度採 Company Facts，季度可透過 --supplemental 解析官方 6-K 盈餘公告；不同指標截至日期可能不同。"] if ticker == "TSM" else [])
