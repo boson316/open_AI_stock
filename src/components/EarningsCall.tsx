@@ -70,7 +70,6 @@ export function EarningsCall({
   shareUnit: string;
 }) {
   const [data, setData] = useState<EarningsCalls | null>(null);
-  const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
@@ -80,14 +79,12 @@ export function EarningsCall({
         return r.json();
       })
       .then((j) => setData(validateCalls(j)))
-      .catch((e) => {
-        if (e.name !== "AbortError") setError(e.message);
-      });
+      // 法說會卡片是輔助內容：讀取失敗就不顯示，不干擾主要財報資料的錯誤提示。
+      .catch(() => setData(null));
     return () => controller.abort();
   }, [base]);
   useEffect(() => setOpen(false), [ticker]);
 
-  if (error) return <div className="notice error" role="alert">法說會資料讀取失敗：{error}</div>;
   const call = data?.calls[ticker]
     ?.slice()
     .sort((a, b) => b.date.localeCompare(a.date))[0];
