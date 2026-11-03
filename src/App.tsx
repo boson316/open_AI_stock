@@ -36,6 +36,7 @@ import { Compare } from "./components/Compare";
 import { Screener } from "./components/Screener";
 import { ExternalValuationPanel } from "./components/ExternalValuation";
 import { ValuationTools } from "./components/ValuationTools";
+import { IntrinsicValue } from "./components/IntrinsicValue";
 import { StockSnapshot } from "./components/StockSnapshot";
 import { Gurus } from "./components/Gurus";
 import { Market } from "./components/Market";
@@ -1888,6 +1889,14 @@ export function App() {
                     dark={dark}
                   />
                   <ValuationTools base={base} ticker={ticker} />
+                  <IntrinsicValue
+                    base={base}
+                    ticker={ticker}
+                    dark={dark}
+                    quarters={quarters}
+                    raw={raw}
+                    isFinancial={isFinancial}
+                  />
                   {riverDates.length > 0 && (
                     <FinancialChart
                       title="本益比估值河流圖（你匯入的股價）"
