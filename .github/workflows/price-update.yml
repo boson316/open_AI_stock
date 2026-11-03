@@ -1,0 +1,40 @@
+name: Price Update
+# 每週六（美股週五收盤後）更新股價；也可以手動執行。
+on:
+  schedule:
+    - cron: '23 2 * * 6'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: price-update
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - run: pip install -r requirements.lock && pip install --no-deps -e .
+      - name: Download weekly prices (single-ticker failures keep previous price)
+        run: python -m openstock.prices
+      - run: pytest tests/financial/test_prices.py
+      # 股價屬低風險資料，直接提交到 main；GITHUB_TOKEN 的推送不會觸發部署，所以手動觸發 Pages。
+      - name: Commit and deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- public/data/prices.json; then
+            echo "No price changes"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/prices.json
+          git commit -m "data: weekly price update"
+          git push origin HEAD:main
+          gh workflow run deploy.yml --ref main

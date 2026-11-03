@@ -216,14 +216,72 @@ export function validateResearch(raw: unknown): Research {
   return d;
 }
 
+export type PriceFile = {
+  version: 1;
+  source: string;
+  note: string;
+  updated: string;
+  tickers: Record<string, { asof: string; close: number; hi52: number; lo52: number; weekly: [string, number][] }>;
+};
+
+/**
+ * 用每週自動更新的股價（prices.json）覆蓋研究資料裡較舊的收盤價。
+ * 本益比、股價淨值比等倍數依新舊股價比例等比例調整（EPS、淨值等分母不變）。
+ */
+export function applyPrices(research: Research, prices: PriceFile | null): Research {
+  if (!prices || prices.version !== 1) return research;
+  const day = (s: string | null | undefined) => (s && /^\d{4}-\d{2}-\d{2}/.test(s) ? s.slice(0, 10) : "");
+  const valid = (p: PriceFile["tickers"][string] | undefined) =>
+    p && Number.isFinite(p.close) && p.close > 0 && p.hi52 >= p.lo52 && day(p.asof) !== "";
+  const companies = Object.fromEntries(
+    Object.entries(research.companies).map(([t, c]) => {
+      const p = prices.tickers[t];
+      const oldClose = c.close ?? c.price;
+      if (!valid(p) || day(p!.asof) <= day(c.close_asof) || !(oldClose > 0)) return [t, c];
+      const k = p!.close / oldClose;
+      const scale = (v: number | null) => (v === null ? null : v * k);
+      const label = `${p!.asof} 收盤（Stooq）`;
+      return [
+        t,
+        {
+          ...c,
+          price: p!.close,
+          price_asof: label,
+          close: p!.close,
+          close_asof: label,
+          hi52: p!.hi52,
+          lo52: p!.lo52,
+          pe: scale(c.pe),
+          fwd_pe: scale(c.fwd_pe),
+          pb: scale(c.pb),
+          ps: scale(c.ps),
+          pfcf: scale(c.pfcf),
+          mcap_100m_usd: scale(c.mcap_100m_usd),
+        },
+      ];
+    }),
+  );
+  const etf = research.etf.map((e) => {
+    const p = prices.tickers[e.ticker];
+    return valid(p) ? { ...e, close: p!.close, wk52_lo: p!.lo52, wk52_hi: p!.hi52 } : e;
+  });
+  return { ...research, companies, etf };
+}
+
 let cache: Promise<Research> | null = null;
 export function loadResearch(base: string): Promise<Research> {
-  cache ??= fetch(`${base}data/research.json`)
+  if (cache) return cache;
+  // 股價檔是選用的：讀不到就沿用研究資料裡的收盤價。
+  const prices = fetch(`${base}data/prices.json`)
+    .then((r) => (r.ok ? (r.json() as Promise<PriceFile>) : null))
+    .catch(() => null);
+  cache = fetch(`${base}data/research.json`)
     .then((r) => {
       if (!r.ok) throw Error(`HTTP ${r.status}`);
       return r.json();
     })
     .then(validateResearch)
+    .then(async (d) => applyPrices(d, await prices))
     .catch((e) => {
       cache = null;
       throw e;

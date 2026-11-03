@@ -1842,7 +1842,8 @@ export function App() {
                     <div>
                       <h3>使用你有權使用的歷史股價</h3>
                       <p className="muted">
-                        未確認免費來源的再散布授權，因此不抓取非官方即時報價。CSV
+                        行情、本益比與估值工具使用每週自動更新的 Stooq 收盤價（僅供個人研究、非即時報價）。
+                        若要畫每日本益比河流圖，可另外匯入股價 CSV；CSV
                         僅在本次瀏覽器工作階段使用，不會上傳。
                       </p>
                       <code>Date,Open,High,Low,Close,AdjustedClose,Volume</code>
