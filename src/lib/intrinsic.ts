@@ -13,7 +13,9 @@ const days = (a: string, b: string) =>
 
 /** 截至 end（含）最近四個連續單季的 TTM 合計；不足或不連續時 null。 */
 export function ttmAt(quarters: Fact[], metric: string, end: string) {
-  const rows = quarters.filter((f) => f.metric === metric && f.end <= end);
+  // 容許 20 天誤差：52/53 週會計年度的季末每年差一兩天（如 Apple、AMD）。
+  const limit = new Date(Date.parse(end) + 20 * 86400000).toISOString().slice(0, 10);
+  const rows = quarters.filter((f) => f.metric === metric && f.end <= limit);
   const lastRow = rows.at(-1);
   if (!lastRow || days(lastRow.end, end) > 20) return null;
   return ttm(rows.slice(-4));

@@ -58,18 +58,24 @@ export function debtHistory(quarters: Fact[]): DebtPoint[] {
   const reported = metrics.filter((m) => has(quarters, m));
   if (!reported.length) return [];
   return endsOf(quarters, metrics).map((date) => {
-    const get = (m: string) =>
-      reported.includes(m) ? (instantAt(quarters, m, date) ?? 0) : 0;
+    // 短期借款還清後公司常不再列示，缺值視為 0；長期借款與一年內到期部分
+    // 曾經申報、這期卻沒有時視為「不明」，不當成 0，避免低估負債。
+    const get = (m: string) => {
+      if (!reported.includes(m)) return 0;
+      const v = instantAt(quarters, m, date);
+      return v ?? (m === "short_borrowings" ? 0 : null);
+    };
     const anyHere = metrics.some((m) => instantAt(quarters, m, date) !== null);
     const shortTerm = anyHere ? get("short_borrowings") : null;
     const currentLongTerm = anyHere ? get("debt_current") : null;
     const longTerm = anyHere ? get("long_term_debt") : null;
+    const parts = [shortTerm, currentLongTerm, longTerm];
     return {
       date,
       shortTerm,
       currentLongTerm,
       longTerm,
-      total: anyHere ? shortTerm! + currentLongTerm! + longTerm! : null,
+      total: anyHere && parts.every((v) => v !== null) ? parts.reduce((a, v) => a! + v!, 0) : null,
       cash: instantAt(quarters, "cash", date),
       equity: instantAt(quarters, "equity", date),
     };

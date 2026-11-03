@@ -31,8 +31,8 @@ METRICS = {
     "inventory": ("USD", ["InventoryNet"]),
     "payables": ("USD", ["AccountsPayableCurrent", "AccountsPayableTradeCurrent"]),
     "short_borrowings": ("USD", ["ShortTermBorrowings", "CommercialPaper"]),
-    "debt_current": ("USD", ["LongTermDebtCurrent", "DebtCurrent", "ConvertibleNotesPayableCurrent"]),
-    "long_term_debt": ("USD", ["LongTermDebtNoncurrent", "ConvertibleNotesPayableNoncurrent"]),
+    "debt_current": ("USD", ["LongTermDebtCurrent", "DebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent", "ConvertibleNotesPayableCurrent"]),
+    "long_term_debt": ("USD", ["LongTermDebtNoncurrent", "LongTermDebtAndCapitalLeaseObligations", "ConvertibleNotesPayableNoncurrent"]),
     "dividends_paid": ("USD", ["PaymentsOfDividendsCommonStock", "PaymentsOfDividends"]),
     "dps": ("USD/shares", ["CommonStockDividendsPerShareDeclared", "CommonStockDividendsPerShareCashPaid"]),
 }
