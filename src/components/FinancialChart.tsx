@@ -65,6 +65,9 @@ export function FinancialChart({
     observer.observe(box.current);
     return () => observer.disconnect();
   }, [hasData]);
+  // 折線／散佈圖不必從 0 開始：讓 Y 軸只涵蓋資料區間（如 35%～70%），走勢較易判讀。
+  // 長條圖與堆疊圖的高度代表數值大小，仍保留 0 基準。
+  const lineLike = kind === "line" || kind === "area" || kind === "scatter";
   const option: EChartsOption = {
     backgroundColor: dark ? "#181d2e" : "#ffffff",
     color: ["#5c7aed", "#9ba9cc", "#c4aa7f", "#6aafa8", "#8e82ba", "#df9ca5"],
@@ -103,13 +106,20 @@ export function FinancialChart({
           {
             type: "value",
             name: unit,
+            scale: lineLike,
             splitLine: { lineStyle: { color: "#899c9a22" } },
           },
-          { type: "value", name: secondaryUnit, splitLine: { show: false } },
+          {
+            type: "value",
+            name: secondaryUnit,
+            scale: true,
+            splitLine: { show: false },
+          },
         ]
       : {
           type: log ? "log" : "value",
           name: unit,
+          scale: lineLike,
           splitLine: { lineStyle: { color: "#899c9a22" } },
         },
     dataZoom: [
@@ -137,7 +147,8 @@ export function FinancialChart({
       data: s.values,
       barMaxWidth: 30,
       stack: kind === "stack" ? "total" : undefined,
-      areaStyle: kind === "area" ? { opacity: 0.08 } : undefined,
+      areaStyle:
+        kind === "area" ? { opacity: 0.08, origin: "start" } : undefined,
       smooth: false,
       connectNulls: false,
       symbolSize: 5,
