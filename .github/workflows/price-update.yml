@@ -1,8 +1,7 @@
 name: Price Update
-# 每週六（美股週五收盤後）更新股價；也可以手動執行。
+# 股價更新：Stooq 目前需要金鑰才能下載，排程先停用，只保留手動執行。
+# 之後取得資料來源金鑰後，再恢復每週六的排程（cron: '23 2 * * 6'）。
 on:
-  schedule:
-    - cron: '23 2 * * 6'
   workflow_dispatch:
 permissions:
   contents: write
