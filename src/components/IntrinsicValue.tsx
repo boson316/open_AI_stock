@@ -12,6 +12,8 @@ import {
   type FcfYieldPoint,
 } from "../lib/intrinsic";
 import { useResearch, wacc, type Research } from "../lib/research";
+import { annual, cagr } from "../lib/finance";
+import { ddm } from "../lib/health";
 import { validateExternal, type ExternalValuation } from "./ExternalValuation";
 import { FinancialChart } from "./FinancialChart";
 
@@ -99,7 +101,21 @@ export function IntrinsicValue({ base, ticker, dark, quarters, raw, isFinancial 
     ? rq.reduce((a, q) => a + Math.abs(q.div!), 0) * 1e8
     : null;
   const niAtDiv = rq.at(-1) ? ttmAt(quarters, "net_income", rq.at(-1)!.end) : null;
-  const payout = divTtm !== null && niAtDiv && niAtDiv > 0 ? divTtm / niAtDiv : null;
+  const vendorPayout = divTtm !== null && niAtDiv && niAtDiv > 0 ? divTtm / niAtDiv : null;
+  // 配息率優先用 SEC 申報的「發放現金股利」近四季合計 ÷ 同期淨利；沒有時才用資料商季度配息。
+  const lastDivEnd = quarters.filter((f) => f.metric === "dividends_paid").at(-1)?.end;
+  const secDiv = lastDivEnd ? ttmAt(quarters, "dividends_paid", lastDivEnd) : null;
+  const secNi = lastDivEnd ? ttmAt(quarters, "net_income", lastDivEnd) : null;
+  const secPayout = secDiv !== null && secNi && secNi > 0 ? Math.abs(secDiv) / secNi : null;
+  const payout = secPayout ?? vendorPayout;
+  const payoutSource = secPayout !== null ? `SEC 財報，截至 ${lastDivEnd}` : vendorPayout !== null ? "資料商季度配息" : null;
+  const dpsAnnual = annual(raw).filter((f) => f.metric === "dps");
+  const dpsLast = dpsAnnual.at(-1);
+  const dpsFirst = dpsLast
+    ? dpsAnnual.find((f) => Math.abs((Date.parse(dpsLast.end) - Date.parse(f.end)) / 86400000 / 365.2425 - 5) < 0.1) ??
+      dpsAnnual.find((f) => Math.abs((Date.parse(dpsLast.end) - Date.parse(f.end)) / 86400000 / 365.2425 - 3) < 0.1)
+    : undefined;
+  const dpsGrowth = dpsLast && dpsFirst ? cagr(dpsFirst.value, dpsLast.value, dpsFirst.end, dpsLast.end) : null;
   const dividendYield = payout !== null && pe ? payout / pe : null;
 
   return (
@@ -143,6 +159,19 @@ export function IntrinsicValue({ base, ticker, dark, quarters, raw, isFinancial 
         cagr3={epsCagr(raw, 3)}
         dividendYield={dividendYield}
         payout={payout}
+      />
+      <Ddm
+        key={`ddm-${ticker}-${research ? 1 : 0}-${payout ?? "none"}`}
+        research={research}
+        ticker={ticker}
+        price={price}
+        priceAsOf={priceAsOf}
+        unit={unit}
+        eps={epsTtm}
+        payout={payout}
+        payoutSource={payoutSource}
+        dpsGrowth={dpsGrowth}
+        epsGrowth={epsCagr(raw, 5) ?? epsCagr(raw, 3)}
       />
     </div>
   );
@@ -528,6 +557,173 @@ function Lynch({
       <p className="muted small">
         林區法適合穩定成長的公司；景氣循環股（如記憶體）在獲利高峰時本益比低、成長率高，容易看起來很便宜，需要搭配循環位置判斷。僅供研究，不構成投資建議。
       </p>
+    </section>
+  );
+}
+
+function Ddm({
+  research,
+  ticker,
+  price,
+  priceAsOf,
+  unit,
+  eps,
+  payout,
+  payoutSource,
+  dpsGrowth,
+  epsGrowth,
+}: {
+  research: Research | null;
+  ticker: string;
+  price: number;
+  priceAsOf: string;
+  unit: string;
+  eps: number | null;
+  payout: number | null;
+  payoutSource: string | null;
+  dpsGrowth: number | null;
+  epsGrowth: number | null;
+}) {
+  const r = research?.roic[ticker];
+  const ke = r
+    ? wacc({ rf: research!.rf_us10y, beta: r.beta, erp: r.erp, kdSpread: r.kd_spread, tax: r.tax, debtWeight: r.debt_weight }).ke
+    : 9;
+  const baseG = dpsGrowth ?? epsGrowth;
+  const defaults = {
+    g1: baseG === null ? 5 : round1(Math.min(Math.max(baseG * 100, 0), 20)),
+    gt: 3,
+    r: round1(ke),
+  };
+  const [s, setS] = useState(defaults);
+  const set = (key: "g1" | "gt" | "r", v: string) => {
+    const n = Number(v);
+    if (Number.isFinite(n)) setS((p) => ({ ...p, [key]: n }));
+  };
+  const d0 = payout !== null && eps !== null && eps > 0 ? payout * eps : null;
+  const res = d0 ? ddm(d0, s.g1 / 100, s.gt / 100, s.r / 100) : null;
+  const margin = res ? res.value / price - 1 : null;
+  const growths = [s.g1 - 4, s.g1 - 2, s.g1, s.g1 + 2, s.g1 + 4];
+  const rates = [s.r - 1, s.r, s.r + 1];
+  return (
+    <section className="panel tool-panel" aria-label="股利折現評價">
+      <div className="panel-head">
+        <div>
+          <h3>股利折現評價（DDM）</h3>
+          <span className="muted small">
+            股票的價值 = 未來每年領到的股利折算回今天：前 5 年依成長率增加，之後以永續成長率計算
+          </span>
+        </div>
+        {d0 !== null && d0 > 0 && (
+          <button className="button secondary" onClick={() => setS(defaults)}>
+            還原預設假設
+          </button>
+        )}
+      </div>
+      {d0 === null || d0 <= 0 ? (
+        <p className="notice">
+          {payout === 0 || (payout === null && payoutSource === null)
+            ? "這家公司沒有發放現金股利（或尚無配息資料），DDM 不適用；請改看 DCF 或彼得林區評價。"
+            : "TTM EPS ≤ 0，無法換算每股股利。"}
+        </p>
+      ) : (
+        <>
+          <div className="kpi-row">
+            <div className="kpi">
+              <span>每股內在價值（{unit}）</span>
+              <strong>{num(res?.value)}</strong>
+            </div>
+            <div className="kpi">
+              <span>現價（{priceAsOf}）</span>
+              <strong>{num(price)}</strong>
+            </div>
+            <div className="kpi">
+              <span>內在價值 ÷ 現價 − 1</span>
+              <strong className={margin === null ? "" : margin >= 0 ? "positive" : "negative"}>
+                {margin === null ? "N/A" : `${margin >= 0 ? "+" : ""}${pct(margin)}`}
+              </strong>
+            </div>
+            <div className="kpi">
+              <span>目前殖利率</span>
+              <strong>{pct(d0 / price, 2)}</strong>
+            </div>
+          </div>
+          <div className="table-scroll">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>假設</th>
+                  <th>數值</th>
+                  <th>說明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>近四季每股股利（{unit}）</th>
+                  <td>{num(d0, 3)}</td>
+                  <td className="wrap">配息率 {pct(payout)}（{payoutSource}）× TTM EPS {num(eps)}；換算成股價幣別，與財報幣別無關。</td>
+                </tr>
+                {(
+                  [
+                    ["g1", "前 5 年股利成長率（%）",
+                      dpsGrowth !== null
+                        ? `預設取 SEC 年度每股股利複合成長率 ${pct(dpsGrowth)}，限制在 0–20%`
+                        : epsGrowth !== null
+                          ? `沒有每股股利歷史，改用 EPS 複合成長率 ${pct(epsGrowth)}，限制在 0–20%`
+                          : "預設 5%"],
+                    ["gt", "永續成長率（%）", "第 6 年起每年成長率，須低於要求報酬率"],
+                    ["r", "要求報酬率（%）", r ? `預設為本站 CAPM 估算的股東要求報酬 ${ke.toFixed(1)}%` : "預設 9%"],
+                  ] as const
+                ).map(([key, label, note]) => (
+                  <tr key={key}>
+                    <th>{label}</th>
+                    <td>
+                      <input aria-label={label} type="number" step="0.5" value={s[key]} onChange={(e) => set(key, e.target.value)} />
+                    </td>
+                    <td className="wrap">{note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {res && (
+            <p className="muted small">
+              價值組成：前 5 年股利 {num(res.stage)}（{pct(res.stage / res.value, 0)}）、永續價值 {num(res.terminal)}（{pct(res.terminal / res.value, 0)}）。
+            </p>
+          )}
+          <h4>敏感度：每股內在價值（{unit}）</h4>
+          <div className="table-scroll">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>要求報酬 ＼ 前 5 年成長</th>
+                  {growths.map((g) => (
+                    <th key={g}>{g.toFixed(1)}%</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rates.map((rate) => (
+                  <tr key={rate}>
+                    <th>{rate.toFixed(1)}%</th>
+                    {growths.map((g) => {
+                      const v = ddm(d0, g / 100, s.gt / 100, rate / 100)?.value ?? null;
+                      return (
+                        <td key={g} className={v === null ? "muted" : v >= price ? "positive" : "negative"}>
+                          {num(v)}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="muted small">
+            DDM 適合配息穩定、配息率高的成熟公司。配息率低、主要靠買回庫藏股回饋股東，或把現金留著擴產的公司（如多數科技股），
+            DDM 會嚴重低估價值，請以 DCF 為主。僅供研究，不構成投資建議。
+          </p>
+        </>
+      )}
     </section>
   );
 }

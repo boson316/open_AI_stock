@@ -39,6 +39,7 @@ import { ValuationTools } from "./components/ValuationTools";
 import { IntrinsicValue } from "./components/IntrinsicValue";
 import { StockSnapshot } from "./components/StockSnapshot";
 import { EarningsCall } from "./components/EarningsCall";
+import { HealthPanels } from "./components/HealthPanels";
 import { Gurus } from "./components/Gurus";
 import { Market } from "./components/Market";
 import { Portfolio } from "./components/Portfolio";
@@ -87,7 +88,21 @@ const sections = [
 const financialGroups: Record<string, string[]> = {
   income: ["revenue", "gross_profit", "operating_income", "net_income", "eps"],
   cashflow: ["ocf", "icf", "financing_cf", "capex", "sbc"],
-  balance: ["assets", "liabilities", "equity", "cash", "shares"],
+  balance: [
+    "assets",
+    "liabilities",
+    "equity",
+    "cash",
+    "shares",
+    "current_assets",
+    "current_liabilities",
+    "receivables",
+    "inventory",
+    "payables",
+    "short_borrowings",
+    "debt_current",
+    "long_term_debt",
+  ],
   banking: [
     "deposits",
     "net_interest_income",
@@ -1715,17 +1730,10 @@ export function App() {
                   <div className="notice">
                     <CircleHelp size={18} />
                     <p>
-                      總負債不等於有息負債。尚未驗證債務組成，總債務、淨債務維持
-                      N/A。帳面每股淨值僅使用同一資產負債表日的權益與股數。
+                      總負債不等於有息負債：要付利息的借款見下方「長短期金融借款」。帳面每股淨值僅使用同一資產負債表日的權益與股數。
                     </p>
                   </div>
                   <div className="mini-metrics">
-                    <span>
-                      總債務 <strong>N/A</strong>
-                    </span>
-                    <span>
-                      淨債務 <strong>N/A</strong>
-                    </span>
                     <span>
                       每股淨值{" "}
                       <strong>
@@ -1742,6 +1750,14 @@ export function App() {
                       <strong>{displayFormat(endingAssets?.value)}</strong>
                     </span>
                   </div>
+                  <HealthPanels
+                    dark={dark}
+                    quarters={quarters}
+                    unit={unit}
+                    unitLabel={unitLabel}
+                    isFinancial={isFinancial}
+                    years={years}
+                  />
                 </section>
               </>
             )}

@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 from .models import Dataset
 from .normalize import quarters
-from .mapping import METRICS,INSTANT
+from .mapping import METRICS,INSTANT,BALANCE_EXTRA
 from .pipeline import atomic_json
 
 CORE=('revenue','net_income','eps')
@@ -114,7 +114,7 @@ def audit_dataset(dataset):
     if revenue and (revenue[0].start is None or not 1730 <= (revenue[-1].end-revenue[0].start).days+1 <= 1920):
         errors.append('20-quarter fiscal span is not approximately five years')
     records=[]
-    optional=[m for m in METRICS if m not in CORE and m not in {'deposits','allowance','net_interest_income'}]
+    optional=[m for m in METRICS if m not in CORE and m not in {'deposits','allowance','net_interest_income','dividends_paid','dps'} and m not in BALANCE_EXTRA]
     for r in revenue:
         metrics={}
         for metric in CORE:

@@ -24,8 +24,21 @@ METRICS = {
     "deposits": ("USD", ["Deposits"]),
     "allowance": ("USD", ["FinancingReceivableAllowanceForCreditLossExcludingAccruedInterestAfterAdjustmentForTimeValue"]),
     "net_interest_income": ("USD", ["InterestIncomeExpenseNet"]),
+    # 營運資金、金融借款與股利（Piotroski F 分數、現金週轉循環、長短期借款、股利折現）
+    "current_assets": ("USD", ["AssetsCurrent"]),
+    "current_liabilities": ("USD", ["LiabilitiesCurrent"]),
+    "receivables": ("USD", ["AccountsReceivableNetCurrent", "ReceivablesNetCurrent"]),
+    "inventory": ("USD", ["InventoryNet"]),
+    "payables": ("USD", ["AccountsPayableCurrent", "AccountsPayableTradeCurrent"]),
+    "short_borrowings": ("USD", ["ShortTermBorrowings", "CommercialPaper"]),
+    "debt_current": ("USD", ["LongTermDebtCurrent", "DebtCurrent", "ConvertibleNotesPayableCurrent"]),
+    "long_term_debt": ("USD", ["LongTermDebtNoncurrent", "ConvertibleNotesPayableNoncurrent"]),
+    "dividends_paid": ("USD", ["PaymentsOfDividendsCommonStock", "PaymentsOfDividends"]),
+    "dps": ("USD/shares", ["CommonStockDividendsPerShareDeclared", "CommonStockDividendsPerShareCashPaid"]),
 }
-INSTANT = {"assets", "liabilities", "equity", "cash", "shares", "deposits", "allowance", "members", "products", "cet1"}
+BALANCE_EXTRA = {"current_assets", "current_liabilities", "receivables", "inventory", "payables",
+                 "short_borrowings", "debt_current", "long_term_debt"}
+INSTANT = {"assets", "liabilities", "equity", "cash", "shares", "deposits", "allowance", "members", "products", "cet1"} | BALANCE_EXTRA
 
 IFRS_METRICS = {
     "revenue": ["Revenue"],
@@ -42,6 +55,16 @@ IFRS_METRICS = {
     "financing_cf": ["CashFlowsFromUsedInFinancingActivities"],
     "capex": ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"],
     "sbc": ["AdjustmentsForSharebasedPayments"],
+    "current_assets": ["CurrentAssets"],
+    "current_liabilities": ["CurrentLiabilities"],
+    "receivables": ["CurrentTradeReceivables", "TradeAndOtherCurrentReceivables"],
+    "inventory": ["Inventories"],
+    "payables": ["TradeAndOtherCurrentPayablesToTradeSuppliers", "CurrentTradePayables", "TradeAndOtherCurrentPayables"],
+    "short_borrowings": ["ShorttermBorrowings"],
+    "debt_current": ["CurrentPortionOfNoncurrentBondsIssued", "CurrentPortionOfLongtermBorrowings"],
+    "long_term_debt": ["NoncurrentPortionOfNoncurrentBondsIssued", "LongtermBorrowings", "NoncurrentPortionOfNoncurrentLoansReceived"],
+    "dividends_paid": ["DividendsPaidClassifiedAsFinancingActivities", "DividendsPaid"],
+    "dps": ["DividendsRecognisedAsDistributionsToOwnersPerShare"],
 }
 
 

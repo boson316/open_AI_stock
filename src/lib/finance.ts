@@ -75,6 +75,14 @@ export const instant = new Set([
   "cet1",
   "members",
   "products",
+  "current_assets",
+  "current_liabilities",
+  "receivables",
+  "inventory",
+  "payables",
+  "short_borrowings",
+  "debt_current",
+  "long_term_debt",
 ]);
 const equivalentTags: Record<string, string> = {
   "disclosure:sofi.revenue": "us-gaap:RevenuesNetOfInterestExpense",
@@ -133,6 +141,7 @@ export function normalize(facts: Fact[], asOf = "9999-12-31"): Fact[] {
     if (
       instant.has(f.metric) ||
       f.metric === "eps" ||
+      f.metric === "dps" ||
       f.metric === "nim" ||
       days < 150 ||
       days > 380
@@ -410,4 +419,14 @@ export const labels: Record<string, string> = {
   deposits: "存款總額",
   allowance: "信用損失備抵",
   net_interest_income: "淨利息收入",
+  current_assets: "流動資產",
+  current_liabilities: "流動負債",
+  receivables: "應收帳款",
+  inventory: "存貨",
+  payables: "應付帳款",
+  short_borrowings: "短期借款",
+  debt_current: "一年內到期長期負債",
+  long_term_debt: "長期借款",
+  dividends_paid: "發放現金股利",
+  dps: "每股股利",
 };
