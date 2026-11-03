@@ -122,15 +122,25 @@ export function EarningsCall({
         </div>
         <div className="kpi">
           <span>本季 EPS（{shareUnit}）</span>
-          <strong>{eps.value === null ? "N/A" : eps.value.toLocaleString("zh-TW", { maximumFractionDigits: 2 })}</strong>
+          <strong>
+            {eps.value === null ? (
+              <small className="muted">SEC 尚未收錄</small>
+            ) : (
+              eps.value.toLocaleString("zh-TW", { maximumFractionDigits: 2 })
+            )}
+          </strong>
         </div>
         <div className="kpi">
           <span>EPS 年增率</span>
-          <strong className={eps.yoy === null ? "" : eps.yoy >= 0 ? "positive" : "negative"}>{pct(eps.yoy)}</strong>
+          <strong className={eps.yoy === null ? "" : eps.yoy >= 0 ? "positive" : "negative"}>
+            {eps.value === null ? <small className="muted">SEC 尚未收錄</small> : pct(eps.yoy)}
+          </strong>
         </div>
         <div className="kpi">
           <span>營收年增率（財報幣別）</span>
-          <strong className={revenue.yoy === null ? "" : revenue.yoy >= 0 ? "positive" : "negative"}>{pct(revenue.yoy)}</strong>
+          <strong className={revenue.yoy === null ? "" : revenue.yoy >= 0 ? "positive" : "negative"}>
+            {revenue.value === null ? <small className="muted">SEC 尚未收錄</small> : pct(revenue.yoy)}
+          </strong>
         </div>
       </div>
       <ul className="call-summary">
@@ -176,7 +186,7 @@ export function EarningsCall({
               </table>
             </div>
           )}
-          <h4>法人 Q&amp;A</h4>
+          {call.qa.length > 0 && <h4>法人 Q&amp;A</h4>}
           {call.qa.map((x) => (
             <details key={x.q} className="call-qa">
               <summary>{x.q}</summary>
