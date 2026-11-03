@@ -5,6 +5,9 @@ and intangible assets, USD millions, shown as outflows. Preserve positive
 acquisition payments for CapEx and pin the original document checksum.
 """
 import hashlib
+import html
+import re
+import sys
 from datetime import date
 from .models import Fact
 
@@ -21,18 +24,41 @@ DOCUMENTS = [
 ]
 
 
+LABEL='Purchases related to property and equipment and intangible assets'
+
+
+def row_still_present(content: bytes, rows) -> bool:
+    """SEC 偶爾重新產生舊申報的 HTML（位元組改變、數字不變）。
+    檢查覆核過的那一列與每個數字是否仍在原文件同一列中。"""
+    text=html.unescape(re.sub(r'<[^>]+>',' ',content.decode('utf-8','ignore')))
+    text=re.sub(r'\s+',' ',text.replace('\xa0',' '))
+    for m in re.finditer(re.escape(LABEL),text,flags=re.I):
+        window=text[m.end():m.end()+160]
+        if all(re.search(rf'(?<![\d,.]){re.escape(f"{v:,}")}(?![\d,.])',window) for _,_,v in rows):
+            return True
+    return False
+
+
 def reviewed_facts(client=None):
     result=[]
     for filed,acc,name,digest,fy,form,rows in DOCUMENTS:
         source=f"https://www.sec.gov/Archives/edgar/data/1045810/{acc.replace('-','')}/{name}"
-        if client and hashlib.sha256(client.get_bytes(source)).hexdigest()!=digest:
-            raise ValueError('NVIDIA historical cash statement checksum changed; review required')
+        note='Original document SHA256: '+digest
+        if client:
+            content=client.get_bytes(source)
+            current=hashlib.sha256(content).hexdigest()
+            if current!=digest:
+                if not row_still_present(content,rows):
+                    raise ValueError(f'NVIDIA historical cash statement changed and reviewed values not found: {name}; review required')
+                print(f'::warning::NVIDIA {name} checksum changed ({current[:12]}); reviewed row values still match the document',file=sys.stderr)
+                note+=f'; current SHA256 {current} (values re-verified in document)'
+
         for start,end,millions in rows:
             result.append(Fact(metric='capex',value=millions*1000000,unit='USD',start=start,end=end,filed=filed,accession=acc,
                 tag='disclosure:nvda.productive_assets',basis='0001045810:productive-assets-capex',report_fiscal_year=fy,
                 reporting_basis='US GAAP',source=source,form=form,
                 lineage=['Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets',
-                    'USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention', 'Original document SHA256: '+digest]))
+                    'USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention', note]))
     return result
 
 

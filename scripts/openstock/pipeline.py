@@ -147,9 +147,23 @@ def main():
             filing = {"path":args.filing_input, "source":args.filing_url, "filed":args.filed, "accession":args.accession, "form":args.form}
         if args.ticker == "ALL" and (args.input or args.mapping or filing):
             p.error("ALL cannot be combined with per-company input/mapping/filing")
-        for ticker in COMPANIES if args.ticker == "ALL" else [args.ticker]:
-            d = generate(ticker, args.output, args.input, json.loads(args.mapping.read_text()) if args.mapping else None, filing, args.supplemental)
+        tickers = COMPANIES if args.ticker == "ALL" else [args.ticker]
+        failed = []
+        for ticker in tickers:
+            try:
+                d = generate(ticker, args.output, args.input, json.loads(args.mapping.read_text()) if args.mapping else None, filing, args.supplemental)
+            except Exception as exc:
+                if args.ticker != "ALL":
+                    raise
+                # 單檔失敗不拖累其他公司：保留該檔先前已驗證的資料，繼續更新其餘公司。
+                failed.append(ticker)
+                print(f"::warning::{ticker} update failed; previous valid data retained: {exc}", file=sys.stderr, flush=True)
+                continue
             print(f"Validated {d.ticker}: {len(d.facts)} reported facts; {d.currency} {d.periods}", flush=True)
+        if failed and len(failed) == len(tickers):
+            raise ValueError("all tickers failed")
+        if failed:
+            print(f"Updated {len(tickers) - len(failed)}/{len(tickers)}; kept previous data for {', '.join(failed)}", flush=True)
     except Exception as exc:
         print(f"Update failed; previous valid data retained: {exc}", file=sys.stderr)
         return 1
