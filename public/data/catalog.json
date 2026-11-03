@@ -9,7 +9,7 @@
       "sector": "fintech",
       "status": "available",
       "file": "SOFI.json",
-      "updated": "2026-10-27T17:17:52.465826+00:00",
+      "updated": "2026-11-03T03:15:41.736835+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -31,7 +31,7 @@
       "sector": "technology",
       "status": "available",
       "file": "GOOGL.json",
-      "updated": "2026-10-27T17:17:52.687220+00:00",
+      "updated": "2026-11-03T03:15:48.204518+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -40,8 +40,8 @@
       ],
       "coverage": {
         "quarters": 20,
-        "first_end": "2021-09-30",
-        "last_end": "2026-06-30",
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
         "core_complete": true
       }
     },
@@ -53,7 +53,7 @@
       "sector": "technology",
       "status": "available",
       "file": "GOOG.json",
-      "updated": "2026-10-27T17:17:52.911040+00:00",
+      "updated": "2026-11-03T03:15:48.502718+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -62,8 +62,8 @@
       ],
       "coverage": {
         "quarters": 20,
-        "first_end": "2021-09-30",
-        "last_end": "2026-06-30",
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
         "core_complete": true
       }
     },
@@ -75,7 +75,7 @@
       "sector": "semiconductor",
       "status": "available",
       "file": "NVDA.json",
-      "updated": "2026-10-27T17:17:53.133761+00:00",
+      "updated": "2026-11-03T03:15:57.319739+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -97,7 +97,7 @@
       "sector": "semiconductor",
       "status": "available",
       "file": "AMD.json",
-      "updated": "2026-10-27T17:17:53.456594+00:00",
+      "updated": "2026-11-03T03:16:03.737239+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -119,7 +119,7 @@
       "sector": "semiconductor",
       "status": "available",
       "file": "TSM.json",
-      "updated": "2026-10-27T17:17:53.599840+00:00",
+      "updated": "2026-11-03T03:17:16.451592+00:00",
       "currency": "TWD",
       "accounting_standard": "IFRS",
       "periods": [
@@ -141,7 +141,7 @@
       "sector": "technology",
       "status": "available",
       "file": "MSFT.json",
-      "updated": "2026-10-27T17:17:54.061036+00:00",
+      "updated": "2026-11-03T03:17:23.624601+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -150,8 +150,8 @@
       ],
       "coverage": {
         "quarters": 20,
-        "first_end": "2021-09-30",
-        "last_end": "2026-06-30",
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
         "core_complete": true
       }
     },
@@ -163,7 +163,7 @@
       "sector": "technology",
       "status": "available",
       "file": "AAPL.json",
-      "updated": "2026-10-27T17:17:54.207828+00:00",
+      "updated": "2026-11-03T03:17:29.900481+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -185,7 +185,7 @@
       "sector": "technology",
       "status": "available",
       "file": "AMZN.json",
-      "updated": "2026-10-27T17:17:54.541686+00:00",
+      "updated": "2026-11-03T03:17:35.653891+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -194,8 +194,8 @@
       ],
       "coverage": {
         "quarters": 20,
-        "first_end": "2021-09-30",
-        "last_end": "2026-06-30",
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
         "core_complete": true
       }
     },
@@ -207,7 +207,7 @@
       "sector": "technology",
       "status": "available",
       "file": "META.json",
-      "updated": "2026-10-27T17:17:54.747779+00:00",
+      "updated": "2026-11-03T03:17:42.261995+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -229,7 +229,7 @@
       "sector": "technology",
       "status": "available",
       "file": "PLTR.json",
-      "updated": "2026-10-27T17:17:54.917704+00:00",
+      "updated": "2026-11-03T03:17:48.185145+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -251,7 +251,7 @@
       "sector": "semiconductor",
       "status": "available",
       "file": "MU.json",
-      "updated": "2026-10-27T17:17:55.141390+00:00",
+      "updated": "2026-11-03T03:17:55.822742+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -273,7 +273,7 @@
       "sector": "automotive",
       "status": "available",
       "file": "TSLA.json",
-      "updated": "2026-10-27T17:17:55.226102+00:00",
+      "updated": "2026-11-03T03:18:04.056081+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
