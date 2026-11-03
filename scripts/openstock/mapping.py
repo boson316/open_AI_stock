@@ -104,7 +104,8 @@ def extract(companyfacts, cik, overrides=None, *, currency="USD", standard="US G
         for tag in candidates:
             namespace, local = tag.split(":", 1)
             rows = companyfacts.get("facts", {}).get(namespace, {}).get(local, {}).get("units", {}).get(unit, [])
-            rows = [r for r in rows if r.get("form") in forms]
+            # 申報日早於期末的列（例如提前宣告下一季每股股利）不是已實現的財報數字，略過。
+            rows = [r for r in rows if r.get("form") in forms and r["filed"] >= r["end"]]
             if not rows:
                 continue
             for row in rows:

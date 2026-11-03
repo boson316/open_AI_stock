@@ -49,3 +49,12 @@ def test_ifrs_tags_for_tsm():
     }}}
     got = {f.metric: (f.value, f.unit) for f in extract(raw, "0001046179", currency="TWD", standard="IFRS")}
     assert got == {"current_assets": (9, "TWD"), "dividends_paid": (7, "TWD")}
+
+
+def test_forward_declared_dividend_is_skipped():
+    raw = facts({"CommonStockDividendsPerShareDeclared": {"USD/shares": [
+        row(0.075, "2013-04-28", "2013-01-28", filed="2013-03-12", accn="0001045810-13-000109"),
+        row(0.075, "2013-01-27", "2012-10-29", filed="2013-03-12", accn="0001045810-13-000109"),
+    ]}})
+    got = [(str(f.end), f.value) for f in extract(raw, "0001045810")]
+    assert got == [("2013-01-27", 0.075)]
