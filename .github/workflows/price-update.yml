@@ -1,13 +1,15 @@
 name: Price Update
-# 股價更新：Stooq 目前需要金鑰才能下載，排程先停用，只保留手動執行。
-# 之後取得資料來源金鑰後，再恢復每週六的排程（cron: '23 2 * * 6'）。
+# 股價更新：Yahoo Finance 日線為主、Stooq 為備援（設定 STOOQ_APIKEY secret 時附上金鑰）。
+# 每週六台北 10:23 自動執行，也可手動執行；在哪個分支執行就提交到哪個分支，只有 main 會觸發部署。
 on:
+  schedule:
+    - cron: '23 2 * * 6'
   workflow_dispatch:
 permissions:
   contents: write
   actions: write
 concurrency:
-  group: price-update
+  group: price-update-${{ github.ref_name }}
   cancel-in-progress: false
 jobs:
   update:
@@ -24,12 +26,16 @@ jobs:
       - name: Download weekly prices (single-ticker failures keep previous price)
         timeout-minutes: 8
         run: python -u -m openstock.prices
+        env:
+          STOOQ_APIKEY: ${{ secrets.STOOQ_APIKEY }}
       - run: pytest tests/financial/test_prices.py
-      # 股價屬低風險資料，直接提交到 main；GITHUB_TOKEN 的推送不會觸發部署，所以手動觸發 Pages。
+      # 股價屬低風險資料，直接提交到執行的分支；GITHUB_TOKEN 的推送不會觸發部署，所以在 main 時手動觸發 Pages。
       - name: Commit and deploy
         env:
           GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
         run: |
+          git add -N public/data/prices.json
           if git diff --quiet -- public/data/prices.json; then
             echo "No price changes"; exit 0
           fi
@@ -37,5 +43,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/data/prices.json
           git commit -m "data: weekly price update"
-          git push origin HEAD:main
-          gh workflow run deploy.yml --ref main
+          git push origin "HEAD:$BRANCH"
+          if [ "$BRANCH" = "main" ]; then gh workflow run deploy.yml --ref main; fi

@@ -35,3 +35,65 @@ def test_published_prices_are_consistent():
     assert data["version"] == 1
     for t, p in data["tickers"].items():
         assert p["lo52"] <= p["close"] <= p["hi52"], t
+
+
+def _yahoo(days, splits=None, offset=-14400):
+    base = 1761000000  # 2025-10-20 22:40 UTC
+    stamps = [base + i * 86400 for i in range(days)]
+    return {
+        "chart": {
+            "result": [
+                {
+                    "meta": {"gmtoffset": offset},
+                    "timestamp": stamps,
+                    "events": {"splits": splits or {}},
+                    "indicators": {
+                        "quote": [
+                            {
+                                "high": [11 + i * 0.1 for i in range(days)],
+                                "low": [9 + i * 0.1 for i in range(days)],
+                                "close": [10 + i * 0.1 if i != 3 else None for i in range(days)],
+                            }
+                        ]
+                    },
+                }
+            ],
+            "error": None,
+        }
+    }
+
+
+def test_parse_yahoo_uses_exchange_dates_and_skips_gaps():
+    from openstock.prices import parse_yahoo
+
+    payload = _yahoo(10, {"x": {"date": 1761000000, "numerator": 10, "denominator": 1}})
+    r = parse_yahoo(payload, date(2025, 11, 1))
+    # 22:40 UTC − 4h = 當地 18:40，日期仍是 10/20（週一）；週線保留該 ISO 週最後一天 10/26
+    assert r["weekly"][0][0] == "2025-10-26"
+    assert r["asof"] == "2025-10-29" and r["close"] == pytest.approx(10.9)
+    assert r["prev_close"] == pytest.approx(10.8)
+    assert r["lo52"] == 9 and r["hi52"] == pytest.approx(11.9)
+    assert r["splits"] == [{"date": "2025-10-20", "ratio": 10.0}]
+
+
+def test_parse_yahoo_rejects_errors_and_stale():
+    from openstock.prices import parse_yahoo
+
+    with pytest.raises(ValueError):
+        parse_yahoo({"chart": {"result": None, "error": {"code": "Not Found"}}}, date(2025, 11, 1))
+    with pytest.raises(ValueError, match="stale"):
+        parse_yahoo(_yahoo(5), date(2026, 3, 1))
+
+
+def test_published_prices_have_sorted_weekly_and_valid_splits():
+    path = Path("public/data/prices.json")
+    if not path.exists():
+        pytest.skip("prices.json not generated yet")
+    data = json.loads(path.read_text())
+    for t, p in data["tickers"].items():
+        dates = [d for d, _ in p["weekly"]]
+        assert dates == sorted(dates) and len(set(dates)) == len(dates), t
+        assert all(c > 0 for _, c in p["weekly"]), t
+        assert dates[-1] <= p["asof"], t
+        for s in p.get("splits", []):
+            assert s["ratio"] > 0 and len(s["date"]) == 10, t
