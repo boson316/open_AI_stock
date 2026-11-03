@@ -2,8 +2,9 @@
 
 來源依序嘗試：
 1. Yahoo Finance chart 介面（先取得 cookie／crumb；日線、股票分割事件）。
-2. Nasdaq 歷史行情介面（日線，無分割事件）。
-3. Stooq 日線 CSV（若設定環境變數 STOOQ_APIKEY 會附上金鑰；無分割事件）。
+2. Cboe 延遲行情 CDN（日線；未調整分割時以已核對的分割表換算）。
+3. Nasdaq 歷史行情介面（日線，無分割事件）。
+4. Stooq 日線 CSV（若設定環境變數 STOOQ_APIKEY 會附上金鑰；無分割事件）。
 
 - 免費資料僅供個人研究使用；網站標示來源，非即時報價。
 - 收盤價為「分割調整、未還原股息」的收盤價（目前股數基礎），52 週高低點取日線最高、最低價。
@@ -29,8 +30,9 @@ from .pipeline import COMPANIES
 ETFS = ["EWT", "SMH"]
 YAHOO = "https://query2.finance.yahoo.com/v8/finance/chart/{symbol}"
 NASDAQ = "https://api.nasdaq.com/api/quote/{symbol}/historical"
+CBOE = "https://cdn.cboe.com/api/global/delayed_quotes/charts/historical/{symbol}.json"
 STOOQ = "https://stooq.com/q/d/l/?s={symbol}&d1={start}&d2={end}&i=d"
-SOURCES = {"yahoo": "Yahoo Finance", "nasdaq": "Nasdaq", "stooq": "Stooq"}
+SOURCES = {"yahoo": "Yahoo Finance", "cboe": "Cboe", "nasdaq": "Nasdaq", "stooq": "Stooq"}
 # 已人工核對的股票分割（第一個以新股數交易的日期、1 股拆成幾股）。
 # 五年價格區間以外的分割也要列：早期季度 EPS 可能在分割前申報，需換算到目前股數基礎。
 KNOWN_SPLITS = {
@@ -194,6 +196,49 @@ def parse_nasdaq(payload: dict, today: date):
     return summarize(bars, today)
 
 
+def split_adjust(bars, splits):
+    """若日線在已知分割日前後出現與分割比例相符的跳空（未調整），把分割前的價格除以比例。
+
+    已調整的資料不會有這種跳空，維持原值；判斷不出來（缺資料）時也不改。
+    """
+    bars = sorted(bars)
+    for s in splits or []:
+        d = date.fromisoformat(s["date"])
+        before = [b for b in bars if b[0] < d]
+        after = [b for b in bars if b[0] >= d]
+        if not before or not after:
+            continue
+        jump = before[-1][3] / after[0][3]
+        if abs(jump / s["ratio"] - 1) < 0.35:
+            r = s["ratio"]
+            bars = [(b[0], b[1] / r, b[2] / r, b[3] / r) if b[0] < d else b for b in bars]
+    return bars
+
+
+def parse_cboe(payload: dict, today: date, splits=None):
+    """Cboe 歷史日線 JSON（data: [{date, high, low, close}]）→ summarize()。"""
+    rows = (payload or {}).get("data") or []
+    if not rows:
+        raise ValueError("cboe payload has no rows")
+    start = today - timedelta(days=5 * 366 + 14)
+    bars = []
+    for r in rows:
+        d = date.fromisoformat(str(r["date"])[:10])
+        if d < start:
+            continue
+        hi, lo, close = float(r["high"]), float(r["low"]), float(r["close"])
+        if close <= 0:
+            continue
+        bars.append((d, max(hi, close), min(lo, close) if lo > 0 else close, close))
+    return summarize(split_adjust(bars, splits), today)
+
+
+def fetch_cboe(ticker: str, client: httpx.Client, today: date):
+    response = client.get(CBOE.format(symbol=ticker))
+    response.raise_for_status()
+    return parse_cboe(response.json(), today, KNOWN_SPLITS.get(ticker))
+
+
 def fetch_nasdaq(ticker: str, client: httpx.Client, today: date):
     for asset in ("stocks", "etf"):
         response = client.get(
@@ -204,7 +249,12 @@ def fetch_nasdaq(ticker: str, client: httpx.Client, today: date):
                 "todate": today.isoformat(),
                 "limit": 9999,
             },
-            headers={"Origin": "https://www.nasdaq.com", "Referer": "https://www.nasdaq.com/"},
+            headers={
+                "Origin": "https://www.nasdaq.com",
+                "Referer": "https://www.nasdaq.com/",
+                "Accept-Language": "en-US,en;q=0.9",
+            },
+            timeout=httpx.Timeout(8, connect=5),
         )
         response.raise_for_status()
         payload = response.json()
@@ -232,6 +282,7 @@ def fetch(ticker: str, client: httpx.Client, today: date, yahoo: "Yahoo | None" 
     errors = []
     for name, fn in (
         ("yahoo", lambda: yahoo.fetch(ticker, today)),
+        ("cboe", lambda: fetch_cboe(ticker, client, today)),
         ("nasdaq", lambda: fetch_nasdaq(ticker, client, today)),
         ("stooq", lambda: fetch_stooq(ticker, client, today)),
     ):

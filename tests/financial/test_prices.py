@@ -118,3 +118,16 @@ def test_merge_splits_keeps_known_events_sorted_and_unique():
 
     merged = merge_splits([{"date": "2024-06-10", "ratio": 10}], KNOWN_SPLITS["NVDA"])
     assert merged == [{"date": "2021-07-20", "ratio": 4.0}, {"date": "2024-06-10", "ratio": 10.0}]
+
+
+def test_cboe_unadjusted_split_is_detected_and_adjusted():
+    from openstock.prices import parse_cboe
+
+    rows = [{"date": "2025-10-%02d" % d, "high": 101, "low": 99, "close": 100} for d in range(1, 10)]
+    rows += [{"date": "2025-10-%02d" % d, "high": 10.2, "low": 9.8, "close": 10} for d in range(10, 20)]
+    r = parse_cboe({"data": rows}, date(2025, 10, 25), [{"date": "2025-10-10", "ratio": 10.0}])
+    assert all(abs(c - 10) < 1e-9 for _, c in r["weekly"])
+    assert r["hi52"] == 10.2
+    # 已調整的資料（沒有跳空）不改
+    flat = [{"date": "2025-10-%02d" % d, "high": 10.2, "low": 9.8, "close": 10} for d in range(1, 20)]
+    assert parse_cboe({"data": flat}, date(2025, 10, 25), [{"date": "2025-10-10", "ratio": 10.0}])["close"] == 10
