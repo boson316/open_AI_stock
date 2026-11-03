@@ -58,9 +58,9 @@ it("DDM：零成長時等於 D/(r−g) 的高登模型", () => {
   expect(ddm(2, 0.03, 0.09, 0.08)).toBeNull();
 });
 
-it("現有資料（尚無新欄位）不會讓長期負債項目白拿分", () => {
+it("缺少長期借款資料時，長期負債項目不白拿分", () => {
   const d = validateDataset(JSON.parse(readFileSync("public/data/MSFT.json", "utf8")));
-  const q = normalize(d.facts);
+  const q = normalize(d.facts.filter((f) => f.metric !== "long_term_debt"));
   const r = piotroski(q, q.filter((f) => f.metric === "revenue").at(-1)!.end);
   expect(r.tests.find((t) => t.key === "lev")!.pass).toBeNull();
   expect(r.scorable).toBeGreaterThanOrEqual(5);

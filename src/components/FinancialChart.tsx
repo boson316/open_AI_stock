@@ -88,7 +88,8 @@ export function FinancialChart({
       textStyle: { color: dark ? "#b4c0d6" : "#5d6684", fontSize: 12 },
       type: "scroll",
     },
-    grid: { left: 57, right: dualAxis ? 58 : 17, top: 58, bottom: 56 },
+    // containLabel：Y 軸數字很長時（例如百萬新臺幣）自動留出空間，不會被切掉。
+    grid: { left: 12, right: dualAxis ? 12 : 17, top: 58, bottom: 56, containLabel: true },
     xAxis: {
       type: "category",
       data: dates,

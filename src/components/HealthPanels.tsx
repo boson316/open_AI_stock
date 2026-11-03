@@ -174,7 +174,7 @@ function Debt({ quarters, dark, unit, unitLabel, years }: { quarters: Fact[]; da
             </div>
           </div>
           <FinancialChart
-            title="長短期金融借款"
+            title="借款結構"
             dates={rows.map((r) => r.date)}
             dark={dark}
             unit={unitLabel}
@@ -232,7 +232,7 @@ function Ccc({ quarters, dark, years }: { quarters: Fact[]; dark: boolean; years
             </div>
           </div>
           <FinancialChart
-            title="現金週轉循環（天）"
+            title="週轉天數走勢"
             dates={rows.map((r) => r.date)}
             dark={dark}
             unit="天"
