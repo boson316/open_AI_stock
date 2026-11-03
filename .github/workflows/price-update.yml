@@ -13,6 +13,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -22,7 +23,8 @@ jobs:
           cache-dependency-path: requirements.lock
       - run: pip install -r requirements.lock && pip install --no-deps -e .
       - name: Download weekly prices (single-ticker failures keep previous price)
-        run: python -m openstock.prices
+        timeout-minutes: 8
+        run: python -u -m openstock.prices
       - run: pytest tests/financial/test_prices.py
       # 股價屬低風險資料，直接提交到 main；GITHUB_TOKEN 的推送不會觸發部署，所以手動觸發 Pages。
       - name: Commit and deploy

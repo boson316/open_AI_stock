@@ -20,7 +20,7 @@ from .pipeline import COMPANIES
 
 ETFS = ["EWT", "SMH"]
 SOURCE = "https://stooq.com/"
-URL = "https://stooq.com/q/d/l/?s={symbol}&i=d"
+URL = "https://stooq.com/q/d/l/?s={symbol}&d1={start}&d2={end}&i=d"
 
 
 def parse(text: str, today: date):
@@ -55,7 +55,10 @@ def parse(text: str, today: date):
 
 
 def fetch(ticker: str, client: httpx.Client, today: date):
-    response = client.get(URL.format(symbol=f"{ticker.lower()}.us"))
+    # 只要近 5 年多的日線，回應小、下載快。
+    url = URL.format(symbol=f"{ticker.lower()}.us",
+                     start=(today - timedelta(days=5 * 366 + 14)).strftime("%Y%m%d"), end=today.strftime("%Y%m%d"))
+    response = client.get(url)
     response.raise_for_status()
     return parse(response.text, today)
 
@@ -68,19 +71,20 @@ def main():
     tickers = dict(old.get("tickers", {}))
     today = datetime.now(timezone.utc).date()
     failed = []
-    with httpx.Client(timeout=30, headers={"User-Agent": "OpenStock Analytics price update"}) as client:
+    timeout = httpx.Timeout(20, connect=10)
+    with httpx.Client(timeout=timeout, follow_redirects=True, headers={"User-Agent": "OpenStock Analytics price update"}) as client:
         for t in [*COMPANIES, *ETFS]:
             try:
                 new = fetch(t, client, today)
             except Exception as exc:  # noqa: BLE001 - 單檔失敗保留舊值
                 failed.append(t)
-                print(f"::warning::{t} price update failed; previous price kept: {exc}", file=sys.stderr)
+                print(f"::warning::{t} price update failed; previous price kept: {type(exc).__name__}: {exc}", file=sys.stderr, flush=True)
                 continue
             prev = tickers.get(t)
             if prev and abs(new["close"] / prev["close"] - 1) > 0.5:
                 print(f"::warning::{t} moved more than 50% since {prev['asof']} (split?) — please review", file=sys.stderr)
             tickers[t] = new
-            print(f"{t}: {new['close']} @ {new['asof']}")
+            print(f"{t}: {new['close']} @ {new['asof']}", flush=True)
     if len(failed) == len(COMPANIES) + len(ETFS):
         print("All price downloads failed; prices.json unchanged", file=sys.stderr)
         return 1
