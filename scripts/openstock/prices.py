@@ -1,8 +1,9 @@
 """每週股價更新：下載近 5 年日線，寫入 public/data/prices.json。
 
 來源依序嘗試：
-1. Yahoo Finance chart 介面（日線、股票分割事件）。
-2. Stooq 日線 CSV（若設定環境變數 STOOQ_APIKEY 會附上金鑰；無分割事件）。
+1. Yahoo Finance chart 介面（先取得 cookie／crumb；日線、股票分割事件）。
+2. Nasdaq 歷史行情介面（日線，無分割事件）。
+3. Stooq 日線 CSV（若設定環境變數 STOOQ_APIKEY 會附上金鑰；無分割事件）。
 
 - 免費資料僅供個人研究使用；網站標示來源，非即時報價。
 - 收盤價為「分割調整、未還原股息」的收盤價（目前股數基礎），52 週高低點取日線最高、最低價。
@@ -17,6 +18,7 @@ import io
 import json
 import os
 import sys
+import time
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -25,9 +27,29 @@ import httpx
 from .pipeline import COMPANIES
 
 ETFS = ["EWT", "SMH"]
-YAHOO = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+YAHOO = "https://query2.finance.yahoo.com/v8/finance/chart/{symbol}"
+NASDAQ = "https://api.nasdaq.com/api/quote/{symbol}/historical"
 STOOQ = "https://stooq.com/q/d/l/?s={symbol}&d1={start}&d2={end}&i=d"
-SOURCES = {"yahoo": "Yahoo Finance", "stooq": "Stooq"}
+SOURCES = {"yahoo": "Yahoo Finance", "nasdaq": "Nasdaq", "stooq": "Stooq"}
+# 已人工核對的股票分割（第一個以新股數交易的日期、1 股拆成幾股）。
+# 五年價格區間以外的分割也要列：早期季度 EPS 可能在分割前申報，需換算到目前股數基礎。
+KNOWN_SPLITS = {
+    "AAPL": [{"date": "2020-08-31", "ratio": 4.0}],
+    "TSLA": [{"date": "2020-08-31", "ratio": 5.0}, {"date": "2022-08-25", "ratio": 3.0}],
+    "NVDA": [{"date": "2021-07-20", "ratio": 4.0}, {"date": "2024-06-10", "ratio": 10.0}],
+    "GOOGL": [{"date": "2022-07-18", "ratio": 20.0}],
+    "GOOG": [{"date": "2022-07-18", "ratio": 20.0}],
+    "AMZN": [{"date": "2022-06-06", "ratio": 20.0}],
+}
+
+
+def merge_splits(*lists):
+    """合併多個來源的分割事件；同一天以先出現者為準。"""
+    out = {}
+    for items in lists:
+        for s in items or []:
+            out.setdefault(s["date"], {"date": s["date"], "ratio": float(s["ratio"])})
+    return [out[d] for d in sorted(out)]
 HEADERS = {
     # Yahoo 會拒絕沒有瀏覽器樣式 User-Agent 的請求。
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36",
@@ -114,13 +136,81 @@ def parse_yahoo(payload: dict, today: date):
     return summarize(list(by_day.values()), today, splits)
 
 
-def fetch_yahoo(ticker: str, client: httpx.Client, today: date):
-    response = client.get(
-        YAHOO.format(symbol=ticker),
-        params={"range": "5y", "interval": "1d", "events": "split", "includePrePost": "false"},
-    )
-    response.raise_for_status()
-    return parse_yahoo(response.json(), today)
+class Yahoo:
+    """Yahoo 需要先拿 cookie 再取 crumb；沒有時常回 429。整個程序共用一組 session。"""
+
+    def __init__(self, client: httpx.Client):
+        self.client = client
+        self.crumb = None
+        self.ready = False
+
+    def _session(self):
+        if self.ready:
+            return
+        self.ready = True
+        for url in ("https://fc.yahoo.com", "https://finance.yahoo.com/"):
+            try:
+                self.client.get(url)
+            except httpx.HTTPError:
+                pass
+        try:
+            r = self.client.get("https://query2.finance.yahoo.com/v1/test/getcrumb")
+            if r.status_code == 200 and r.text and "<" not in r.text and len(r.text) < 64:
+                self.crumb = r.text.strip()
+        except httpx.HTTPError:
+            pass
+
+    def fetch(self, ticker: str, today: date):
+        self._session()
+        start = datetime.combine(today - timedelta(days=5 * 366 + 14), datetime.min.time(), tzinfo=timezone.utc)
+        params = {
+            "period1": int(start.timestamp()),
+            "period2": int(datetime.now(timezone.utc).timestamp()),
+            "interval": "1d",
+            "events": "split",
+            "includePrePost": "false",
+        }
+        if self.crumb:
+            params["crumb"] = self.crumb
+        for attempt in range(3):
+            response = self.client.get(YAHOO.format(symbol=ticker), params=params)
+            if response.status_code != 429:
+                break
+            time.sleep(2 * (attempt + 1))
+        response.raise_for_status()
+        return parse_yahoo(response.json(), today)
+
+
+def parse_nasdaq(payload: dict, today: date):
+    """Nasdaq 歷史行情 JSON（金額為 "$1,234.56" 字串、日期 MM/DD/YYYY）→ summarize()。"""
+    rows = (((payload or {}).get("data") or {}).get("tradesTable") or {}).get("rows") or []
+    if not rows:
+        raise ValueError("nasdaq payload has no rows")
+    money = lambda v: float(str(v).replace("$", "").replace(",", "").strip())  # noqa: E731
+    bars = []
+    for r in rows:
+        m, d, y = (int(x) for x in r["date"].split("/"))
+        bars.append((date(y, m, d), money(r["high"]), money(r["low"]), money(r["close"])))
+    return summarize(bars, today)
+
+
+def fetch_nasdaq(ticker: str, client: httpx.Client, today: date):
+    for asset in ("stocks", "etf"):
+        response = client.get(
+            NASDAQ.format(symbol=ticker),
+            params={
+                "assetclass": asset,
+                "fromdate": (today - timedelta(days=5 * 366 + 14)).isoformat(),
+                "todate": today.isoformat(),
+                "limit": 9999,
+            },
+            headers={"Origin": "https://www.nasdaq.com", "Referer": "https://www.nasdaq.com/"},
+        )
+        response.raise_for_status()
+        payload = response.json()
+        if (payload.get("data") or {}).get("tradesTable"):
+            return parse_nasdaq(payload, today)
+    raise ValueError("nasdaq: symbol not found")
 
 
 def fetch_stooq(ticker: str, client: httpx.Client, today: date):
@@ -136,12 +226,17 @@ def fetch_stooq(ticker: str, client: httpx.Client, today: date):
     return parse(response.text, today)
 
 
-def fetch(ticker: str, client: httpx.Client, today: date):
-    """依序嘗試各來源，回傳 (來源代號, 資料)；全部失敗丟出最後一個錯誤。"""
+def fetch(ticker: str, client: httpx.Client, today: date, yahoo: "Yahoo | None" = None):
+    """依序嘗試各來源，回傳 (來源代號, 資料)；全部失敗丟出所有錯誤。"""
+    yahoo = yahoo or Yahoo(client)
     errors = []
-    for name, fn in (("yahoo", fetch_yahoo), ("stooq", fetch_stooq)):
+    for name, fn in (
+        ("yahoo", lambda: yahoo.fetch(ticker, today)),
+        ("nasdaq", lambda: fetch_nasdaq(ticker, client, today)),
+        ("stooq", lambda: fetch_stooq(ticker, client, today)),
+    ):
         try:
-            return name, fn(ticker, client, today)
+            return name, fn()
         except Exception as exc:  # noqa: BLE001 - 換下一個來源
             errors.append(f"{name}: {type(exc).__name__}: {str(exc)[:120]}")
     raise RuntimeError("; ".join(errors))
@@ -159,18 +254,25 @@ def main(argv=None):
     failed, used = [], set()
     timeout = httpx.Timeout(20, connect=10)
     with httpx.Client(timeout=timeout, follow_redirects=True, headers=HEADERS) as client:
-        for t in targets:
+        yahoo = Yahoo(client)
+        for i, t in enumerate(targets):
+            if i:
+                time.sleep(0.8)  # 放慢速度，避免被限流
             try:
-                source, new = fetch(t, client, today)
+                source, new = fetch(t, client, today, yahoo)
             except Exception as exc:  # noqa: BLE001 - 單檔失敗保留舊值
                 failed.append(t)
                 print(f"::warning::{t} price update failed; previous price kept: {exc}", file=sys.stderr, flush=True)
                 continue
             prev = tickers.get(t)
-            if prev and abs(new["close"] / prev["close"] - 1) > 0.5 and not new.get("splits"):
+            if prev and abs(new["close"] / prev["close"] - 1) > 0.5 and not any(
+                s["date"] > prev["asof"] for s in new.get("splits") or []
+            ):
                 print(f"::warning::{t} moved more than 50% since {prev['asof']} (split?) — please review", file=sys.stderr)
-            if "splits" not in new and prev and prev.get("splits"):
-                new["splits"] = prev["splits"]  # Stooq 沒有分割事件，沿用上次。
+            # Yahoo 的分割事件 + 已核對的歷史分割；其他來源沒有分割事件時沿用上次。
+            new["splits"] = merge_splits(
+                new.get("splits") or (prev or {}).get("splits"), KNOWN_SPLITS.get(t)
+            )
             new["source"] = SOURCES[source]
             used.add(SOURCES[source])
             tickers[t] = new

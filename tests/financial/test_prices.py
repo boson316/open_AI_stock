@@ -97,3 +97,24 @@ def test_published_prices_have_sorted_weekly_and_valid_splits():
         assert dates[-1] <= p["asof"], t
         for s in p.get("splits", []):
             assert s["ratio"] > 0 and len(s["date"]) == 10, t
+
+
+def test_parse_nasdaq_money_strings():
+    from openstock.prices import parse_nasdaq
+
+    rows = [
+        {"date": "10/30/2025", "close": "$1,010.50", "high": "$1,020.00", "low": "$990.10"},
+        {"date": "10/31/2025", "close": "$1,000.00", "high": "$1,011.00", "low": "$995.00"},
+    ]
+    r = parse_nasdaq({"data": {"tradesTable": {"rows": rows}}}, date(2025, 11, 2))
+    assert r["asof"] == "2025-10-31" and r["close"] == 1000 and r["prev_close"] == 1010.5
+    assert r["hi52"] == 1020 and r["lo52"] == 990.1
+    with pytest.raises(ValueError):
+        parse_nasdaq({"data": None}, date(2025, 11, 2))
+
+
+def test_merge_splits_keeps_known_events_sorted_and_unique():
+    from openstock.prices import KNOWN_SPLITS, merge_splits
+
+    merged = merge_splits([{"date": "2024-06-10", "ratio": 10}], KNOWN_SPLITS["NVDA"])
+    assert merged == [{"date": "2021-07-20", "ratio": 4.0}, {"date": "2024-06-10", "ratio": 10.0}]
