@@ -515,7 +515,13 @@ test("research modules: snapshot, valuation tools, 13F, market, statements suppl
   await page.getByRole("button", { name: "切換至 NVDA", exact: true }).click();
   await expect(page.locator(".ticker-pill")).toHaveText("NVDA");
   await expect(page.getByText("市場行情與研究觀察")).toBeVisible();
-  await expect(page.locator(".quote").first()).toHaveText(String(research.companies.NVDA.close));
+  // 每週自動股價（prices.json）較新時會覆蓋研究資料的收盤價。
+  const priceRes = await page.request.get("data/prices.json");
+  const autoNvda = priceRes.ok() ? (await priceRes.json()).tickers?.NVDA : null;
+  const nvdaClose = autoNvda?.close ?? research.companies.NVDA.close;
+  await expect(page.locator(".quote").first()).toHaveText(
+    nvdaClose.toLocaleString("zh-TW", { maximumFractionDigits: 2 }),
+  );
 
   await page.getByRole("tab", { name: "估值研究", exact: true }).click();
   await expect(page.getByText("跌幅價位表")).toBeVisible();
@@ -565,4 +571,26 @@ test("portfolio stays in the browser: no network upload, computes weights, survi
   await expect(page.getByLabel("第 1 列代號")).toHaveValue("NVDA");
   await expect(page.getByLabel("現金", { exact: true })).toHaveValue("20000");
   expect(posts).toEqual([]);
+});
+
+test("automatic weekly prices fill quote card and valuation river for stocks without external research", async ({ page }) => {
+  test.setTimeout(120000);
+  await page.unroute("**/data/catalog.json");
+  const priceRes = await page.request.get("data/prices.json");
+  test.skip(!priceRes.ok(), "prices.json not generated yet");
+  const prices = await priceRes.json();
+  await page.goto("./");
+  await expect(page.getByText("已載入 SEC 財報")).toBeVisible();
+  await page.getByRole("button", { name: "切換至 AAPL", exact: true }).click();
+  await expect(page.locator(".ticker-pill")).toHaveText("AAPL");
+  const card = page.getByTestId("official-quote");
+  await expect(card).toBeVisible();
+  await expect(card.locator(".quote")).toHaveText(
+    prices.tickers.AAPL.close.toLocaleString("zh-TW", { maximumFractionDigits: 2 }),
+  );
+  await expect(card.getByText(/^\d+(\.\d)?×$/).first()).toBeVisible();
+  await page.getByRole("tab", { name: "估值研究", exact: true }).click();
+  await expect(page.getByText("已載入每週自動更新的股價")).toBeVisible();
+  await expect(page.getByRole("region", { name: "本益比估值河流圖（自動週收盤）", exact: true })).toBeVisible();
+  await expect(page.getByText("現金流折現評價（DCF）").first()).toBeVisible();
 });

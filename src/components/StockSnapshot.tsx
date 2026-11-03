@@ -6,7 +6,32 @@ const actionClass = (a: string) =>
   a === "加碼" || a === "新建" ? "positive" : a === "減碼" || a === "出清" ? "negative" : "muted";
 
 /** 研究總覽頁：外部行情、估值位階、13F 持有者、風險分組與個股觀察；與官方財報分開標示。 */
-export function StockSnapshot({ base, ticker, onGurus }: { base: string; ticker: string; onGurus: () => void }) {
+export type OfficialQuote = {
+  close: number;
+  asof: string;
+  prev: number | null;
+  hi52: number;
+  lo52: number;
+  source: string;
+  pe: number | null;
+  pb: number | null;
+  ps: number | null;
+  pfcf: number | null;
+  mcap: number | null;
+  sharesEnd: string | null;
+};
+
+export function StockSnapshot({
+  base,
+  ticker,
+  onGurus,
+  official = null,
+}: {
+  base: string;
+  ticker: string;
+  onGurus: () => void;
+  official?: OfficialQuote | null;
+}) {
   const { data } = useResearch(base);
   if (!data) return null;
   const c = data.companies[ticker];
@@ -18,7 +43,7 @@ export function StockSnapshot({ base, ticker, onGurus }: { base: string; ticker:
   const notes = data.commentary[key] ?? [];
   const risk = data.risk[key];
   const comp = c ?? (ticker === "GOOG" ? data.companies.GOOGL : undefined);
-  if (!comp && !holders.length && !notes.length) return null;
+  if (!comp && !official && !holders.length && !notes.length) return null;
   const pos =
     comp && comp.close !== null && comp.hi52 !== null && comp.lo52 !== null
       ? (comp.close - comp.lo52) / (comp.hi52 - comp.lo52)
@@ -32,9 +57,14 @@ export function StockSnapshot({ base, ticker, onGurus }: { base: string; ticker:
       <div className="section-heading">
         <div>
           <h2>市場行情與研究觀察</h2>
-          <p>外部資料（{data.as_of} 前後擷取，非 SEC 官方）；財報數字以本站官方資料為準</p>
+          <p>
+            {comp
+              ? `外部資料（${data.as_of} 前後擷取，非 SEC 官方）；財報數字以本站官方資料為準`
+              : "股價每週自動更新；倍數由本站 SEC 官方財報計算，13F 持股為外部資料"}
+          </p>
         </div>
       </div>
+      {!comp && official && <OfficialQuoteCard q={official} />}
       {comp && (
         <div className="research-grid">
           <div className="panel quote-panel">
@@ -157,5 +187,68 @@ export function StockSnapshot({ base, ticker, onGurus }: { base: string; ticker:
         </div>
       </div>
     </section>
+  );
+}
+
+const mult = (v: number | null) => (v !== null && Number.isFinite(v) && v > 0 ? `${v.toFixed(1)}×` : "N/A");
+
+/** 沒有外部研究資料時：收盤價、52 週區間與倍數全部由本站官方財報 × 自動股價計算。 */
+function OfficialQuoteCard({ q }: { q: OfficialQuote }) {
+  const pos = q.hi52 > q.lo52 ? (q.close - q.lo52) / (q.hi52 - q.lo52) : null;
+  const day = q.prev ? (q.close / q.prev - 1) * 100 : null;
+  return (
+    <div className="research-grid" data-testid="official-quote">
+      <div className="panel quote-panel">
+        <span className="muted small">
+          收盤價 · {q.asof}（{q.source}）
+        </span>
+        <strong className="quote">{num(q.close)}</strong>
+        {day !== null && (
+          <span className={`small ${day >= 0 ? "positive" : "negative"}`}>
+            前一交易日 {day >= 0 ? "+" : ""}
+            {day.toFixed(2)}%
+          </span>
+        )}
+        <div className="range-bar" aria-label="52 週區間">
+          <span className="range-fill" style={{ width: `${Math.max(0, Math.min(1, pos ?? 0)) * 100}%` }} />
+          <span className="range-labels">
+            <small>52 週低 {num(q.lo52)}</small>
+            <small>距高點 {`${((q.close / q.hi52 - 1) * 100).toFixed(1)}%`}</small>
+            <small>高 {num(q.hi52)}</small>
+          </span>
+        </div>
+        <p className="muted small">每週自動更新的免費日線（已按分割調整），非即時報價。</p>
+      </div>
+      <div className="panel valuation-mini">
+        <div>
+          <span>本益比（TTM）</span>
+          <strong>{mult(q.pe)}</strong>
+        </div>
+        <div>
+          <span>股價淨值比</span>
+          <strong>{mult(q.pb)}</strong>
+        </div>
+        <div>
+          <span>股價營收比</span>
+          <strong>{mult(q.ps)}</strong>
+        </div>
+        <div>
+          <span>股價自由現金流比</span>
+          <strong>{mult(q.pfcf)}</strong>
+        </div>
+        <div>
+          <span>市值</span>
+          <strong>{q.mcap ? `${num(q.mcap / 1e8, 0)} 億美元` : "N/A"}</strong>
+        </div>
+        <div>
+          <span>距 52 週低點</span>
+          <strong>{q.lo52 > 0 ? `+${((q.close / q.lo52 - 1) * 100).toFixed(1)}%` : "N/A"}</strong>
+        </div>
+        <p className="muted small" style={{ gridColumn: "1 / -1" }}>
+          倍數＝收盤價 ÷ 本站 SEC 官方 TTM 數字（EPS、營收、自由現金流 = OCF − |CapEx|）；市值＝收盤價 × 最新申報流通股數
+          {q.sharesEnd ? `（${q.sharesEnd}）` : ""}。非外部研究資料，沒有預估本益比。
+        </p>
+      </div>
+    </div>
   );
 }

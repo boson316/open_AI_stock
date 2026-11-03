@@ -2,7 +2,7 @@
 
 免費、靜態部署的繁體中文美股財報研究平台。React / TypeScript / Vite / Tailwind CSS / Apache ECharts；Python 3.12 處理 SEC 資料。不需要付費 API、資料庫或常駐後端。
 
-本版收錄 **SOFI、GOOGL、GOOG、NVDA、AMD、TSM、MSFT、AAPL、AMZN、META、PLTR、MU、TSLA**。13 個代號各有最近 20 個連續財季的營收、淨利與直接披露稀釋 EPS，並附正式 SEC 資料快照。GOOGL / GOOG 共用 Alphabet 的發行人財報；股價仍須按各自代號匯入。所有測試中的合成數字只存在於 `tests/`，不發布至 `public/data/`。
+本版收錄 **SOFI、GOOGL、GOOG、NVDA、AMD、TSM、MSFT、AAPL、AMZN、META、PLTR、MU、TSLA**。13 個代號各有最近 20 個連續財季的營收、淨利與直接披露稀釋 EPS，並附正式 SEC 資料快照。GOOGL / GOOG 共用 Alphabet 的發行人財報；股價按各自代號每週自動更新。所有測試中的合成數字只存在於 `tests/`，不發布至 `public/data/`。
 
 ## 本地開發
 
@@ -72,12 +72,18 @@ export SEC_USER_AGENT='OpenStockAnalytics your-real-contact@your-domain.com'
 - SoFi KPI、來源明細、季度 / 年度 / TTM、YoY / 前期增率、3 / 5 年 CAGR。
 - 損益、現金流、資產負債、比率與財務表格；圖例、縮放、圖表類型、全螢幕、PNG / SVG / CSV 匯出。
 - 金融機構解讀、10 項條件式財報觀察、深色模式及手機版。
-- 經授權股價 CSV 匯入、按申報可得日期計算的 PE 分位估值圖、使用者 ROIC / WACC 假設計算。
+- 每週自動更新的股價（近 5 年週收盤、52 週高低、分割事件），按申報可得日期計算的 PE 分位估值圖與股價 × EPS 疊圖；也可匯入自己的股價 CSV 覆蓋。使用者 ROIC / WACC 假設計算。
 - 缺值明示 N/A；不將自行推算值標示為官方 Adjusted EPS，也不在資料不足時產生健康總分。
 
 ## 股價匯入
 
-本版不使用授權範圍未確認的 Yahoo / Stooq 非官方介面。請自行取得有權使用的資料，填寫來源，確認區間不存在未處理的股票分割後匯入：
+`Price Update` 工作流程每週六（UTC 02:23）以 `python -m openstock.prices` 下載近 5 年日線，依序嘗試 Yahoo Finance（含分割事件）、Nasdaq、Stooq（設定 `STOOQ_APIKEY` secret 時使用），寫入 `public/data/prices.json`，在 main 執行時直接提交並觸發部署。單檔失敗保留上次價格；全部失敗不改檔。這些是免費的非官方介面，僅供個人研究，非即時報價。
+
+收盤價為「按分割調整、未還原股息」的價格。前端把分割前申報的 EPS 除以之後的分割比例（股數乘以比例）換算到目前股數基礎，再與股價配對計算本益比；已核對的歷史分割列在 `prices.py` 的 `KNOWN_SPLITS`（NVDA、TSLA、GOOGL/GOOG、AMZN、AAPL），並與 Yahoo 回傳的分割事件合併。
+
+沒有外部研究資料的股票（AAPL、TSLA、SOFI），總覽的行情卡改以「自動股價 × 本站 SEC 官方 TTM 數字」計算本益比、股價淨值比、股價營收比、股價自由現金流比與市值。
+
+也可以在估值頁匯入自己有權使用的 CSV 覆蓋自動股價（匯入的資料不做分割換算，請確認區間不存在未處理的股票分割）：
 
 ```csv
 Date,Open,High,Low,Close,AdjustedClose,Volume

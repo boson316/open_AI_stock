@@ -8,6 +8,31 @@ export type QuarterPrice = {
   eps_ttm: number | null;
 };
 
+/**
+ * 沒有外部估值資料時：用自動股價（週收盤）與 SEC 財報組出季末股價、TTM EPS。
+ * 每個財季末取該日（含）之前 10 天內最後一筆週收盤；最後一列為最新收盤。
+ * quarters 需已換算到與股價相同的股數基礎（adjustForSplits）。
+ */
+export function quarterPricesFromWeekly(
+  quarters: Fact[],
+  weekly: [string, number][],
+  latest: { date: string; close: number } | null,
+): QuarterPrice[] {
+  const ends = [...new Set(quarters.filter((f) => f.metric === "eps").map((f) => f.end))].sort();
+  const sorted = [...weekly].sort((a, b) => a[0].localeCompare(b[0]));
+  const rows: QuarterPrice[] = [];
+  for (const end of ends) {
+    const hit = sorted.filter(([d]) => d <= end && days(d, end) <= 10).at(-1);
+    if (!hit) continue;
+    rows.push({ date: end, label: `${end.slice(2, 4)}/${end.slice(5, 7)}`, price: hit[1], eps_ttm: ttmAt(quarters, "eps", end) });
+  }
+  if (latest && latest.close > 0 && (!rows.length || latest.date > rows.at(-1)!.date)) {
+    const lastEnd = ends.at(-1);
+    rows.push({ date: latest.date, label: "最新", price: latest.close, eps_ttm: lastEnd ? ttmAt(quarters, "eps", lastEnd) : null });
+  }
+  return rows;
+}
+
 const days = (a: string, b: string) =>
   Math.abs(Date.parse(a) - Date.parse(b)) / 86400000;
 

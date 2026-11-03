@@ -430,3 +430,28 @@ export const labels: Record<string, string> = {
   dividends_paid: "發放現金股利",
   dps: "每股股利",
 };
+
+export type Split = { date: string; ratio: number };
+/**
+ * 把「當時申報」的每股數字換算到目前股數基礎：申報日之後才發生的分割，
+ * EPS 除以分割比例、股數乘以分割比例。分割後申報（含重編比較數）的數字已是新基礎，不再調整。
+ */
+export function adjustForSplits(facts: Fact[], splits: Split[]): Fact[] {
+  const valid = splits.filter(
+    (s) => /^\d{4}-\d{2}-\d{2}$/.test(s.date) && Number.isFinite(s.ratio) && s.ratio > 0 && s.ratio !== 1,
+  );
+  if (!valid.length) return facts;
+  return facts.map((f) => {
+    if (f.metric !== "eps" && f.metric !== "shares" && f.metric !== "dps") return f;
+    const k = valid.filter((s) => s.date > f.filed).reduce((a, s) => a * s.ratio, 1);
+    if (k === 1) return f;
+    return { ...f, value: f.metric === "shares" ? f.value * k : f.value / k };
+  });
+}
+/** prices.json 的週收盤 → Price[]（只有收盤價；開高低以收盤代替，不用於 OHLC 判斷）。 */
+export function weeklyToPrices(weekly: [string, number][], source: string): Price[] {
+  return weekly
+    .filter(([d, c]) => /^\d{4}-\d{2}-\d{2}$/.test(d) && Number.isFinite(c) && c > 0)
+    .map(([date, close]) => ({ date, open: close, high: close, low: close, close, adjustedClose: null, volume: 0, source }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+}

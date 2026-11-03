@@ -73,7 +73,7 @@ export function ExternalValuationPanel({
           <strong>{ticker} 沒有外部估值資料</strong>
           <p>
             目前外部提供的季末估值資料涵蓋 {Object.keys(data.companies).join("、")}
-            。若要查看 {ticker} 的估值，請在下方匯入你有權使用的歷史股價 CSV。
+            。{ticker} 的自由現金流報酬率、內在價值與本益比河流圖改用每週自動更新的股價 × 本站 SEC 財報計算（見下方）。
           </p>
         </div>
       </div>

@@ -221,7 +221,19 @@ export type PriceFile = {
   source: string;
   note: string;
   updated: string;
-  tickers: Record<string, { asof: string; close: number; hi52: number; lo52: number; weekly: [string, number][] }>;
+  tickers: Record<string, PriceEntry>;
+};
+export type PriceEntry = {
+  asof: string;
+  close: number;
+  prev_close?: number | null;
+  hi52: number;
+  lo52: number;
+  weekly: [string, number][];
+  /** 股票分割事件（除權日、比例），收盤價已按這些分割調整。 */
+  splits?: { date: string; ratio: number }[];
+  /** 資料來源名稱，例如 Yahoo Finance、Stooq。 */
+  source?: string;
 };
 
 /**
@@ -240,7 +252,7 @@ export function applyPrices(research: Research, prices: PriceFile | null): Resea
       if (!valid(p) || day(p!.asof) <= day(c.close_asof) || !(oldClose > 0)) return [t, c];
       const k = p!.close / oldClose;
       const scale = (v: number | null) => (v === null ? null : v * k);
-      const label = `${p!.asof} 收盤（Stooq）`;
+      const label = `${p!.asof} 收盤（${p!.source ?? "Stooq"}）`;
       return [
         t,
         {
@@ -268,13 +280,22 @@ export function applyPrices(research: Research, prices: PriceFile | null): Resea
   return { ...research, companies, etf };
 }
 
+let priceCache: Promise<PriceFile | null> | null = null;
+/** 讀取自動更新的股價檔；沒有檔案或格式不對時回傳 null（股價是選用資料）。 */
+export function loadPriceFile(base: string): Promise<PriceFile | null> {
+  if (priceCache) return priceCache;
+  priceCache = fetch(`${base}data/prices.json`)
+    .then((r) => (r.ok ? (r.json() as Promise<PriceFile>) : null))
+    .then((p) => (p && p.version === 1 && p.tickers && typeof p.tickers === "object" ? p : null))
+    .catch(() => null);
+  return priceCache;
+}
+
 let cache: Promise<Research> | null = null;
 export function loadResearch(base: string): Promise<Research> {
   if (cache) return cache;
   // 股價檔是選用的：讀不到就沿用研究資料裡的收盤價。
-  const prices = fetch(`${base}data/prices.json`)
-    .then((r) => (r.ok ? (r.json() as Promise<PriceFile>) : null))
-    .catch(() => null);
+  const prices = loadPriceFile(base);
   cache = fetch(`${base}data/research.json`)
     .then((r) => {
       if (!r.ok) throw Error(`HTTP ${r.status}`);

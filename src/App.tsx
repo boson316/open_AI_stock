@@ -69,6 +69,10 @@ import {
   yoy,
 } from "./lib/finance";
 import type { Catalog, Dataset, Fact, Price } from "./lib/finance";
+import { adjustForSplits, weeklyToPrices } from "./lib/finance";
+import { quarterPricesFromWeekly } from "./lib/intrinsic";
+import { loadPriceFile } from "./lib/research";
+import type { PriceEntry } from "./lib/research";
 
 const sections = [
   { id: "overview", label: "研究總覽", icon: Layers3 },
@@ -193,7 +197,8 @@ export function App() {
     [priceSource, setPriceSource] = useState(""),
     [priceImported, setPriceImported] = useState(""),
     [priceConsent, setPriceConsent] = useState(false),
-    [log, setLog] = useState(false);
+    [log, setLog] = useState(false),
+    [autoPrice, setAutoPrice] = useState<PriceEntry | null>(null);
   const pageTop = useRef<HTMLElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
   const [favorites, setFavorites] = useState<string[]>(() => {
@@ -265,6 +270,16 @@ export function App() {
     const company = catalog.companies.find((c) => c.ticker === ticker);
     setPrices([]);
     setPriceImported("");
+    setAutoPrice(null);
+    // 預設載入每週自動更新的股價；使用者匯入 CSV 時會覆蓋。
+    loadPriceFile(base).then((pf) => {
+      const entry = pf?.tickers[ticker];
+      if (controller.signal.aborted || !entry || !Array.isArray(entry.weekly)) return;
+      const series = weeklyToPrices(entry.weekly, `${entry.source ?? "Stooq"}（每週自動更新）`);
+      if (!series.length) return;
+      setAutoPrice(entry);
+      setPrices((cur) => (cur.length ? cur : series));
+    });
     setDataset(null);
     setImported(false);
     setLoading(true);
@@ -466,6 +481,19 @@ export function App() {
   }
   const lastPrice = prices.at(-1),
     prevPrice = prices.at(-2);
+  // 自動股價已按分割調整：把當時申報的 EPS／股數換算到目前股數基礎再計算倍數。
+  const splits = useMemo(() => autoPrice?.splits ?? [], [autoPrice]);
+  const adjQuarters = useMemo(
+    () => adjustForSplits(quarters, splits),
+    [quarters, splits],
+  );
+  const adjRaw = useMemo(
+    () => adjustForSplits(raw, splits),
+    [raw, splits],
+  );
+  const epsForPrice = annualOnly
+    ? (last(adjQuarters, "eps")?.value ?? null)
+    : sumTTM(adjQuarters, "eps");
   const matchedLatest =
     currency === "USD" &&
     !annualOnly &&
@@ -474,8 +502,8 @@ export function App() {
     lastPrice.date >= latestDate &&
     (Date.parse(lastPrice.date) - Date.parse(latestDate)) / 86400000 <= 180;
   const peValue =
-    matchedLatest && eps !== null && eps > 0
-      ? divide(lastPrice!.close, eps)
+    matchedLatest && epsForPrice !== null && epsForPrice > 0
+      ? divide(lastPrice!.close, epsForPrice)
       : null;
   const equityForPB =
     endingEquity &&
@@ -485,7 +513,7 @@ export function App() {
       180
       ? endingEquity
       : null;
-  const sharesForPB = last(quarters, "shares");
+  const sharesForPB = last(adjQuarters, "shares");
   const pb =
     matchedLatest &&
     equityForPB &&
@@ -493,6 +521,44 @@ export function App() {
     sharesForPB.filed < lastPrice!.date
       ? divide(lastPrice!.close, divide(equityForPB.value, sharesForPB.value))
       : null;
+  const autoQuarterPrices = useMemo(
+    () =>
+      autoPrice && currency === "USD" && !annualOnly
+        ? quarterPricesFromWeekly(adjQuarters, autoPrice.weekly, {
+            date: autoPrice.asof,
+            close: autoPrice.close,
+          })
+        : null,
+    [autoPrice, adjQuarters, currency, annualOnly],
+  );
+  // 沒有外部研究資料的股票：以官方財報 × 自動股價計算行情卡。
+  const officialQuote = (() => {
+    if (!autoPrice || currency !== "USD" || annualOnly || !matchedLatest)
+      return null;
+    const shares = last(adjQuarters, "shares");
+    const mcap =
+      shares && shares.filed < autoPrice.asof
+        ? autoPrice.close * shares.value
+        : null;
+    const rev = sumTTM(quarters, "revenue");
+    const ocf = sumTTM(quarters, "ocf"),
+      capex = sumTTM(quarters, "capex");
+    const fcf = ocf !== null && capex !== null ? ocf - Math.abs(capex) : null;
+    return {
+      close: autoPrice.close,
+      asof: autoPrice.asof,
+      prev: autoPrice.prev_close ?? null,
+      hi52: autoPrice.hi52,
+      lo52: autoPrice.lo52,
+      source: autoPrice.source ?? "Stooq",
+      pe: peValue,
+      pb,
+      ps: mcap !== null && rev ? divide(mcap, rev) : null,
+      pfcf: mcap !== null && fcf !== null && fcf > 0 ? divide(mcap, fcf) : null,
+      mcap,
+      sharesEnd: shares?.end ?? null,
+    };
+  })();
   const kpis = [
     {
       title: annualOnly ? "年度營業收入" : "TTM 營業收入",
@@ -621,8 +687,8 @@ export function App() {
       ? "尚無足夠且可比較的財報資料，暫不產生營收趨勢結論。"
       : `${annualOnly ? "本年度營收較上年度" : "本季營收較去年同期"}${revenueGrowth >= 0 ? "增加" : "減少"} ${Math.abs(revenueGrowth * 100).toFixed(1)}%。此變化需要查閱財報附註確認原因。`;
   const riverRows = useMemo(
-    () => river(currency === "USD" && !annualOnly ? raw : [], prices),
-    [raw, prices, currency, annualOnly],
+    () => river(currency === "USD" && !annualOnly ? adjRaw : [], prices),
+    [adjRaw, prices, currency, annualOnly],
   );
   const riverDates = riverRows.filter(
     (r) =>
@@ -665,6 +731,7 @@ export function App() {
       if (!priceConsent) throw Error("請先確認你有權使用這份股價資料");
       const parsed = parsePrices(await file.text(), priceSource);
       setPrices(parsed);
+      setAutoPrice(null);
       setPriceImported(new Date().toISOString());
       setError("");
     } catch (e) {
@@ -1516,18 +1583,23 @@ export function App() {
                   base={base}
                   ticker={ticker}
                   onGurus={() => navigate("gurus")}
+                  official={officialQuote}
                 />
                 <section className="price-callout">
                   <div>
                     <ChartCandlestick size={20} />
                     <span>
                       {lastPrice
-                        ? `${ticker} 匯入收盤價 $${lastPrice.close.toFixed(2)} · ${lastPrice.date}`
+                        ? autoPrice
+                          ? `${ticker} 收盤價 $${autoPrice.close.toFixed(2)} · ${autoPrice.asof}（${autoPrice.source ?? "Stooq"}）`
+                          : `${ticker} 匯入收盤價 $${lastPrice.close.toFixed(2)} · ${lastPrice.date}`
                         : "想一起研究價格與估值？"}
                       <small>
-                        {lastPrice && prevPrice
-                          ? `相鄰匯入交易日 ${displayFormat(growth(lastPrice.close, prevPrice.close), "%")}`
-                          : "匯入你有權使用的股價 CSV，查看歷史本益比與估值河流圖。"}
+                        {autoPrice
+                          ? `${autoPrice.prev_close ? `前一交易日 ${displayFormat(growth(autoPrice.close, autoPrice.prev_close), "%")} · ` : ""}${prevPrice ? `近一週 ${displayFormat(growth(lastPrice!.close, prevPrice.close), "%")} · ` : ""}本益比 ${peValue !== null ? `${peValue.toFixed(1)}×` : "N/A"} · 每週自動更新，非即時報價`
+                          : lastPrice && prevPrice
+                            ? `相鄰匯入交易日 ${displayFormat(growth(lastPrice.close, prevPrice.close), "%")}`
+                            : "匯入你有權使用的股價 CSV，查看歷史本益比與估值河流圖。"}
                       </small>
                     </span>
                   </div>
@@ -1840,10 +1912,15 @@ export function App() {
                   <SectionTitle eyebrow="VALUATION LAB" title="估值研究" />
                   <div className="panel import-panel">
                     <div>
-                      <h3>使用你有權使用的歷史股價</h3>
+                      <h3>
+                        {autoPrice
+                          ? "已載入每週自動更新的股價"
+                          : "使用你有權使用的歷史股價"}
+                      </h3>
                       <p className="muted">
-                        未確認免費來源的再散布授權，因此不抓取非官方即時報價。CSV
-                        僅在本次瀏覽器工作階段使用，不會上傳。
+                        {autoPrice
+                          ? `近 5 年週收盤（${autoPrice.source ?? "Stooq"} 免費日線，已按股票分割調整、未還原股息），僅供個人研究，非即時報價。分割前申報的 EPS 會換算成目前股數基礎再計算本益比。也可以匯入你自己的 CSV 覆蓋。`
+                          : "這檔目前沒有自動股價（或你已匯入自己的資料）。CSV 僅在本次瀏覽器工作階段使用，不會上傳。"}
                       </p>
                       <code>Date,Open,High,Low,Close,AdjustedClose,Volume</code>
                       <p className="small muted">
@@ -1883,11 +1960,25 @@ export function App() {
                       {lastPrice && (
                         <span className="small accent">
                           <Check size={13} />
-                          已匯入 {prices.length} 筆 · 截至 {lastPrice.date}
+                          {autoPrice ? "已載入" : "已匯入"} {prices.length} 筆 ·
+                          截至 {lastPrice.date}
                           <br />
                           來源：{lastPrice.source}
-                          <br />
-                          匯入時間：{priceImported}
+                          {autoPrice && splits.length > 0 && (
+                            <>
+                              <br />
+                              分割事件：
+                              {splits
+                                .map((x) => `${x.date}（1 拆 ${x.ratio}）`)
+                                .join("、")}
+                            </>
+                          )}
+                          {priceImported && (
+                            <>
+                              <br />
+                              匯入時間：{priceImported}
+                            </>
+                          )}
                         </span>
                       )}
                     </div>
@@ -1919,10 +2010,11 @@ export function App() {
                     quarters={quarters}
                     raw={raw}
                     isFinancial={isFinancial}
+                    fallbackRows={autoQuarterPrices}
                   />
                   {riverDates.length > 0 && (
                     <FinancialChart
-                      title="本益比估值河流圖（你匯入的股價）"
+                      title={`本益比估值河流圖（${autoPrice ? "自動週收盤" : "你匯入的股價"}）`}
                       dates={riverDates.map((r) => r.date)}
                       dark={dark}
                       unit="美元／股"

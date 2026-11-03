@@ -10,6 +10,7 @@ import {
   median,
   ttmAt,
   type FcfYieldPoint,
+  type QuarterPrice,
 } from "../lib/intrinsic";
 import { useResearch, wacc, type Research } from "../lib/research";
 import { annual, cagr } from "../lib/finance";
@@ -36,10 +37,12 @@ type Props = {
   /** 原始財報事實，用於年度 EPS 成長率 */
   raw: Fact[];
   isFinancial: boolean;
+  /** 沒有外部估值資料時，由自動股價 × SEC 財報組成的季末股價與 TTM EPS。 */
+  fallbackRows?: QuarterPrice[] | null;
 };
 
 /** 自由現金流報酬率、現金流折現評價、彼得林區評價。 */
-export function IntrinsicValue({ base, ticker, dark, quarters, raw, isFinancial }: Props) {
+export function IntrinsicValue({ base, ticker, dark, quarters, raw, isFinancial, fallbackRows = null }: Props) {
   const { data: research } = useResearch(base);
   const [external, setExternal] = useState<ExternalValuation | null>(null);
   const [error, setError] = useState("");
@@ -57,7 +60,7 @@ export function IntrinsicValue({ base, ticker, dark, quarters, raw, isFinancial 
     return () => controller.abort();
   }, [base]);
 
-  const rows = external?.companies[ticker];
+  const rows = external?.companies[ticker] ?? (fallbackRows?.length ? fallbackRows : undefined);
   const history = useMemo(
     () => (rows ? fcfYieldHistory(quarters, rows) : []),
     [rows, quarters],

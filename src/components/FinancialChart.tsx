@@ -113,6 +113,8 @@ export function FinancialChart({
           {
             type: "value",
             name: secondaryUnit,
+            // 右軸標題靠右對齊，避免長單位（例如「TTM EPS（美元／股）」）超出圖框被切掉。
+            nameTextStyle: { align: "right" },
             scale: true,
             splitLine: { show: false },
           },
