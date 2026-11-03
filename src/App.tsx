@@ -38,6 +38,7 @@ import { ExternalValuationPanel } from "./components/ExternalValuation";
 import { ValuationTools } from "./components/ValuationTools";
 import { IntrinsicValue } from "./components/IntrinsicValue";
 import { StockSnapshot } from "./components/StockSnapshot";
+import { EarningsCall } from "./components/EarningsCall";
 import { Gurus } from "./components/Gurus";
 import { Market } from "./components/Market";
 import { Portfolio } from "./components/Portfolio";
@@ -1349,6 +1350,12 @@ export function App() {
                 <div className="dashboard-kpis">
                   {primaryMetrics.map(metricCard)}
                 </div>
+                <EarningsCall
+                  base={base}
+                  ticker={ticker}
+                  quarters={quarters}
+                  shareUnit={shareUnit}
+                />
                 <div className="overview-grid">
                   <div className="trend-panel panel">
                     <div className="trend-heading">

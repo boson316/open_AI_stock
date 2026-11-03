@@ -522,3 +522,82 @@
     flex-wrap: wrap;
   }
 }
+
+/* ===== 法說會重點 ===== */
+.earnings-call h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.earnings-call .panel-head .button {
+  gap: 6px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.call-summary {
+  margin: 4px 0 8px;
+  padding-left: 20px;
+  line-height: 1.8;
+}
+.call-toggle {
+  display: block;
+  margin: 8px auto 0;
+  padding: 8px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--tint);
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+.call-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+}
+.call-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  min-width: 120px;
+}
+.call-chip small {
+  color: var(--muted);
+}
+.call-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 8px 0 14px;
+}
+.call-block h4 {
+  margin: 0 0 6px;
+}
+.call-block.positive h4 {
+  color: var(--positive);
+}
+.call-block.negative h4 {
+  color: var(--negative);
+}
+.call-block ul {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.call-qa {
+  border-top: 1px solid var(--line);
+  padding: 6px 0;
+}
+.call-qa summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.call-qa p {
+  margin: 6px 0 4px;
+  line-height: 1.7;
+}
