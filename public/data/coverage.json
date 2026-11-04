@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-04T01:32:10.862226+00:00",
+  "generated_at": "2026-11-04T02:11:15.371069+00:00",
   "core_metrics": [
     "revenue",
     "net_income",
@@ -2843,7 +2843,7 @@
         "sbc": 1,
         "shares": 1
       },
-      "dataset_sha256": "93af07073d94f32e7e1ebc81af6801ff7965297e0034ebd8c0898c5a4df6642b"
+      "dataset_sha256": "8b6d6809dba14b452d39cf4dc0addbc4c991613857ac78a90de906191e8ca078"
     },
     {
       "ticker": "GOOGL",
@@ -6032,7 +6032,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "bd888c64f8117b0911190816ce0773121cfe35b67b67a5317cfdaf2e9d122c7d"
+      "dataset_sha256": "bb3af91674bb4388bc0a1bb001618ddb6629e4f088b1b8775aab0449bc4010f9"
     },
     {
       "ticker": "GOOG",
@@ -9221,7 +9221,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "08d9688aba8531de46a9eeebcc2fd4c2b16c4e640e0ee072bb0dbe132c07c0d6"
+      "dataset_sha256": "10d7f3b575121cf45937be17503bef9b17566092dd52dd0b77480170d62423bf"
     },
     {
       "ticker": "NVDA",
@@ -12354,7 +12354,7 @@
         "sbc": 0,
         "shares": 15
       },
-      "dataset_sha256": "b768ec9cdca5ef49432e7812e77cc2d2624e0b4738c4b2da6e189e0884b1170e"
+      "dataset_sha256": "78b6d7de0b8c7eb15a18cfc639444141b515a6d09d7425e3525835439420cbe0"
     },
     {
       "ticker": "AMD",
@@ -15453,7 +15453,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "15bd32dabe0ad3fa08042047906881308e9c0372d6131f2bc54edf5908351bff"
+      "dataset_sha256": "d66956aced55421ae093fdcaad54abe6d6dec1a848e7110b4895bd1c77345f1f"
     },
     {
       "ticker": "TSM",
@@ -18683,7 +18683,7 @@
         "sbc": 1,
         "shares": 3
       },
-      "dataset_sha256": "7fefd8d50bbd703394dcfc5831aff109018c080842983d89019ffbfe64654db0"
+      "dataset_sha256": "8039963e726afbba22cc99b99b4c13df6ca44faf263244e11c3d639e770f7b7d"
     },
     {
       "ticker": "MSFT",
@@ -21427,7 +21427,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "04c999067bfb2d8a239adfc0511d0eb9507abac0b5e0564f8fe9d53844dda85e"
+      "dataset_sha256": "9dfc4b2bfe3d6849d0aacbbefe3c0c3a4aa6dc5ab13b14983b887ac18509039a"
     },
     {
       "ticker": "AAPL",
@@ -24561,7 +24561,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "f52c4218eb1fbb151ab78d3945905c761b85bea32d98f13779f7c77bbb4ef815"
+      "dataset_sha256": "4bab8f4467483f93c80ce3ddac09baae5968d3763636876ed27a0417febd711b"
     },
     {
       "ticker": "AMZN",
@@ -27975,7 +27975,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "97f9009b702347851b2cad4d73a6bb02c13c956d5b7a372fd75e23dbf09d0b17"
+      "dataset_sha256": "db4f8d7a762cefa49a5ad85a6bc15f0e116c838372893b1558949f278841928f"
     },
     {
       "ticker": "META",
@@ -31208,7 +31208,7 @@
         "sbc": 0,
         "shares": 20
       },
-      "dataset_sha256": "1213a93766dbd0949536fc2b947720cf22a00ba2ecbef69c5ef1b1e8664702a9"
+      "dataset_sha256": "89ad1810bf15a683dc882e4566fe9a4f16207a3a37086a9153ee4257a5318cb9"
     },
     {
       "ticker": "PLTR",
@@ -34309,7 +34309,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "21eba881368d6459479b3fa0c2c52c481e52783fa45f35563177395758a3c75e"
+      "dataset_sha256": "93e0e43e6923c2ce27591a19573934444dc825811b7c0267f1f3bd0343391cb0"
     },
     {
       "ticker": "MU",
@@ -37443,7 +37443,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "7b4ca5f38709dbf77177bd10fcce8441519179e1fcf538bb8779493d72fa2eb3"
+      "dataset_sha256": "f9bb67c1646f2d9506540202990f6476160d0ecd1c39d5c7857773bc51a04497"
     },
     {
       "ticker": "TSLA",
@@ -40551,7 +40551,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "df63ac92af376c5d18a6b044318043a9fe8ecd2a3f028a1cf0651739305a6bb1"
+      "dataset_sha256": "c86f549ba9187a29d6446f254a1049a882c841e974b9c4e505e50dbc1281f8a3"
     }
   ]
 }
