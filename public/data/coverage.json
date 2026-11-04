@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-04T02:36:06.273512+00:00",
+  "generated_at": "2026-11-04T02:38:09.621437+00:00",
   "core_metrics": [
     "revenue",
     "net_income",
@@ -39814,12 +39814,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -40539,18 +40534,18 @@
         "gross_profit": 0,
         "cost_revenue": 20,
         "operating_income": 0,
-        "assets": 2,
-        "liabilities": 2,
-        "equity": 2,
-        "cash": 2,
+        "assets": 1,
+        "liabilities": 1,
+        "equity": 1,
+        "cash": 1,
         "ocf": 1,
         "icf": 1,
         "financing_cf": 1,
         "capex": 1,
         "sbc": 1,
-        "shares": 2
+        "shares": 1
       },
-      "dataset_sha256": "5f66d3394bfc0d0a1fc09faf74a8c93e1ea6c0a39267418d921f22fc7391f30d"
+      "dataset_sha256": "d2c1356209268561bfdf0ea4a6e6aa4f3634541ed214e27138a789a71da24bb3"
     }
   ]
 }
