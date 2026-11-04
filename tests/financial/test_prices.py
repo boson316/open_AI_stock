@@ -153,3 +153,13 @@ def test_parse_h10_html_table():
     rows += "".join(f"<tr><th>{d}-Sep-26</th><td>ND</td></tr>" for d in range(1, 30))
     r = parse_h10(f"<table>{rows}</table>", date(2026, 11, 2))
     assert r["asof"] == "2026-10-30" and r["rate"] == 31.30
+
+
+def test_parse_bis_csv():
+    from openstock.prices import parse_bis
+
+    text = "STRUCTURE,STRUCTURE_ID,FREQ,TIME_PERIOD,OBS_VALUE\n" + "\n".join(
+        f"dataflow,BIS:WS_XRU(1.0),D,2026-10-{d:02d},{31 + d / 100:.4f}" for d in range(1, 31)
+    )
+    r = parse_bis(text, date(2026, 11, 2))
+    assert r["asof"] == "2026-10-30" and r["rate"] == 31.30

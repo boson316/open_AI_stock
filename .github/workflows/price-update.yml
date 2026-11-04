@@ -5,6 +5,11 @@ on:
   schedule:
     - cron: '23 2 * * 6'
   workflow_dispatch:
+    inputs:
+      fx_only:
+        description: 只更新匯率（測試用）
+        type: boolean
+        default: false
 permissions:
   contents: write
   actions: write
@@ -25,7 +30,7 @@ jobs:
       - run: pip install -r requirements.lock && pip install --no-deps -e .
       - name: Download weekly prices (single-ticker failures keep previous price)
         timeout-minutes: 12
-        run: python -u -m openstock.prices
+        run: python -u -m openstock.prices ${{ inputs.fx_only && '--fx-only' || '' }}
         env:
           STOOQ_APIKEY: ${{ secrets.STOOQ_APIKEY }}
       - run: pytest tests/financial/test_prices.py

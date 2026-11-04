@@ -29,7 +29,8 @@ from .pipeline import COMPANIES
 
 ETFS = ["EWT", "SMH", "SPY"]  # SPY 作為計算 Beta 的市場基準
 FRED = "https://fred.stlouisfed.org/graph/fredgraph.csv"
-H10 = "https://www.federalreserve.gov/releases/h10/hist/dat00_ta.htm"  # 聯準會 H.10 台灣歷史匯率（NT$ per US$）
+H10 = "https://www.federalreserve.gov/releases/h10/hist/dat00_ta.htm"
+BIS = "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_XRU/1.0/D.TW.TWD.A"  # 國際清算銀行：新臺幣兌美元日資料  # 聯準會 H.10 台灣歷史匯率（NT$ per US$）
 YAHOO = "https://query2.finance.yahoo.com/v8/finance/chart/{symbol}"
 NASDAQ = "https://api.nasdaq.com/api/quote/{symbol}/historical"
 CBOE = "https://cdn.cboe.com/api/global/delayed_quotes/charts/historical/{symbol}.json"
@@ -334,6 +335,22 @@ def parse_h10(html: str, today: date):
     return parse_fred("\n".join(lines), today)
 
 
+def parse_bis(text: str, today: date):
+    """BIS SDMX CSV（欄位含 TIME_PERIOD、OBS_VALUE）→ 與 parse_fred 相同格式。"""
+    rows = list(csv.DictReader(io.StringIO(text)))
+    if not rows or "TIME_PERIOD" not in rows[0] or "OBS_VALUE" not in rows[0]:
+        raise ValueError(f"unexpected BIS response: {text[:80]!r}")
+    lines = ["observation_date,DEXTAWUS"] + [
+        f"{r['TIME_PERIOD'][:10]},{r['OBS_VALUE'] or '.'}" for r in rows if re_date(r["TIME_PERIOD"])
+    ]
+    return parse_fred("\n".join(lines), today)
+
+
+def re_date(s):
+    import re
+    return re.fullmatch(r"\d{4}-\d{2}-\d{2}", s[:10] or "") is not None
+
+
 def fetch_fx(client: httpx.Client, today: date):
     """新臺幣兌美元：Federal Reserve H.10（每 1 美元兌新臺幣，紐約中午買入匯率）。
     先抓聯準會官網的 H.10 歷史頁，失敗再試 FRED 的同一序列（DEXTAWUS）。"""
@@ -356,7 +373,19 @@ def fetch_fx(client: httpx.Client, today: date):
             out["source"] = "Federal Reserve H.10（FRED DEXTAWUS）"
         except Exception as exc2:  # noqa: BLE001
             errors.append(f"fred: {exc2}")
-            raise RuntimeError("; ".join(errors))
+            try:
+                r = client.get(
+                    BIS,
+                    params={"startPeriod": (today - timedelta(days=5 * 366 + 14)).isoformat(), "format": "csv"},
+                    headers={"Accept": "application/vnd.sdmx.data+csv;version=2.0.0, text/csv"},
+                    timeout=httpx.Timeout(40, connect=15),
+                )
+                r.raise_for_status()
+                out = parse_bis(r.text, today)
+                out["source"] = "國際清算銀行 BIS（WS_XRU，D.TW.TWD.A）"
+            except Exception as exc3:  # noqa: BLE001
+                errors.append(f"bis: {exc3}")
+                raise RuntimeError("; ".join(errors))
     out["unit"] = "TWD per USD"
     return out
 
@@ -365,11 +394,12 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", type=Path, default=Path("public/data/prices.json"))
     p.add_argument("--ticker", nargs="*", help="只更新指定代號（預設全部）")
+    p.add_argument("--fx-only", action="store_true", help="只更新匯率")
     args = p.parse_args(argv)
     old = json.loads(args.output.read_text()) if args.output.exists() else {"tickers": {}}
     tickers = dict(old.get("tickers", {}))
     today = datetime.now(timezone.utc).date()
-    targets = args.ticker or [*COMPANIES, *ETFS]
+    targets = [] if args.fx_only else (args.ticker or [*COMPANIES, *ETFS])
     failed, used = [], set()
     timeout = httpx.Timeout(20, connect=10)
     with httpx.Client(timeout=timeout, follow_redirects=True, headers=HEADERS) as client:
@@ -403,7 +433,7 @@ def main(argv=None):
                 print(f"USDTWD: {fx['USDTWD']['rate']} @ {fx['USDTWD']['asof']}", flush=True)
             except Exception as exc:  # noqa: BLE001 - 匯率失敗保留上次
                 print(f"::warning::USD/TWD update failed; previous rate kept: {exc}", file=sys.stderr, flush=True)
-    if len(failed) == len(targets):
+    if targets and len(failed) == len(targets):
         print("All price downloads failed; prices.json unchanged", file=sys.stderr)
         return 1
     names = "、".join(sorted(used)) or "免費日線資料"
