@@ -112,28 +112,6 @@
       }
     },
     {
-      "ticker": "TSM",
-      "cik": "0001046179",
-      "name": "Taiwan Semiconductor Manufacturing",
-      "exchange": "NYSE",
-      "sector": "semiconductor",
-      "status": "available",
-      "file": "TSM.json",
-      "updated": "2026-11-04T02:10:25.107658+00:00",
-      "currency": "TWD",
-      "accounting_standard": "IFRS",
-      "periods": [
-        "quarter",
-        "annual"
-      ],
-      "coverage": {
-        "quarters": 20,
-        "first_end": "2021-12-31",
-        "last_end": "2026-09-30",
-        "core_complete": true
-      }
-    },
-    {
       "ticker": "MSFT",
       "cik": "0000789019",
       "name": "Microsoft",
@@ -276,6 +254,28 @@
       "updated": "2026-11-04T02:11:13.300638+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "TSM",
+      "cik": "0001046179",
+      "name": "Taiwan Semiconductor Manufacturing",
+      "exchange": "NYSE",
+      "sector": "semiconductor",
+      "status": "available",
+      "file": "TSM.json",
+      "updated": "2026-11-04T02:36:03.852237+00:00",
+      "currency": "TWD",
+      "accounting_standard": "IFRS",
       "periods": [
         "quarter",
         "annual"
