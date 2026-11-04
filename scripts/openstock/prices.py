@@ -322,8 +322,22 @@ def parse_fred(text: str, today: date):
 
 def fetch_fx(client: httpx.Client, today: date):
     """新臺幣兌美元：Federal Reserve H.10（FRED DEXTAWUS，每 1 美元兌新臺幣，紐約中午買入匯率）。"""
-    response = client.get(FRED, params={"id": "DEXTAWUS", "cosd": (today - timedelta(days=5 * 366 + 14)).isoformat()})
-    response.raise_for_status()
+    # FRED 的 CSV 匯出偶爾很慢：拉長逾時並重試 3 次。
+    last_exc = None
+    for attempt in range(3):
+        try:
+            response = client.get(
+                FRED,
+                params={"id": "DEXTAWUS", "cosd": (today - timedelta(days=5 * 366 + 14)).isoformat()},
+                timeout=httpx.Timeout(90, connect=20),
+            )
+            response.raise_for_status()
+            break
+        except httpx.HTTPError as exc:
+            last_exc = exc
+            time.sleep(5 * (attempt + 1))
+    else:
+        raise last_exc
     out = parse_fred(response.text, today)
     out["source"] = "Federal Reserve H.10（FRED DEXTAWUS）"
     out["unit"] = "TWD per USD"
