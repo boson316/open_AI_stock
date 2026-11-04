@@ -2,12 +2,12 @@ import { Lightbulb } from "lucide-react";
 import type { ChartGuide } from "../lib/chartGuides";
 
 /** 圖表下方的「怎麼看」：意義、好壞方向、參考區間、注意事項。 */
-export function ChartGuideBox({ guide }: { guide: ChartGuide | null }) {
+export function ChartGuideBox({ guide, label = "怎麼看這張圖" }: { guide: ChartGuide | null; label?: string }) {
   if (!guide) return null;
   return (
     <details className="chart-guide" open>
       <summary>
-        <Lightbulb size={14} /> 怎麼看這張圖
+        <Lightbulb size={14} /> {label}
       </summary>
       <p>
         <strong>代表什麼：</strong>

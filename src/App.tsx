@@ -51,7 +51,7 @@ import {
 } from "./lib/analysisPack";
 import { FinancialChart } from "./components/FinancialChart";
 import { ChartGuideBox } from "./components/ChartGuideBox";
-import { SNAPSHOT_GUIDE } from "./lib/chartGuides";
+import { BANK_GUIDE, SNAPSHOT_GUIDE } from "./lib/chartGuides";
 import {
   annual,
   cagr,
@@ -1740,7 +1740,7 @@ export function App() {
                         </button>
                       ))}
                     </section>
-                    <ChartGuideBox guide={isFinancial ? null : SNAPSHOT_GUIDE} />
+                    <ChartGuideBox guide={isFinancial ? BANK_GUIDE : SNAPSHOT_GUIDE} label="怎麼看這些指標" />
                     <section className="panel coverage-panel">
                       <div className="coverage-icon">
                         <ShieldCheck size={20} />
@@ -2113,6 +2113,7 @@ export function App() {
                     )}
                   </div>
                 </section>
+                <ChartGuideBox guide={BANK_GUIDE} label="怎麼看這些指標" />
               </>
             )}
             {section === "screener" && (
@@ -2285,7 +2286,7 @@ export function App() {
                   <p className="muted small">
                     分位數採截至各交易日的擴展樣本，不引用未來股價。EPS ≤
                     0、缺季度或分割口徑未確認時不得作正 PE 結論。Adjusted /
-                    Normalized EPS 尚無可靠資料，維持 N/A。
+                    Normalized EPS（排除一次性項目的調整後 EPS）尚無可靠官方資料，本站一律使用 GAAP EPS。
                   </p>
                   <WaccPanel
                     key={ticker}
