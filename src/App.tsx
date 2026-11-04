@@ -1036,6 +1036,23 @@ export function App() {
     n == null
       ? "N/A"
       : `${currency === "TWD" ? "NT$" : "$"}${Math.abs(n) >= 1e8 ? (n / 1e8).toLocaleString("zh-TW", { maximumFractionDigits: 2 }) + " 億" : (n / 1e6).toLocaleString("zh-TW", { maximumFractionDigits: 1 }) + " 百萬"}`;
+  // KPI 卡：金額不帶幣別符號、≥ 1 兆改用「兆」，幣別寫在數字下方，手機上不會超出卡片。
+  const compactMoney = (n: number) =>
+    Math.abs(n) >= 1e12
+      ? { text: (n / 1e12).toLocaleString("zh-TW", { maximumFractionDigits: 2 }), scale: "兆" }
+      : Math.abs(n) >= 1e8
+        ? { text: (n / 1e8).toLocaleString("zh-TW", { maximumFractionDigits: 2 }), scale: "億" }
+        : { text: (n / 1e6).toLocaleString("zh-TW", { maximumFractionDigits: 1 }), scale: "百萬" };
+  const kpiValue = (k: { value: number | null; unit: string }) => {
+    if (k.value === null) return { text: "N/A", note: "" };
+    if (k.unit === "USD") {
+      const m = compactMoney(k.value);
+      return { text: m.text, note: `${m.scale}${currencyLabel}` };
+    }
+    if (k.unit.endsWith("/shares"))
+      return { text: k.value.toFixed(2), note: `${currencyLabel}／股` };
+    return { text: displayFormat(k.value, k.unit), note: "" };
+  };
   function navigate(id: string) {
     setSection(id);
     setMobile(false);
@@ -1086,11 +1103,11 @@ export function App() {
           {k.title}
           <ArrowUpRight size={15} />
         </span>
-        <strong>
-          {k.unit === "USD"
-            ? shortMoney(k.value)
-            : displayFormat(k.value, k.unit)}
-        </strong>
+        <strong>{kpiValue(k).text}</strong>
+        {/* 沒有單位的卡也保留同高度的一行，四張卡上下對齊 */}
+        <small className="metric-card-unit">
+          {kpiValue(k).note ? `單位：${kpiValue(k).note}` : "\u00a0"}
+        </small>
         <span className="metric-card-foot">
           <span>{k.period ?? last(quarters, k.metric)?.end ?? "尚無可用期間"}</span>
           <span>{k.value === null ? "尚無資料" : "查看明細"}</span>

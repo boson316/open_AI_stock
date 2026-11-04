@@ -126,7 +126,7 @@ test("official persisted data loads through the repository base path with correc
   await expect(page.locator(".ticker-pill")).toHaveText("TSM");
   await expect(
     page.getByRole("button", { name: /TTM 營業收入/ }),
-  ).toContainText("NT$");
+  ).toContainText("新臺幣");
   await page.getByRole("button", { name: "切換至 SOFI", exact: true }).click();
   await expect(page.locator(".ticker-pill")).toHaveText("SOFI");
   await expect(
@@ -204,7 +204,7 @@ test("every requested ticker loads its own verified data and TSM keeps TIFRS qua
     if (ticker === "TSM") {
       await expect(
         page.getByRole("button", { name: /TTM 營業收入/ }),
-      ).toContainText("NT$");
+      ).toContainText("新臺幣");
       await expect(
         page.getByRole("button", { name: "季度", exact: true }),
       ).toBeEnabled();
