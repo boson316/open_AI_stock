@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-03T03:18:05.489730+00:00",
+  "generated_at": "2026-11-04T01:32:10.862226+00:00",
   "core_metrics": [
     "revenue",
     "net_income",
@@ -2843,7 +2843,7 @@
         "sbc": 1,
         "shares": 1
       },
-      "dataset_sha256": "d21d87e27c6d83789bfc33e6b7490369a4f4bbc5741dc9a5accd49376f31e87e"
+      "dataset_sha256": "93af07073d94f32e7e1ebc81af6801ff7965297e0034ebd8c0898c5a4df6642b"
     },
     {
       "ticker": "GOOGL",
@@ -6032,7 +6032,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "ba2371dfd2c2f9b7a27786f72640af20bc7a57c507c6a5da32ac896b8502f2d9"
+      "dataset_sha256": "bd888c64f8117b0911190816ce0773121cfe35b67b67a5317cfdaf2e9d122c7d"
     },
     {
       "ticker": "GOOG",
@@ -9221,7 +9221,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "1ba1aecdadc17bb389982a6ec06fec3881845376a42db9cea7f008d81ea2b3f2"
+      "dataset_sha256": "08d9688aba8531de46a9eeebcc2fd4c2b16c4e640e0ee072bb0dbe132c07c0d6"
     },
     {
       "ticker": "NVDA",
@@ -9482,7 +9482,7 @@
                 "lineage": [
                   "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
                   "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-                  "Original document SHA256: 6fab293ff19b776f7f9c5fac0028bcb041ebd865fef5d30ad402e4af3adc517b; current SHA256 34c80b12dff52cc0dae8d88eb879b716403a19046ef1eeab1853d79765da94c3 (values re-verified in document)"
+                  "Original document SHA256: 6fab293ff19b776f7f9c5fac0028bcb041ebd865fef5d30ad402e4af3adc517b; current SHA256 5f1a525289f463bd888e369b4438154923460f7626c231a487d3c1c62abac5a9 (values re-verified in document)"
                 ]
               },
               "sbc": {
@@ -12354,7 +12354,7 @@
         "sbc": 0,
         "shares": 15
       },
-      "dataset_sha256": "456e242f2fac0bb1e1910c13cbba82d0fcb59340dcc270b92d0ceaa9c92b5927"
+      "dataset_sha256": "b768ec9cdca5ef49432e7812e77cc2d2624e0b4738c4b2da6e189e0884b1170e"
     },
     {
       "ticker": "AMD",
@@ -14722,9 +14722,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2021-09-26",
@@ -14762,8 +14760,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -14801,9 +14798,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2022-03-27",
@@ -14840,9 +14835,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2022-06-26",
@@ -14879,9 +14872,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2022-09-25",
@@ -14919,8 +14910,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -14958,9 +14948,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2023-04-02",
@@ -14997,9 +14985,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2023-07-02",
@@ -15036,9 +15022,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2023-10-01",
@@ -15076,8 +15060,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -15115,9 +15098,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2024-03-31",
@@ -15154,9 +15135,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2024-06-30",
@@ -15193,9 +15172,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2024-09-29",
@@ -15233,8 +15210,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -15272,9 +15248,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2025-03-30",
@@ -15311,9 +15285,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2025-06-29",
@@ -15350,9 +15322,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2025-09-28",
@@ -15390,8 +15360,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -15429,9 +15398,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2026-03-29",
@@ -15468,9 +15435,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         }
       ],
       "missing_optional_counts": {
@@ -15478,7 +15443,7 @@
         "cost_revenue": 5,
         "operating_income": 0,
         "assets": 0,
-        "liabilities": 20,
+        "liabilities": 0,
         "equity": 0,
         "cash": 0,
         "ocf": 0,
@@ -15488,7 +15453,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "7afe08b1c30044913f7c89593f3a7e07dd56592e32a2ee52f253bfb1f4fc11e9"
+      "dataset_sha256": "15bd32dabe0ad3fa08042047906881308e9c0372d6131f2bc54edf5908351bff"
     },
     {
       "ticker": "TSM",
@@ -15716,7 +15681,7 @@
                 "lineage": [
                   "Net cash generated by operating activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 1d70923d13410356eafdab21ce8b1541403e4d2836e67a7f669dcd43eef21c4c"
+                  "Original document SHA256: 236eafcb1ba8ef92ce3758416fa85d638cdc846f41abab28b9f56ded7aac2ad0"
                 ]
               },
               "icf": {
@@ -15731,7 +15696,7 @@
                 "lineage": [
                   "Net cash used in investing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 1d70923d13410356eafdab21ce8b1541403e4d2836e67a7f669dcd43eef21c4c"
+                  "Original document SHA256: 236eafcb1ba8ef92ce3758416fa85d638cdc846f41abab28b9f56ded7aac2ad0"
                 ]
               },
               "financing_cf": {
@@ -15746,7 +15711,7 @@
                 "lineage": [
                   "Net cash used in financing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 1d70923d13410356eafdab21ce8b1541403e4d2836e67a7f669dcd43eef21c4c"
+                  "Original document SHA256: 236eafcb1ba8ef92ce3758416fa85d638cdc846f41abab28b9f56ded7aac2ad0"
                 ]
               },
               "capex": {
@@ -15761,7 +15726,7 @@
                 "lineage": [
                   "Payments for acquisition of property, plant and equipment",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 1d70923d13410356eafdab21ce8b1541403e4d2836e67a7f669dcd43eef21c4c"
+                  "Original document SHA256: 236eafcb1ba8ef92ce3758416fa85d638cdc846f41abab28b9f56ded7aac2ad0"
                 ]
               },
               "sbc": {
@@ -15776,7 +15741,7 @@
                 "lineage": [
                   "Share-based compensation",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 1d70923d13410356eafdab21ce8b1541403e4d2836e67a7f669dcd43eef21c4c"
+                  "Original document SHA256: 236eafcb1ba8ef92ce3758416fa85d638cdc846f41abab28b9f56ded7aac2ad0"
                 ]
               }
             },
@@ -16089,7 +16054,7 @@
                 "lineage": [
                   "Net cash generated by operating activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: bd17c9116f7299266c1858df83117376395795936a965d347ae2020b54ccc901"
+                  "Original document SHA256: 82f06ddd47aa581a4e88f303bc6541477fe0a553ea6dc2c1627c73f0b744be54"
                 ]
               },
               "icf": {
@@ -16104,7 +16069,7 @@
                 "lineage": [
                   "Net cash used in investing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: bd17c9116f7299266c1858df83117376395795936a965d347ae2020b54ccc901"
+                  "Original document SHA256: 82f06ddd47aa581a4e88f303bc6541477fe0a553ea6dc2c1627c73f0b744be54"
                 ]
               },
               "financing_cf": {
@@ -16119,7 +16084,7 @@
                 "lineage": [
                   "Net cash used in financing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: bd17c9116f7299266c1858df83117376395795936a965d347ae2020b54ccc901"
+                  "Original document SHA256: 82f06ddd47aa581a4e88f303bc6541477fe0a553ea6dc2c1627c73f0b744be54"
                 ]
               },
               "capex": {
@@ -16134,7 +16099,7 @@
                 "lineage": [
                   "Payments for acquisition of property, plant and equipment",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: bd17c9116f7299266c1858df83117376395795936a965d347ae2020b54ccc901"
+                  "Original document SHA256: 82f06ddd47aa581a4e88f303bc6541477fe0a553ea6dc2c1627c73f0b744be54"
                 ]
               },
               "sbc": {
@@ -16149,7 +16114,7 @@
                 "lineage": [
                   "Share-based compensation",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: bd17c9116f7299266c1858df83117376395795936a965d347ae2020b54ccc901"
+                  "Original document SHA256: 82f06ddd47aa581a4e88f303bc6541477fe0a553ea6dc2c1627c73f0b744be54"
                 ]
               }
             },
@@ -16462,7 +16427,7 @@
                 "lineage": [
                   "Net cash generated by operating activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: f42b662795ef6d0918ab115b87c239089a7c7e6a747fb21abc99696160af713b"
+                  "Original document SHA256: 791335042b5f4b3f1cf941b49b1a0a1b7c2bb2b3d3c8fe6937ec922c114acbf8"
                 ]
               },
               "icf": {
@@ -16477,7 +16442,7 @@
                 "lineage": [
                   "Net cash used in investing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: f42b662795ef6d0918ab115b87c239089a7c7e6a747fb21abc99696160af713b"
+                  "Original document SHA256: 791335042b5f4b3f1cf941b49b1a0a1b7c2bb2b3d3c8fe6937ec922c114acbf8"
                 ]
               },
               "financing_cf": {
@@ -16492,7 +16457,7 @@
                 "lineage": [
                   "Net cash used in financing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: f42b662795ef6d0918ab115b87c239089a7c7e6a747fb21abc99696160af713b"
+                  "Original document SHA256: 791335042b5f4b3f1cf941b49b1a0a1b7c2bb2b3d3c8fe6937ec922c114acbf8"
                 ]
               },
               "capex": {
@@ -16507,7 +16472,7 @@
                 "lineage": [
                   "Payments for acquisition of property, plant and equipment",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: f42b662795ef6d0918ab115b87c239089a7c7e6a747fb21abc99696160af713b"
+                  "Original document SHA256: 791335042b5f4b3f1cf941b49b1a0a1b7c2bb2b3d3c8fe6937ec922c114acbf8"
                 ]
               },
               "sbc": {
@@ -16522,7 +16487,7 @@
                 "lineage": [
                   "Share-based compensation",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: f42b662795ef6d0918ab115b87c239089a7c7e6a747fb21abc99696160af713b"
+                  "Original document SHA256: 791335042b5f4b3f1cf941b49b1a0a1b7c2bb2b3d3c8fe6937ec922c114acbf8"
                 ]
               }
             },
@@ -16835,7 +16800,7 @@
                 "lineage": [
                   "Net cash generated by operating activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               },
               "icf": {
@@ -16850,7 +16815,7 @@
                 "lineage": [
                   "Net cash used in investing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               },
               "financing_cf": {
@@ -16865,7 +16830,7 @@
                 "lineage": [
                   "Net cash used in financing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               },
               "capex": {
@@ -16880,7 +16845,7 @@
                 "lineage": [
                   "Payments for acquisition of property, plant and equipment",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               },
               "sbc": {
@@ -16895,7 +16860,7 @@
                 "lineage": [
                   "Share-based compensation",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               }
             },
@@ -17208,7 +17173,7 @@
                 "lineage": [
                   "Net cash generated by operating activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               },
               "icf": {
@@ -17223,7 +17188,7 @@
                 "lineage": [
                   "Net cash used in investing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               },
               "financing_cf": {
@@ -17238,7 +17203,7 @@
                 "lineage": [
                   "Net cash used in financing activities",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               },
               "capex": {
@@ -17253,7 +17218,7 @@
                 "lineage": [
                   "Payments for acquisition of property, plant and equipment",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               },
               "sbc": {
@@ -17268,7 +17233,7 @@
                 "lineage": [
                   "Share-based compensation",
                   "Consolidated TIFRS; NTD thousands × 1000",
-                  "Original document SHA256: 2592eb2e96d8fbd2969d7d3c0d062cd471c4802fe846153da173b7edf5d7afa0"
+                  "Original document SHA256: d2cfa75cfac2f465f43bde64b0e6721b810d3f92c5c92fa11937d74a22716bc0"
                 ]
               }
             },
@@ -18026,12 +17991,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18070,12 +18030,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18114,8 +18069,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18154,12 +18108,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18198,12 +18147,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18242,12 +18186,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18286,8 +18225,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18326,12 +18264,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18370,12 +18303,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18414,12 +18342,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18458,8 +18381,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18498,12 +18420,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18542,12 +18459,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18586,12 +18498,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18630,12 +18537,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18674,12 +18576,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18718,12 +18615,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "assets",
-            "liabilities",
-            "equity",
-            "cash",
-            "shares"
+            "cost_revenue"
           ]
         },
         {
@@ -18780,18 +18672,18 @@
         "gross_profit": 0,
         "cost_revenue": 20,
         "operating_income": 0,
-        "assets": 16,
-        "liabilities": 16,
-        "equity": 16,
-        "cash": 16,
+        "assets": 2,
+        "liabilities": 2,
+        "equity": 2,
+        "cash": 2,
         "ocf": 1,
         "icf": 1,
         "financing_cf": 1,
         "capex": 1,
         "sbc": 1,
-        "shares": 20
+        "shares": 3
       },
-      "dataset_sha256": "e99c67b8671e30028610b738428b665734d50c789c25d62f45682dc0243bd3f2"
+      "dataset_sha256": "7fefd8d50bbd703394dcfc5831aff109018c080842983d89019ffbfe64654db0"
     },
     {
       "ticker": "MSFT",
@@ -21535,121 +21427,24 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "8e95a11749853f41ad225e8b3f781b51dbf8a45572747e676eabd3b94afb49bf"
+      "dataset_sha256": "04c999067bfb2d8a239adfc0511d0eb9507abac0b5e0564f8fe9d53844dda85e"
     },
     {
       "ticker": "AAPL",
       "cik": "0000320193",
       "currency": "USD",
       "quarters": 20,
-      "first_end": "2021-09-25",
-      "last_end": "2026-06-27",
+      "first_end": "2021-12-25",
+      "last_end": "2026-09-26",
       "core_complete": true,
       "errors": [],
       "cashflow": {
         "quarters": 20,
-        "first_end": "2021-09-25",
-        "last_end": "2026-06-27",
+        "first_end": "2021-12-25",
+        "last_end": "2026-09-26",
         "complete": true,
         "errors": [],
         "periods": [
-          {
-            "start": "2021-06-27",
-            "end": "2021-09-25",
-            "metrics": {
-              "ocf": {
-                "value": 20200000000.0,
-                "unit": "USD",
-                "filed": "2022-10-28",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInOperatingActivities|0000320193-22-000108|2020-09-27|2021-09-25|104038000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInOperatingActivities|0000320193-22-000070|2020-09-27|2021-06-26|83838000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ]
-              },
-              "icf": {
-                "value": 835000000.0,
-                "unit": "USD",
-                "filed": "2022-10-28",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInInvestingActivities|0000320193-22-000108|2020-09-27|2021-09-25|-14545000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInInvestingActivities|0000320193-22-000070|2020-09-27|2021-06-26|-15380000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ]
-              },
-              "financing_cf": {
-                "value": -20382000000.0,
-                "unit": "USD",
-                "filed": "2022-10-28",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInFinancingActivities|0000320193-22-000108|2020-09-27|2021-09-25|-93353000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInFinancingActivities|0000320193-22-000070|2020-09-27|2021-06-26|-72971000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ]
-              },
-              "capex": {
-                "value": 3223000000.0,
-                "unit": "USD",
-                "filed": "2022-10-28",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0000320193-22-000108|2020-09-27|2021-09-25|11085000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "minus us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0000320193-22-000070|2020-09-27|2021-06-26|7862000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ]
-              },
-              "sbc": {
-                "value": 1945000000.0,
-                "unit": "USD",
-                "filed": "2022-10-28",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:ShareBasedCompensation|0000320193-22-000108|2020-09-27|2021-09-25|7906000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-                  "minus us-gaap:ShareBasedCompensation|0000320193-22-000070|2020-09-27|2021-06-26|5961000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-                ]
-              }
-            },
-            "fcf": 16977000000.0
-          },
           {
             "start": "2021-09-26",
             "end": "2021-12-25",
@@ -22972,91 +22767,91 @@
               "ocf": {
                 "value": 29728000000.0,
                 "unit": "USD",
-                "filed": "2025-10-31",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInOperatingActivities|0000320193-25-000079|2024-09-29|2025-09-27|111482000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInOperatingActivities|0000320193-25-000073|2024-09-29|2025-06-28|81754000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInOperatingActivities|0000320193-26-000026|2024-09-29|2025-09-27|111482000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInOperatingActivities|0000320193-26-000020|2024-09-29|2025-06-28|81754000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ]
               },
               "icf": {
                 "value": -2587000000.0,
                 "unit": "USD",
-                "filed": "2025-10-31",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInInvestingActivities|0000320193-25-000079|2024-09-29|2025-09-27|15195000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInInvestingActivities|0000320193-25-000073|2024-09-29|2025-06-28|17782000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInInvestingActivities|0000320193-26-000026|2024-09-29|2025-09-27|15195000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInInvestingActivities|0000320193-26-000020|2024-09-29|2025-06-28|17782000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ]
               },
               "financing_cf": {
                 "value": -27476000000.0,
                 "unit": "USD",
-                "filed": "2025-10-31",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInFinancingActivities|0000320193-25-000079|2024-09-29|2025-09-27|-120686000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInFinancingActivities|0000320193-25-000073|2024-09-29|2025-06-28|-93210000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInFinancingActivities|0000320193-26-000026|2024-09-29|2025-09-27|-120686000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInFinancingActivities|0000320193-26-000020|2024-09-29|2025-06-28|-93210000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ]
               },
               "capex": {
                 "value": 3242000000.0,
                 "unit": "USD",
-                "filed": "2025-10-31",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0000320193-25-000079|2024-09-29|2025-09-27|12715000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "minus us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0000320193-25-000073|2024-09-29|2025-06-28|9473000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0000320193-26-000026|2024-09-29|2025-09-27|12715000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0000320193-26-000020|2024-09-29|2025-06-28|9473000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ]
               },
               "sbc": {
                 "value": 3183000000.0,
                 "unit": "USD",
-                "filed": "2025-10-31",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:ShareBasedCompensation|0000320193-25-000079|2024-09-29|2025-09-27|12863000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-                  "minus us-gaap:ShareBasedCompensation|0000320193-25-000073|2024-09-29|2025-06-28|9680000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:ShareBasedCompensation|0000320193-26-000026|2024-09-29|2025-09-27|12863000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:ShareBasedCompensation|0000320193-26-000020|2024-09-29|2025-06-28|9680000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
                 ]
               }
             },
@@ -23317,6 +23112,103 @@
               }
             },
             "fcf": 31914000000.0
+          },
+          {
+            "start": "2026-06-28",
+            "end": "2026-09-26",
+            "metrics": {
+              "ocf": {
+                "value": 28101000000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInOperatingActivities|0000320193-26-000026|2025-09-28|2026-09-26|145097000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInOperatingActivities|0000320193-26-000020|2025-09-28|2026-06-27|116996000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ]
+              },
+              "icf": {
+                "value": 1531000000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInInvestingActivities|0000320193-26-000026|2025-09-28|2026-09-26|-17280000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInInvestingActivities|0000320193-26-000020|2025-09-28|2026-06-27|-18811000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ]
+              },
+              "financing_cf": {
+                "value": -32871000000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInFinancingActivities|0000320193-26-000026|2025-09-28|2026-09-26|-127446000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInFinancingActivities|0000320193-26-000020|2025-09-28|2026-06-27|-94575000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ]
+              },
+              "capex": {
+                "value": 2242000000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0000320193-26-000026|2025-09-28|2026-09-26|9041000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0000320193-26-000020|2025-09-28|2026-06-27|6799000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ]
+              },
+              "sbc": {
+                "value": 3266000000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:ShareBasedCompensation|0000320193-26-000026|2025-09-28|2026-09-26|13789000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+                  "minus us-gaap:ShareBasedCompensation|0000320193-26-000020|2025-09-28|2026-06-27|10523000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+                ]
+              }
+            },
+            "fcf": 25859000000.0
           }
         ],
         "annual_checks": [
@@ -23430,35 +23322,70 @@
             "end": "2025-09-27",
             "difference": 0.0,
             "status": "passed",
-            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html"
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
           },
           {
             "metric": "icf",
             "end": "2025-09-27",
             "difference": 0.0,
             "status": "passed",
-            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html"
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
           },
           {
             "metric": "financing_cf",
             "end": "2025-09-27",
             "difference": 0.0,
             "status": "passed",
-            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html"
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
           },
           {
             "metric": "capex",
             "end": "2025-09-27",
             "difference": 0.0,
             "status": "passed",
-            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html"
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
           },
           {
             "metric": "sbc",
             "end": "2025-09-27",
             "difference": 0.0,
             "status": "passed",
-            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html"
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
+          },
+          {
+            "metric": "ocf",
+            "end": "2026-09-26",
+            "difference": 0.0,
+            "status": "passed",
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
+          },
+          {
+            "metric": "icf",
+            "end": "2026-09-26",
+            "difference": 0.0,
+            "status": "passed",
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
+          },
+          {
+            "metric": "financing_cf",
+            "end": "2026-09-26",
+            "difference": 0.0,
+            "status": "passed",
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
+          },
+          {
+            "metric": "capex",
+            "end": "2026-09-26",
+            "difference": 0.0,
+            "status": "passed",
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
+          },
+          {
+            "metric": "sbc",
+            "end": "2026-09-26",
+            "difference": 0.0,
+            "status": "passed",
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
           }
         ]
       },
@@ -23468,27 +23395,6 @@
         "complete": true,
         "errors": [],
         "periods": [
-          {
-            "start": "2021-06-27",
-            "end": "2021-09-25",
-            "gross_profit": 35174000000.0,
-            "revenue": 83360000000.0,
-            "margin_pct": 42.19529750479846,
-            "unit": "USD",
-            "tag": "us-gaap:GrossProfit",
-            "quality": "derived",
-            "filed": "2022-10-28",
-            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-            "source_refs": [
-              "https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-              "https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-            ],
-            "lineage": [
-              "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-              "us-gaap:GrossProfit|0000320193-22-000108|2020-09-27|2021-09-25|152836000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000108/0000320193-22-000108-index.html",
-              "minus us-gaap:GrossProfit|0000320193-22-000070|2020-09-27|2021-06-26|117662000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019322000070/0000320193-22-000070-index.html"
-            ]
-          },
           {
             "start": "2021-09-26",
             "end": "2021-12-25",
@@ -23729,16 +23635,16 @@
             "unit": "USD",
             "tag": "us-gaap:GrossProfit",
             "quality": "derived",
-            "filed": "2025-10-31",
-            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
+            "filed": "2026-11-03",
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
             "source_refs": [
-              "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-              "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+              "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+              "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
             ],
             "lineage": [
-              "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-              "us-gaap:GrossProfit|0000320193-25-000079|2024-09-29|2025-09-27|195201000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html",
-              "minus us-gaap:GrossProfit|0000320193-25-000073|2024-09-29|2025-06-28|146860000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.html"
+              "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+              "us-gaap:GrossProfit|0000320193-26-000026|2024-09-29|2025-09-27|195201000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+              "minus us-gaap:GrossProfit|0000320193-26-000020|2024-09-29|2025-06-28|146860000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
             ]
           },
           {
@@ -23782,28 +23688,33 @@
             "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html",
             "source_refs": [],
             "lineage": []
+          },
+          {
+            "start": "2026-06-28",
+            "end": "2026-09-26",
+            "gross_profit": 54820000000.0,
+            "revenue": 114477000000.0,
+            "margin_pct": 47.887348550363825,
+            "unit": "USD",
+            "tag": "us-gaap:GrossProfit",
+            "quality": "derived",
+            "filed": "2026-11-03",
+            "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+            "source_refs": [
+              "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+              "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+            ],
+            "lineage": [
+              "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+              "us-gaap:GrossProfit|0000320193-26-000026|2025-09-28|2026-09-26|233602000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html",
+              "minus us-gaap:GrossProfit|0000320193-26-000020|2025-09-28|2026-06-27|178782000000.0|https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.html"
+            ]
           }
         ]
       },
       "annual_checks": [
         {
           "metric": "revenue",
-          "end": "2021-09-25",
-          "status": "passed",
-          "difference": 0.0,
-          "tolerance": 2000000,
-          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019323000106/0000320193-23-000106-index.html"
-        },
-        {
-          "metric": "net_income",
-          "end": "2021-09-25",
-          "status": "passed",
-          "difference": 0.0,
-          "tolerance": 2000000,
-          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019323000106/0000320193-23-000106-index.html"
-        },
-        {
-          "metric": "revenue",
           "end": "2022-09-24",
           "status": "passed",
           "difference": 0.0,
@@ -23840,7 +23751,7 @@
           "status": "passed",
           "difference": 0.0,
           "tolerance": 2000000,
-          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html"
+          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
         },
         {
           "metric": "net_income",
@@ -23848,7 +23759,7 @@
           "status": "passed",
           "difference": 0.0,
           "tolerance": 2000000,
-          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html"
+          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
         },
         {
           "metric": "revenue",
@@ -23856,7 +23767,7 @@
           "status": "passed",
           "difference": 0.0,
           "tolerance": 2000000,
-          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html"
+          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
         },
         {
           "metric": "net_income",
@@ -23864,49 +23775,26 @@
           "status": "passed",
           "difference": 0.0,
           "tolerance": 2000000,
-          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.html"
+          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
+        },
+        {
+          "metric": "revenue",
+          "end": "2026-09-26",
+          "status": "passed",
+          "difference": 0.0,
+          "tolerance": 2000000,
+          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
+        },
+        {
+          "metric": "net_income",
+          "end": "2026-09-26",
+          "status": "passed",
+          "difference": 0.0,
+          "tolerance": 2000000,
+          "annual_source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/0000320193-26-000026-index.html"
         }
       ],
       "periods": [
-        {
-          "start": "2021-06-27",
-          "end": "2021-09-25",
-          "metrics": {
-            "revenue": {
-              "value": 83360000000.0,
-              "unit": "USD",
-              "filed": "2021-10-28",
-              "accession": "0000320193-21-000104",
-              "tag": "disclosure:0000320193.revenue",
-              "basis": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
-              "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019321000104/a8-kex991q4202109252021.htm",
-              "quality": "reported"
-            },
-            "net_income": {
-              "value": 20551000000.0,
-              "unit": "USD",
-              "filed": "2021-10-28",
-              "accession": "0000320193-21-000104",
-              "tag": "disclosure:0000320193.net_income",
-              "basis": "us-gaap:NetIncomeLoss",
-              "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019321000104/a8-kex991q4202109252021.htm",
-              "quality": "reported"
-            },
-            "eps": {
-              "value": 1.24,
-              "unit": "USD/shares",
-              "filed": "2021-10-28",
-              "accession": "0000320193-21-000104",
-              "tag": "disclosure:0000320193.eps",
-              "basis": "us-gaap:EarningsPerShareDiluted",
-              "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019321000104/a8-kex991q4202109252021.htm",
-              "quality": "reported"
-            }
-          },
-          "missing_optional": [
-            "cost_revenue"
-          ]
-        },
         {
           "start": "2021-09-26",
           "end": "2021-12-25",
@@ -24617,6 +24505,45 @@
             }
           },
           "missing_optional": []
+        },
+        {
+          "start": "2026-06-28",
+          "end": "2026-09-26",
+          "metrics": {
+            "revenue": {
+              "value": 114477000000.0,
+              "unit": "USD",
+              "filed": "2026-11-02",
+              "accession": "0000320193-26-000024",
+              "tag": "disclosure:0000320193.revenue",
+              "basis": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000024/a8-kex991q4202609262026.htm",
+              "quality": "reported"
+            },
+            "net_income": {
+              "value": 30711000000.0,
+              "unit": "USD",
+              "filed": "2026-11-02",
+              "accession": "0000320193-26-000024",
+              "tag": "disclosure:0000320193.net_income",
+              "basis": "us-gaap:NetIncomeLoss",
+              "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000024/a8-kex991q4202609262026.htm",
+              "quality": "reported"
+            },
+            "eps": {
+              "value": 2.1,
+              "unit": "USD/shares",
+              "filed": "2026-11-02",
+              "accession": "0000320193-26-000024",
+              "tag": "disclosure:0000320193.eps",
+              "basis": "us-gaap:EarningsPerShareDiluted",
+              "source": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000024/a8-kex991q4202609262026.htm",
+              "quality": "reported"
+            }
+          },
+          "missing_optional": [
+            "cost_revenue"
+          ]
         }
       ],
       "missing_optional_counts": {
@@ -24634,7 +24561,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "0f1a5e6bf3416de53b9dc40308a5ba32067810ffadc3026b6f40f830c1e15a53"
+      "dataset_sha256": "f52c4218eb1fbb151ab78d3945905c761b85bea32d98f13779f7c77bbb4ef815"
     },
     {
       "ticker": "AMZN",
@@ -27318,8 +27245,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -27357,9 +27283,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2022-04-01",
@@ -27396,9 +27320,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2022-07-01",
@@ -27435,9 +27357,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2022-10-01",
@@ -27475,8 +27395,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -27514,9 +27433,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2023-04-01",
@@ -27553,9 +27470,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2023-07-01",
@@ -27592,9 +27507,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2023-10-01",
@@ -27632,8 +27545,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -27671,9 +27583,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2024-04-01",
@@ -27710,9 +27620,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2024-07-01",
@@ -27749,9 +27657,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2024-10-01",
@@ -27789,8 +27695,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -27828,9 +27733,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2025-04-01",
@@ -27867,9 +27770,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2025-07-01",
@@ -27906,9 +27807,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2025-10-01",
@@ -27946,8 +27845,7 @@
             }
           },
           "missing_optional": [
-            "cost_revenue",
-            "liabilities"
+            "cost_revenue"
           ]
         },
         {
@@ -27985,9 +27883,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2026-04-01",
@@ -28024,9 +27920,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         },
         {
           "start": "2026-07-01",
@@ -28063,9 +27957,7 @@
               "quality": "reported"
             }
           },
-          "missing_optional": [
-            "liabilities"
-          ]
+          "missing_optional": []
         }
       ],
       "missing_optional_counts": {
@@ -28073,7 +27965,7 @@
         "cost_revenue": 5,
         "operating_income": 0,
         "assets": 0,
-        "liabilities": 20,
+        "liabilities": 0,
         "equity": 0,
         "cash": 0,
         "ocf": 0,
@@ -28083,7 +27975,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "f3ac8068bed362c2aeb2943ffacdfe497a79a09f3f211b3be1adb9b43a35685e"
+      "dataset_sha256": "97f9009b702347851b2cad4d73a6bb02c13c956d5b7a372fd75e23dbf09d0b17"
     },
     {
       "ticker": "META",
@@ -31316,121 +31208,24 @@
         "sbc": 0,
         "shares": 20
       },
-      "dataset_sha256": "8bd4e0d6b3429f050308015ae4cf5322818d905067256ad71bc20bdc48b0b3d8"
+      "dataset_sha256": "1213a93766dbd0949536fc2b947720cf22a00ba2ecbef69c5ef1b1e8664702a9"
     },
     {
       "ticker": "PLTR",
       "cik": "0001321655",
       "currency": "USD",
       "quarters": 20,
-      "first_end": "2021-09-30",
-      "last_end": "2026-06-30",
+      "first_end": "2021-12-31",
+      "last_end": "2026-09-30",
       "core_complete": true,
       "errors": [],
       "cashflow": {
         "quarters": 20,
-        "first_end": "2021-09-30",
-        "last_end": "2026-06-30",
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
         "complete": true,
         "errors": [],
         "periods": [
-          {
-            "start": "2021-07-01",
-            "end": "2021-09-30",
-            "metrics": {
-              "ocf": {
-                "value": 100793000.0,
-                "unit": "USD",
-                "filed": "2022-11-07",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInOperatingActivities|0001321655-22-000032|2021-01-01|2021-09-30|240424000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInOperatingActivities|0001321655-22-000016|2021-01-01|2021-06-30|139631000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ]
-              },
-              "icf": {
-                "value": -214634000.0,
-                "unit": "USD",
-                "filed": "2022-11-07",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInInvestingActivities|0001321655-22-000032|2021-01-01|2021-09-30|-216039000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInInvestingActivities|0001321655-22-000016|2021-01-01|2021-06-30|-1405000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ]
-              },
-              "financing_cf": {
-                "value": 99338000.0,
-                "unit": "USD",
-                "filed": "2022-11-07",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInFinancingActivities|0001321655-22-000032|2021-01-01|2021-09-30|274282000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInFinancingActivities|0001321655-22-000016|2021-01-01|2021-06-30|174944000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ]
-              },
-              "capex": {
-                "value": 5378000.0,
-                "unit": "USD",
-                "filed": "2022-11-07",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0001321655-22-000032|2021-01-01|2021-09-30|6783000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "minus us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0001321655-22-000016|2021-01-01|2021-06-30|1405000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ]
-              },
-              "sbc": {
-                "value": 184835000.0,
-                "unit": "USD",
-                "filed": "2022-11-07",
-                "report_fiscal_year": 2022,
-                "reporting_basis": "US GAAP",
-                "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                "quality": "derived",
-                "lineage": [
-                  "YTD difference; stable reporting-vintage FY2022; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:ShareBasedCompensation|0001321655-22-000032|2021-01-01|2021-09-30|611308000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-                  "minus us-gaap:ShareBasedCompensation|0001321655-22-000016|2021-01-01|2021-06-30|426473000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165522000016/0001321655-22-000016-index.html"
-                ]
-              }
-            },
-            "fcf": 95415000.0
-          },
           {
             "start": "2021-10-01",
             "end": "2021-12-31",
@@ -32753,91 +32548,91 @@
               "ocf": {
                 "value": 507664000.0,
                 "unit": "USD",
-                "filed": "2025-11-04",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInOperatingActivities|0001321655-25-000131|2025-01-01|2025-09-30|1357178000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInOperatingActivities|0001321655-25-000106|2025-01-01|2025-06-30|849514000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInOperatingActivities|0001321655-26-000048|2025-01-01|2025-09-30|1357178000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInOperatingActivities|0001321655-26-000041|2025-01-01|2025-06-30|849514000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ]
               },
               "icf": {
                 "value": 181567000.0,
                 "unit": "USD",
-                "filed": "2025-11-04",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInInvestingActivities|0001321655-25-000131|2025-01-01|2025-09-30|-1825720000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInInvestingActivities|0001321655-25-000106|2025-01-01|2025-06-30|-2007287000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInInvestingActivities|0001321655-26-000048|2025-01-01|2025-09-30|-1825720000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInInvestingActivities|0001321655-26-000041|2025-01-01|2025-06-30|-2007287000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ]
               },
               "financing_cf": {
                 "value": 6435000.0,
                 "unit": "USD",
-                "filed": "2025-11-04",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:NetCashProvidedByUsedInFinancingActivities|0001321655-25-000131|2025-01-01|2025-09-30|-16012000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "minus us-gaap:NetCashProvidedByUsedInFinancingActivities|0001321655-25-000106|2025-01-01|2025-06-30|-22447000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInFinancingActivities|0001321655-26-000048|2025-01-01|2025-09-30|-16012000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInFinancingActivities|0001321655-26-000041|2025-01-01|2025-06-30|-22447000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ]
               },
               "capex": {
                 "value": 6792000.0,
                 "unit": "USD",
-                "filed": "2025-11-04",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0001321655-25-000131|2025-01-01|2025-09-30|20610000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "minus us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0001321655-25-000106|2025-01-01|2025-06-30|13818000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0001321655-26-000048|2025-01-01|2025-09-30|20610000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0001321655-26-000041|2025-01-01|2025-06-30|13818000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ]
               },
               "sbc": {
                 "value": 172318000.0,
                 "unit": "USD",
-                "filed": "2025-11-04",
-                "report_fiscal_year": 2025,
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
                 "reporting_basis": "US GAAP",
                 "source_refs": [
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ],
-                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
                 "quality": "derived",
                 "lineage": [
-                  "YTD difference; stable reporting-vintage FY2025; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
-                  "us-gaap:ShareBasedCompensation|0001321655-25-000131|2025-01-01|2025-09-30|487628000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
-                  "minus us-gaap:ShareBasedCompensation|0001321655-25-000106|2025-01-01|2025-06-30|315310000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/0001321655-25-000106-index.html"
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:ShareBasedCompensation|0001321655-26-000048|2025-01-01|2025-09-30|487628000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:ShareBasedCompensation|0001321655-26-000041|2025-01-01|2025-06-30|315310000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
                 ]
               }
             },
@@ -33098,6 +32893,103 @@
               }
             },
             "fcf": 1201613000.0
+          },
+          {
+            "start": "2026-07-01",
+            "end": "2026-09-30",
+            "metrics": {
+              "ocf": {
+                "value": 1204570000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInOperatingActivities|0001321655-26-000048|2026-01-01|2026-09-30|3319902000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInOperatingActivities|0001321655-26-000041|2026-01-01|2026-06-30|2115332000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ]
+              },
+              "icf": {
+                "value": 371060000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInInvestingActivities|0001321655-26-000048|2026-01-01|2026-09-30|-1138605000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInInvestingActivities|0001321655-26-000041|2026-01-01|2026-06-30|-1509665000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ]
+              },
+              "financing_cf": {
+                "value": 11737000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:NetCashProvidedByUsedInFinancingActivities|0001321655-26-000048|2026-01-01|2026-09-30|20115000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:NetCashProvidedByUsedInFinancingActivities|0001321655-26-000041|2026-01-01|2026-06-30|8378000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ]
+              },
+              "capex": {
+                "value": 8014000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0001321655-26-000048|2026-01-01|2026-09-30|29969000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:PaymentsToAcquirePropertyPlantAndEquipment|0001321655-26-000041|2026-01-01|2026-06-30|21955000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ]
+              },
+              "sbc": {
+                "value": 318889000.0,
+                "unit": "USD",
+                "filed": "2026-11-03",
+                "report_fiscal_year": 2026,
+                "reporting_basis": "US GAAP",
+                "source_refs": [
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ],
+                "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                "quality": "derived",
+                "lineage": [
+                  "YTD difference; stable reporting-vintage FY2026; US GAAP; matching fiscal start, tag and unit; no amended or conflicting operand values",
+                  "us-gaap:ShareBasedCompensation|0001321655-26-000048|2026-01-01|2026-09-30|785690000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+                  "minus us-gaap:ShareBasedCompensation|0001321655-26-000041|2026-01-01|2026-06-30|466801000.0|https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html"
+                ]
+              }
+            },
+            "fcf": 1196556000.0
           }
         ],
         "annual_checks": [
@@ -33249,20 +33141,6 @@
         "complete": true,
         "errors": [],
         "periods": [
-          {
-            "start": "2021-07-01",
-            "end": "2021-09-30",
-            "gross_profit": 305342000.0,
-            "revenue": 392146000.0,
-            "margin_pct": 77.86436684296156,
-            "unit": "USD",
-            "tag": "us-gaap:GrossProfit",
-            "quality": "reported",
-            "filed": "2022-11-07",
-            "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-            "source_refs": [],
-            "lineage": []
-          },
           {
             "start": "2021-10-01",
             "end": "2021-12-31",
@@ -33510,8 +33388,8 @@
             "unit": "USD",
             "tag": "us-gaap:GrossProfit",
             "quality": "reported",
-            "filed": "2025-11-04",
-            "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
+            "filed": "2026-11-03",
+            "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
             "source_refs": [],
             "lineage": []
           },
@@ -33561,6 +33439,20 @@
             "quality": "reported",
             "filed": "2026-08-04",
             "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/0001321655-26-000041-index.html",
+            "source_refs": [],
+            "lineage": []
+          },
+          {
+            "start": "2026-07-01",
+            "end": "2026-09-30",
+            "gross_profit": 1930125000.0,
+            "revenue": 2313411000.0,
+            "margin_pct": 83.43199716781842,
+            "unit": "USD",
+            "tag": "us-gaap:GrossProfit",
+            "quality": "reported",
+            "filed": "2026-11-03",
+            "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
             "source_refs": [],
             "lineage": []
           }
@@ -33649,43 +33541,6 @@
         }
       ],
       "periods": [
-        {
-          "start": "2021-07-01",
-          "end": "2021-09-30",
-          "metrics": {
-            "revenue": {
-              "value": 392146000.0,
-              "unit": "USD",
-              "filed": "2022-11-07",
-              "accession": "0001321655-22-000032",
-              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
-              "basis": null,
-              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-              "quality": "reported"
-            },
-            "net_income": {
-              "value": -102137000.0,
-              "unit": "USD",
-              "filed": "2022-11-07",
-              "accession": "0001321655-22-000032",
-              "tag": "us-gaap:NetIncomeLoss",
-              "basis": null,
-              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-              "quality": "reported"
-            },
-            "eps": {
-              "value": -0.05,
-              "unit": "USD/shares",
-              "filed": "2022-11-07",
-              "accession": "0001321655-22-000032",
-              "tag": "us-gaap:EarningsPerShareDiluted",
-              "basis": null,
-              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165522000032/0001321655-22-000032-index.html",
-              "quality": "reported"
-            }
-          },
-          "missing_optional": []
-        },
         {
           "start": "2021-10-01",
           "end": "2021-12-31",
@@ -34258,31 +34113,31 @@
             "revenue": {
               "value": 1181092000.0,
               "unit": "USD",
-              "filed": "2025-11-04",
-              "accession": "0001321655-25-000131",
+              "filed": "2026-11-03",
+              "accession": "0001321655-26-000048",
               "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
               "basis": null,
-              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
+              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
               "quality": "reported"
             },
             "net_income": {
               "value": 475599000.0,
               "unit": "USD",
-              "filed": "2025-11-04",
-              "accession": "0001321655-25-000131",
+              "filed": "2026-11-03",
+              "accession": "0001321655-26-000048",
               "tag": "us-gaap:NetIncomeLoss",
               "basis": null,
-              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
+              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
               "quality": "reported"
             },
             "eps": {
               "value": 0.18,
               "unit": "USD/shares",
-              "filed": "2025-11-04",
-              "accession": "0001321655-25-000131",
+              "filed": "2026-11-03",
+              "accession": "0001321655-26-000048",
               "tag": "us-gaap:EarningsPerShareDiluted",
               "basis": null,
-              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000131/0001321655-25-000131-index.html",
+              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
               "quality": "reported"
             }
           },
@@ -34400,6 +34255,43 @@
             }
           },
           "missing_optional": []
+        },
+        {
+          "start": "2026-07-01",
+          "end": "2026-09-30",
+          "metrics": {
+            "revenue": {
+              "value": 2313411000.0,
+              "unit": "USD",
+              "filed": "2026-11-03",
+              "accession": "0001321655-26-000048",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "basis": null,
+              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+              "quality": "reported"
+            },
+            "net_income": {
+              "value": 1128012000.0,
+              "unit": "USD",
+              "filed": "2026-11-03",
+              "accession": "0001321655-26-000048",
+              "tag": "us-gaap:NetIncomeLoss",
+              "basis": null,
+              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+              "quality": "reported"
+            },
+            "eps": {
+              "value": 0.44,
+              "unit": "USD/shares",
+              "filed": "2026-11-03",
+              "accession": "0001321655-26-000048",
+              "tag": "us-gaap:EarningsPerShareDiluted",
+              "basis": null,
+              "source": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000048/0001321655-26-000048-index.html",
+              "quality": "reported"
+            }
+          },
+          "missing_optional": []
         }
       ],
       "missing_optional_counts": {
@@ -34417,7 +34309,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "57e406a56cb8b7a568250bec8023a4ddc9383733ba1fcd9b999c171e9464e09e"
+      "dataset_sha256": "21eba881368d6459479b3fa0c2c52c481e52783fa45f35563177395758a3c75e"
     },
     {
       "ticker": "MU",
@@ -37551,7 +37443,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "9906ae59eb3fe26915ba112f18fd8f94a6a31b5ffacb492b41434e6488923f15"
+      "dataset_sha256": "7b4ca5f38709dbf77177bd10fcce8441519179e1fcf538bb8779493d72fa2eb3"
     },
     {
       "ticker": "TSLA",
@@ -40659,7 +40551,7 @@
         "sbc": 0,
         "shares": 0
       },
-      "dataset_sha256": "2f3083dca67621d9dc87d04de6ed67dd377085e231d66d93d20a5b25aecb457b"
+      "dataset_sha256": "df63ac92af376c5d18a6b044318043a9fe8ecd2a3f028a1cf0651739305a6bb1"
     }
   ]
 }
