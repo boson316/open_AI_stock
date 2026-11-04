@@ -131,3 +131,16 @@ def test_cboe_unadjusted_split_is_detected_and_adjusted():
     # 已調整的資料（沒有跳空）不改
     flat = [{"date": "2025-10-%02d" % d, "high": 10.2, "low": 9.8, "close": 10} for d in range(1, 20)]
     assert parse_cboe({"data": flat}, date(2025, 10, 25), [{"date": "2025-10-10", "ratio": 10.0}])["close"] == 10
+
+
+def test_parse_fred_skips_missing_and_rejects_stale():
+    from openstock.prices import parse_fred
+
+    text = "observation_date,DEXTAWUS\n2026-10-26,31.50\n2026-10-27,.\n2026-10-28,31.62\n2026-10-30,31.70\n"
+    r = parse_fred(text, date(2026, 11, 2))
+    assert r["asof"] == "2026-10-30" and r["rate"] == 31.70
+    assert r["weekly"] == [["2026-10-30", 31.70]]
+    with pytest.raises(ValueError, match="stale"):
+        parse_fred(text, date(2027, 1, 30))
+    with pytest.raises(ValueError):
+        parse_fred("<html>", date(2026, 11, 2))

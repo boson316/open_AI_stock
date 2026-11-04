@@ -27,7 +27,8 @@ import httpx
 
 from .pipeline import COMPANIES
 
-ETFS = ["EWT", "SMH"]
+ETFS = ["EWT", "SMH", "SPY"]  # SPY 作為計算 Beta 的市場基準
+FRED = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 YAHOO = "https://query2.finance.yahoo.com/v8/finance/chart/{symbol}"
 NASDAQ = "https://api.nasdaq.com/api/quote/{symbol}/historical"
 CBOE = "https://cdn.cboe.com/api/global/delayed_quotes/charts/historical/{symbol}.json"
@@ -293,6 +294,42 @@ def fetch(ticker: str, client: httpx.Client, today: date, yahoo: "Yahoo | None" 
     raise RuntimeError("; ".join(errors))
 
 
+def parse_fred(text: str, today: date):
+    """FRED CSV（observation_date,SERIES；缺值為 "."）→ 最新匯率與近 5 年週資料。"""
+    rows = list(csv.reader(io.StringIO(text)))
+    if len(rows) < 2 or len(rows[0]) != 2 or not rows[0][0].lower().endswith("date"):
+        raise ValueError(f"unexpected FRED response: {text[:80]!r}")
+    points = []
+    for d, v in rows[1:]:
+        if v.strip() in {"", "."}:
+            continue
+        rate = float(v)
+        if not 1 < rate < 100:
+            raise ValueError(f"implausible USD/TWD rate {rate} on {d}")
+        points.append((date.fromisoformat(d), rate))
+    if not points:
+        raise ValueError("FRED series has no values")
+    points.sort()
+    last = points[-1]
+    if (today - last[0]).days > 21:
+        raise ValueError(f"stale FX data, last {last[0]}")
+    weekly = {}
+    for d, r in points:
+        if d > last[0] - timedelta(days=5 * 366):
+            weekly[d.isocalendar()[:2]] = (d.isoformat(), r)
+    return {"asof": last[0].isoformat(), "rate": last[1], "weekly": [list(v) for v in sorted(weekly.values())]}
+
+
+def fetch_fx(client: httpx.Client, today: date):
+    """新臺幣兌美元：Federal Reserve H.10（FRED DEXTAWUS，每 1 美元兌新臺幣，紐約中午買入匯率）。"""
+    response = client.get(FRED, params={"id": "DEXTAWUS", "cosd": (today - timedelta(days=5 * 366 + 14)).isoformat()})
+    response.raise_for_status()
+    out = parse_fred(response.text, today)
+    out["source"] = "Federal Reserve H.10（FRED DEXTAWUS）"
+    out["unit"] = "TWD per USD"
+    return out
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", type=Path, default=Path("public/data/prices.json"))
@@ -328,6 +365,13 @@ def main(argv=None):
             used.add(SOURCES[source])
             tickers[t] = new
             print(f"{t}: {new['close']} @ {new['asof']} ({SOURCES[source]})", flush=True)
+        fx = dict(old.get("fx", {}))
+        if not args.ticker:
+            try:
+                fx["USDTWD"] = fetch_fx(client, today)
+                print(f"USDTWD: {fx['USDTWD']['rate']} @ {fx['USDTWD']['asof']}", flush=True)
+            except Exception as exc:  # noqa: BLE001 - 匯率失敗保留上次
+                print(f"::warning::USD/TWD update failed; previous rate kept: {exc}", file=sys.stderr, flush=True)
     if len(failed) == len(targets):
         print("All price downloads failed; prices.json unchanged", file=sys.stderr)
         return 1
@@ -338,6 +382,7 @@ def main(argv=None):
         "note": f"股價來自 {names} 免費日線資料，每週自動更新；僅供個人研究，非即時報價。收盤價已按股票分割調整、未還原股息。",
         "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "tickers": dict(sorted(tickers.items())),
+        "fx": fx,
     }
     args.output.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")) + "\n")
     return 0
