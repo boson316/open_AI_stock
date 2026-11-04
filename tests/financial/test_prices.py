@@ -144,3 +144,12 @@ def test_parse_fred_skips_missing_and_rejects_stale():
         parse_fred(text, date(2027, 1, 30))
     with pytest.raises(ValueError):
         parse_fred("<html>", date(2026, 11, 2))
+
+
+def test_parse_h10_html_table():
+    from openstock.prices import parse_h10
+
+    rows = "".join(f"<tr><th>{d}-Oct-26</th><td>{31 + d / 100:.4f}</td></tr>" for d in range(1, 31))
+    rows += "".join(f"<tr><th>{d}-Sep-26</th><td>ND</td></tr>" for d in range(1, 30))
+    r = parse_h10(f"<table>{rows}</table>", date(2026, 11, 2))
+    assert r["asof"] == "2026-10-30" and r["rate"] == 31.30

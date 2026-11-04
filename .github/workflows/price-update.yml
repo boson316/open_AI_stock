@@ -14,7 +14,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -24,7 +24,7 @@ jobs:
           cache-dependency-path: requirements.lock
       - run: pip install -r requirements.lock && pip install --no-deps -e .
       - name: Download weekly prices (single-ticker failures keep previous price)
-        timeout-minutes: 8
+        timeout-minutes: 12
         run: python -u -m openstock.prices
         env:
           STOOQ_APIKEY: ${{ secrets.STOOQ_APIKEY }}

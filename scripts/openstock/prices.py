@@ -29,6 +29,7 @@ from .pipeline import COMPANIES
 
 ETFS = ["EWT", "SMH", "SPY"]  # SPY 作為計算 Beta 的市場基準
 FRED = "https://fred.stlouisfed.org/graph/fredgraph.csv"
+H10 = "https://www.federalreserve.gov/releases/h10/hist/dat00_ta.htm"  # 聯準會 H.10 台灣歷史匯率（NT$ per US$）
 YAHOO = "https://query2.finance.yahoo.com/v8/finance/chart/{symbol}"
 NASDAQ = "https://api.nasdaq.com/api/quote/{symbol}/historical"
 CBOE = "https://cdn.cboe.com/api/global/delayed_quotes/charts/historical/{symbol}.json"
@@ -320,26 +321,42 @@ def parse_fred(text: str, today: date):
     return {"asof": last[0].isoformat(), "rate": last[1], "weekly": [list(v) for v in sorted(weekly.values())]}
 
 
+def parse_h10(html: str, today: date):
+    """聯準會 H.10 歷史匯率頁（日期如 3-Jan-26、匯率或 ND）→ 與 parse_fred 相同格式。"""
+    import re
+    text = re.sub(r"<[^>]+>", " ", html)
+    rows = re.findall(r"(\d{1,2}-[A-Z][a-z]{2}-\d{2})\s+(ND|\d+\.\d+)", text)
+    if len(rows) < 50:
+        raise ValueError("H.10 table not recognized")
+    lines = ["observation_date,DEXTAWUS"] + [
+        f"{datetime.strptime(d, '%d-%b-%y').date().isoformat()},{'.' if v == 'ND' else v}" for d, v in rows
+    ]
+    return parse_fred("\n".join(lines), today)
+
+
 def fetch_fx(client: httpx.Client, today: date):
-    """新臺幣兌美元：Federal Reserve H.10（FRED DEXTAWUS，每 1 美元兌新臺幣，紐約中午買入匯率）。"""
-    # FRED 的 CSV 匯出偶爾很慢：拉長逾時並重試 3 次。
-    last_exc = None
-    for attempt in range(3):
+    """新臺幣兌美元：Federal Reserve H.10（每 1 美元兌新臺幣，紐約中午買入匯率）。
+    先抓聯準會官網的 H.10 歷史頁，失敗再試 FRED 的同一序列（DEXTAWUS）。"""
+    errors = []
+    try:
+        r = client.get(H10, timeout=httpx.Timeout(40, connect=15))
+        r.raise_for_status()
+        out = parse_h10(r.text, today)
+        out["source"] = "Federal Reserve H.10（federalreserve.gov）"
+    except Exception as exc:  # noqa: BLE001
+        errors.append(f"h10: {exc}")
         try:
-            response = client.get(
+            r = client.get(
                 FRED,
                 params={"id": "DEXTAWUS", "cosd": (today - timedelta(days=5 * 366 + 14)).isoformat()},
-                timeout=httpx.Timeout(90, connect=20),
+                timeout=httpx.Timeout(40, connect=15),
             )
-            response.raise_for_status()
-            break
-        except httpx.HTTPError as exc:
-            last_exc = exc
-            time.sleep(5 * (attempt + 1))
-    else:
-        raise last_exc
-    out = parse_fred(response.text, today)
-    out["source"] = "Federal Reserve H.10（FRED DEXTAWUS）"
+            r.raise_for_status()
+            out = parse_fred(r.text, today)
+            out["source"] = "Federal Reserve H.10（FRED DEXTAWUS）"
+        except Exception as exc2:  # noqa: BLE001
+            errors.append(f"fred: {exc2}")
+            raise RuntimeError("; ".join(errors))
     out["unit"] = "TWD per USD"
     return out
 
