@@ -51,3 +51,15 @@ def test_tsm_parent_only_report_is_ignored():
     docs = json.loads(Path("handoff/reference/official-source-table-inspection.json").read_text())["documents"]
     doc = next(d for d in docs if "standalone" in d.get("source", "") or "unconsolidated" in d.get("source", ""))
     assert parse_balance(doc) == []
+
+
+def test_tsm_notes_after_balance_sheet_are_ignored():
+    head = [["", "June 30, 2026", "", "December 31, 2025"], ["", "Amount", "%", "Amount", "%"]]
+    bs = head + [["Cash and cash equivalents (Note 6)", "$100", "1", "$90", "1"], ["TOTAL", "$1,000", "100", "$900", "100"],
+                 ["Total liabilities", "400", "40", "350", "39"],
+                 ["Equity attributable to shareholders of the parent", "600", "60", "550", "61"], ["TOTAL", "$1,000", "100", "$900", "100"]]
+    note = [["Short-term loans", "114,921,333", "(111,959,992", ")", "-"]]
+    doc = {"intro": "EX-99.1 Consolidated Report", "unit_evidence": ["CONSOLIDATED BALANCE SHEETS (In Thousands of New Taiwan Dollars)"],
+           "tables": [bs, note], "source": "https://www.sec.gov/x", "filed": "2026-08-14", "accession": "a", "sha256": "0"}
+    facts = {(f.metric, str(f.end)): f.value for f in parse_balance(doc)}
+    assert facts[("assets", "2026-06-30")] == 1_000_000 and ("short_borrowings", "2026-06-30") not in facts

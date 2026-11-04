@@ -711,8 +711,15 @@ export function App() {
   // 報表空格的原因：金融業不適用的工商業科目、整段期間都沒申報的科目、或個別期間未揭露。
   const bankNA = new Set(["gross_profit", "operating_income", "current_assets", "current_liabilities", "inventory", "payables", "receivables"]);
   const reported = new Set(raw.map((f) => f.metric));
-  const missingReason = (m: string) =>
-    isFinancial && bankNA.has(m)
+  const lastReported = (m: string) =>
+    raw.filter((f) => f.metric === m).reduce((a, f) => (f.end > a ? f.end : a), "");
+  const missingReason = (m: string, d?: string) =>
+    d && reported.has(m) && d > lastReported(m)
+      ? {
+          text: "尚未申報",
+          title: `這一季的完整報表（資產負債表、現金流量表）公司尚未向 SEC 申報；最新已申報期為 ${lastReported(m)}。台積電通常在法說會後約一個月才申報完整合併財報。`,
+        }
+      : isFinancial && bankNA.has(m)
       ? { text: "不適用", title: "金融機構不區分流動／非流動，也不揭露毛利、營業利益、存貨等工商業科目" }
       : !reported.has(m)
         ? { text: "未申報", title: "公司在 SEC 申報中沒有使用此科目（常見原因：沒有這類資產負債，或改用公司自訂科目）" }
@@ -2017,7 +2024,9 @@ export function App() {
                   />
                   <div className="chart-grid">
                     {chart("資產負債結構", ["assets", "liabilities", "equity"])}
-                    {chart("現金與存款", ["cash", "deposits"])}
+                    {isFinancial
+                      ? chart("現金與存款", ["cash", "deposits"])
+                      : chart("現金及約當現金", ["cash"])}
                   </div>
                   <div className="notice">
                     <CircleHelp size={18} />
@@ -2699,7 +2708,7 @@ function TableGroup({
   shareUnit: string;
   onDetail: (f: Fact) => void;
   /** 空格的原因：不適用、公司未申報此科目、或該期未揭露。 */
-  missing?: (m: string) => { text: string; title: string };
+  missing?: (m: string, d: string) => { text: string; title: string };
 }) {
   return (
     <>
@@ -2718,7 +2727,7 @@ function TableGroup({
             dates.map((d) => {
               const v = get(m, d),
                 f = fact(m, d);
-              const why = v === null ? (missing?.(m) ?? { text: "未揭露", title: "該期沒有相容的官方數字" }) : null;
+              const why = v === null ? (missing?.(m, d) ?? { text: "未揭露", title: "該期沒有相容的官方數字" }) : null;
               return (
                 <td key={d} className={v !== null && v < 0 ? "negative" : why ? "muted" : ""}>
                   <button

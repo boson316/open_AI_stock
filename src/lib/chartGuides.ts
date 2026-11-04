@@ -193,6 +193,7 @@ const GUIDES: Record<string, ChartGuide> = {
 /** 依標題找說明；多股比較、河流圖這類動態標題用關鍵字比對。 */
 export function chartGuide(title: string): ChartGuide | null {
   if (GUIDES[title]) return GUIDES[title];
+  if (title === "現金及約當現金") return GUIDES.現金與存款;
   if (title.startsWith("本益比估值河流圖") || title.startsWith("本益比河流圖")) return RIVER;
   if (title.startsWith("美股席勒本益比")) return GUIDES.美股席勒本益比;
   if (title.startsWith("多股比較：")) {

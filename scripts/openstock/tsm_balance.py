@@ -53,7 +53,10 @@ def parse_balance(doc):
     found = {}
     dates = None
     total_seen = False
+    done = False
     for table in doc['tables']:
+        if done:
+            break
         if not isinstance(table, list):
             continue
         for row in table[:6]:
@@ -76,7 +79,9 @@ def parse_balance(doc):
             metric = LABELS.get(label)
             if label == 'TOTAL':
                 if total_seen:
-                    continue  # 第二個 TOTAL 是負債及權益總計
+                    # 第二個 TOTAL 是負債及權益總計：資產負債表到此結束，後面的附註表格（借款變動等）不再讀取。
+                    done = True
+                    break
                 metric, total_seen = 'assets', True
             if metric is None:
                 continue
