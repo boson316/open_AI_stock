@@ -114,7 +114,7 @@ def audit_dataset(dataset):
     if revenue and (revenue[0].start is None or not 1730 <= (revenue[-1].end-revenue[0].start).days+1 <= 1920):
         errors.append('20-quarter fiscal span is not approximately five years')
     records=[]
-    optional=[m for m in METRICS if m not in CORE and m not in {'deposits','allowance','net_interest_income','dividends_paid','dps'} and m not in BALANCE_EXTRA]
+    optional=[m for m in METRICS if m not in CORE and m not in {'deposits','allowance','net_interest_income','dividends_paid','dps','shares_cover','diluted_shares','liabilities_and_equity','minority_interest'} and m not in BALANCE_EXTRA]
     for r in revenue:
         metrics={}
         for metric in CORE:

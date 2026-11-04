@@ -55,6 +55,8 @@ def generate(ticker, output, input_path=None, overrides=None, filing=None, suppl
     facts = extract(raw, cik, {**COMPANY_MAPPINGS.get(ticker, {}), **(overrides or {})}, currency=currency, standard=standard)
     if ticker == "TSM":
         facts = [f for f in facts if f.metric not in {"ocf","icf","financing_cf","capex","sbc"}]
+    from .balance_extra import align_cover_shares, derive_liabilities
+    facts = derive_liabilities(align_cover_shares(facts))
     if supplemental:
         if ticker == "SOFI":
             from .supplemental import fetch_releases
@@ -69,7 +71,7 @@ def generate(ticker, output, input_path=None, overrides=None, filing=None, suppl
             facts += reviewed_facts(SECClient())
         if ticker == "TSM":
             from .tsm_cash import fetch_cashflows
-            facts += fetch_cashflows(SECClient())
+            facts += fetch_cashflows(SECClient(), with_balance=True)
         if ticker == "SOFI":
             from .us_quarters import fetch_q4
             facts += fetch_q4(SECClient(),cik,facts)

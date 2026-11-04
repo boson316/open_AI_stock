@@ -67,7 +67,7 @@ def parse_statement(doc):
     return list(unique.values())
 
 
-def fetch_cashflows(client):
+def fetch_cashflows(client, with_balance=False):
     from .history import filings
     r=filings(client,'0001046179');facts=[]
     for i,form in enumerate(r['form']):
@@ -78,5 +78,14 @@ def fetch_cashflows(client):
             name=item['name']
             if not name.endswith('.htm') or name==primary or name.startswith('R'):continue
             content=client.get_bytes(base+name)
-            facts+=parse_statement({**statement_tables(content),'source':base+name,'filed':r['filingDate'][i],'accession':acc,'sha256':hashlib.sha256(content).hexdigest()})
+            doc={**statement_tables(content),'source':base+name,'filed':r['filingDate'][i],'accession':acc,'sha256':hashlib.sha256(content).hexdigest()}
+            facts+=parse_statement(doc)
+            if with_balance:
+                from .tsm_balance import parse_balance
+                try:
+                    facts+=parse_balance(doc)
+                except ValueError as exc:
+                    # 資產負債表格式改版只略過該份文件的資產負債表，不影響現金流與其他季度。
+                    import sys
+                    print(f"::warning::TSM balance sheet skipped for {base+name}: {exc}",file=sys.stderr)
     return facts

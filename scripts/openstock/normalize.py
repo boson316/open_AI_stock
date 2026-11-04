@@ -8,7 +8,7 @@ revisions remain missing.
 """
 from datetime import timedelta, date
 from .models import Fact
-from .mapping import INSTANT
+from .mapping import INSTANT, NON_ADDITIVE
 
 CASH_FLOWS = {'ocf','icf','financing_cf','capex','sbc'}
 
@@ -73,7 +73,7 @@ def quarters(facts: list[Fact], as_of: date | None = None) -> list[Fact]:
             if old is None or (f.filed, f.accession) > (old.filed, old.accession):
                 selected[key] = f
     for f in available:
-        if f.metric in INSTANT or f.metric in {"eps", "nim", "dps"} or not 150 <= days(f) <= 380:
+        if f.metric in INSTANT or f.metric in NON_ADDITIVE or not 150 <= days(f) <= 380:
             continue
         prior = [p for p in groups[group_key(f)] if 70 <= (f.end - p.end).days <= 105]
         if not prior:

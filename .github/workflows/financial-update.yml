@@ -9,6 +9,10 @@ on:
         default: ALL
         type: choice
         options: [ALL, SOFI, GOOGL, GOOG, NVDA, AMD, TSM, MSFT, AAPL, AMZN, META, PLTR, MU, TSLA]
+      commit_to_branch:
+        description: 直接提交到執行的分支（不開資料 PR；只用於非 main 的開發分支）
+        type: boolean
+        default: false
 permissions:
   contents: write
   pull-requests: write
@@ -36,7 +40,20 @@ jobs:
       - run: python -m openstock.coverage
       # A PR intentionally triggers the normal checks on merge; GITHUB_TOKEN
       # commits alone do not trigger another push workflow.
+      - name: Commit to the running development branch
+        if: ${{ inputs.commit_to_branch && github.ref_name != 'main' }}
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git add -N public/data/
+          if git diff --quiet -- public/data/; then echo "No data changes"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/
+          git commit -m "data: refresh validated SEC financial facts"
+          git push origin "HEAD:$BRANCH"
       - uses: peter-evans/create-pull-request@v7
+        if: ${{ !(inputs.commit_to_branch && github.ref_name != 'main') }}
         with:
           branch: automation/financial-data
           title: 'data: refresh validated SEC financial facts'

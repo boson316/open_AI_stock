@@ -35,10 +35,20 @@ METRICS = {
     "long_term_debt": ("USD", ["LongTermDebtNoncurrent", "LongTermDebtAndCapitalLeaseObligations", "ConvertibleNotesPayableNoncurrent"]),
     "dividends_paid": ("USD", ["PaymentsOfDividendsCommonStock", "PaymentsOfDividends"]),
     "dps": ("USD/shares", ["CommonStockDividendsPerShareDeclared", "CommonStockDividendsPerShareCashPaid"]),
+    # 股數補充：資產負債表沒有標註流通股數的公司（例如雙層股權、只在年報標註者），
+    # 改用申報封面的流通股數（期末改記為該申報的財報期末，lineage 保留實際封面日）與加權平均稀釋股數。
+    "shares_cover": ("shares", ["dei:EntityCommonStockSharesOutstanding"]),
+    "diluted_shares": ("shares", ["WeightedAverageNumberOfDilutedSharesOutstanding"]),
+    # 總負債缺漏時以「負債及權益總計 − 權益」推算（見 pipeline.derive_liabilities）。
+    "liabilities_and_equity": ("USD", ["LiabilitiesAndStockholdersEquity"]),
+    "minority_interest": ("USD", ["MinorityInterest"]),
 }
 BALANCE_EXTRA = {"current_assets", "current_liabilities", "receivables", "inventory", "payables",
                  "short_borrowings", "debt_current", "long_term_debt"}
-INSTANT = {"assets", "liabilities", "equity", "cash", "shares", "deposits", "allowance", "members", "products", "cet1"} | BALANCE_EXTRA
+INSTANT = {"assets", "liabilities", "equity", "cash", "shares", "deposits", "allowance", "members", "products", "cet1",
+           "shares_cover", "liabilities_and_equity", "minority_interest"} | BALANCE_EXTRA
+# 期間型但不可用「全年 − 前三季」相減還原第四季的指標。
+NON_ADDITIVE = {"eps", "nim", "dps", "diluted_shares"}
 
 IFRS_METRICS = {
     "revenue": ["Revenue"],
@@ -75,7 +85,7 @@ def extract(companyfacts, cik, overrides=None, *, currency="USD", standard="US G
         if standard == "IFRS":
             tags = IFRS_METRICS.get(metric, [])
         namespace = "ifrs-full" if standard == "IFRS" else "us-gaap"
-        candidates = (overrides or {}).get(metric, [f"{namespace}:{t}" for t in tags])
+        candidates = (overrides or {}).get(metric, [t if ":" in t else f"{namespace}:{t}" for t in tags])
         unit = unit.replace("USD", currency)
         forms = {"20-F", "20-F/A", "6-K", "6-K/A"} if standard == "IFRS" else {"10-K", "10-Q", "10-K/A", "10-Q/A"}
         # Issuers can migrate between reviewed equivalent candidates. Select one
