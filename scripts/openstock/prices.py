@@ -303,7 +303,7 @@ def parse_fred(text: str, today: date):
         raise ValueError(f"unexpected FRED response: {text[:80]!r}")
     points = []
     for d, v in rows[1:]:
-        if v.strip() in {"", "."}:
+        if v.strip().lower() in {"", ".", "nan", "nd"}:
             continue
         rate = float(v)
         if not 1 < rate < 100:

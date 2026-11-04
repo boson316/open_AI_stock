@@ -163,3 +163,10 @@ def test_parse_bis_csv():
     )
     r = parse_bis(text, date(2026, 11, 2))
     assert r["asof"] == "2026-10-30" and r["rate"] == 31.30
+
+
+def test_fx_missing_values_are_skipped():
+    from openstock.prices import parse_bis
+
+    text = "TIME_PERIOD,OBS_VALUE\n" + "\n".join(f"2026-10-{d:02d},{'NaN' if d % 7 == 0 else 31.5}" for d in range(1, 31))
+    assert parse_bis(text, date(2026, 11, 2))["rate"] == 31.5
