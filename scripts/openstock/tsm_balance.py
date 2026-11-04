@@ -60,7 +60,8 @@ def parse_balance(doc):
         if not isinstance(table, list):
             continue
         for row in table[:6]:
-            ds = [DATE.fullmatch(c.strip()) for c in row if DATE.fullmatch(c.strip())]
+            # 日期欄可能帶註記，例如「March 31, 2022 (Reviewed)」「December 31, 2021 (Audited)」。
+            ds = [m for m in (DATE.match(c.strip()) for c in row if len(c.strip()) < 45) if m]
             if len(ds) >= 2:
                 dates = [datetime.strptime(' '.join(m.groups()), '%B %d %Y').date() for m in ds]
                 total_seen = False

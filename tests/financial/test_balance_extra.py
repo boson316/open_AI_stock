@@ -63,3 +63,12 @@ def test_tsm_notes_after_balance_sheet_are_ignored():
            "tables": [bs, note], "source": "https://www.sec.gov/x", "filed": "2026-08-14", "accession": "a", "sha256": "0"}
     facts = {(f.metric, str(f.end)): f.value for f in parse_balance(doc)}
     assert facts[("assets", "2026-06-30")] == 1_000_000 and ("short_borrowings", "2026-06-30") not in facts
+
+
+def test_tsm_dates_with_review_annotations():
+    head = [["", "March 31, 2022 (Reviewed)", "", "December 31, 2021 (Audited)"], ["", "Amount", "%", "Amount", "%"]]
+    bs = head + [["TOTAL", "$1,000", "100", "$900", "100"], ["Total liabilities", "400", "40", "350", "39"]]
+    doc = {"intro": "EX-99.1 Consolidated Report", "unit_evidence": ["CONSOLIDATED BALANCE SHEETS (In Thousands of New Taiwan Dollars)"],
+           "tables": [bs], "source": "https://www.sec.gov/x", "filed": "2022-05-13", "accession": "a", "sha256": "0"}
+    facts = {(f.metric, str(f.end)): f.value for f in parse_balance(doc)}
+    assert facts[("assets", "2022-03-31")] == 1_000_000
