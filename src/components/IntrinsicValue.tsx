@@ -3,6 +3,7 @@ import type { Fact } from "../lib/finance";
 import {
   dcf,
   epsCagr,
+  epsGrowthBest,
   fcfYieldHistory,
   impliedGrowth,
   lynch,
@@ -160,6 +161,7 @@ export function IntrinsicValue({ base, ticker, dark, quarters, raw, isFinancial,
         pe={pe}
         cagr5={epsCagr(raw, 5)}
         cagr3={epsCagr(raw, 3)}
+        best={epsGrowthBest(raw)}
         dividendYield={dividendYield}
         payout={payout}
       />
@@ -174,7 +176,7 @@ export function IntrinsicValue({ base, ticker, dark, quarters, raw, isFinancial,
         payout={payout}
         payoutSource={payoutSource}
         dpsGrowth={dpsGrowth}
-        epsGrowth={epsCagr(raw, 5) ?? epsCagr(raw, 3)}
+        epsGrowth={epsGrowthBest(raw).value}
       />
     </div>
   );
@@ -447,6 +449,7 @@ function Lynch({
   pe,
   cagr5,
   cagr3,
+  best,
   dividendYield,
   payout,
 }: {
@@ -457,10 +460,11 @@ function Lynch({
   pe: number | null;
   cagr5: number | null;
   cagr3: number | null;
+  best: { value: number | null; years: number | null; reason: string | null };
   dividendYield: number | null;
   payout: number | null;
 }) {
-  const baseGrowth = cagr5 ?? cagr3;
+  const baseGrowth = best.value;
   const defaults = {
     g: baseGrowth === null ? 10 : round1(Math.min(Math.max(baseGrowth * 100, 0), 25)),
     y: dividendYield === null ? 0 : Math.round(dividendYield * 1000) / 10,
@@ -535,7 +539,9 @@ function Lynch({
                 <input aria-label="EPS 年成長率" type="number" step="0.5" value={s.g} onChange={(e) => set("g", e.target.value)} />
               </td>
               <td className="wrap">
-                預設取 SEC 年度 EPS 近 5 年複合成長率 {pct(cagr5)}（近 3 年 {pct(cagr3)}），上限 25%：林區認為超過 25% 的高成長很難長期維持。
+                {best.value !== null
+                  ? `預設取 SEC 年度 EPS 近 ${best.years} 年複合成長率 ${pct(best.value)}${cagr5 !== null && cagr3 !== null ? `（近 3 年 ${pct(cagr3)}）` : ""}，上限 25%：林區認為超過 25% 的高成長很難長期維持。`
+                  : `${best.reason}，預設 10%，請依自己的判斷調整。`}
               </td>
             </tr>
             <tr>

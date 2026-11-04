@@ -17,8 +17,8 @@ const TABLE_COLUMNS = [
 ] as const;
 
 const pct = (v: number | null) =>
-  v === null ? "N/A" : `${(v * 100).toFixed(1)}%`;
-const times = (v: number | null) => (v === null ? "N/A" : `${v.toFixed(2)}×`);
+  v === null ? "—" : `${(v * 100).toFixed(1)}%`;
+const times = (v: number | null) => (v === null ? "—" : `${v.toFixed(2)}×`);
 
 export function Compare({
   catalog,

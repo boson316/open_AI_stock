@@ -160,7 +160,7 @@ function Debt({ quarters, dark, unit, unitLabel, years }: { quarters: Fact[]; da
             </div>
             <div className="kpi">
               <span>一年內到期占比</span>
-              <strong>{shortShare === null ? "N/A" : `${(shortShare * 100).toFixed(0)}%`}</strong>
+              <strong>{shortShare === null ? (latest && latest.total === 0 ? "無金融借款" : "—") : `${(shortShare * 100).toFixed(0)}%`}</strong>
             </div>
             <div className="kpi">
               <span>{netCash !== null && netCash >= 0 ? "淨現金（現金 − 借款）" : "淨負債（借款 − 現金）"}</span>

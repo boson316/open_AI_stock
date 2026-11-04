@@ -208,9 +208,10 @@ test("every requested ticker loads its own verified data and TSM keeps TIFRS qua
       await expect(
         page.getByRole("button", { name: "季度", exact: true }),
       ).toBeEnabled();
+      // ROE 以 6-K 的 TIFRS 季度損益與資產負債表計算（不與 20-F IFRS 混算）。
       await expect(
-        page.getByRole("button", { name: /股東權益報酬率/ }),
-      ).toContainText("N/A");
+        page.getByRole("button", { name: /股東權益報酬率/ }).first(),
+      ).toContainText("%");
       await page.getByRole("button", { name: "年度", exact: true }).click();
       await page
         .getByRole("tab", { name: "完整財務報表", exact: true })
@@ -434,7 +435,7 @@ test("multi-stock comparison charts 20 aligned quarters and exports ratios", asy
   expect(filled.some((r) => Math.abs(Number(r[col]) - last.margin_pct) < 0.01)).toBe(true);
   const sofi = rows[0].findIndex((h) => h.startsWith("SOFI"));
   expect(rows.slice(1).every((r) => r[sofi] === "")).toBe(true);
-  await expect(page.locator(".compare-table-panel")).toContainText("N/A");
+  await expect(page.locator(".compare-table-panel")).toContainText("—");
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator("body")).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);

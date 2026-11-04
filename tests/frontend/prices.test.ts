@@ -74,3 +74,36 @@ it("沒有外部估值資料時，以週收盤組出季末股價與 TTM EPS", as
   expect(rows.at(-2)!.eps_ttm).toBe(4);
   expect(rows.at(-1)).toMatchObject({ label: "最新", eps_ttm: 4 });
 });
+
+it("股數依序採流通股數、封面股數、加權平均稀釋股數；Beta 由週報酬迴歸", async () => {
+  const { sharesAt, betaFromWeekly } = await import("../../src/lib/finance");
+  const f = (metric: string, value: number, end: string) => ({
+    metric, value, unit: "shares", start: null, end, filed: end, accession: end, tag: "x", source: "x", form: "10-Q", quality: "reported" as const, lineage: [],
+  });
+  expect(sharesAt([f("diluted_shares", 3, "2026-09-30"), f("shares_cover", 2, "2026-09-30")], "2026-09-30")).toMatchObject({ value: 2, metric: "shares_cover" });
+  expect(sharesAt([f("diluted_shares", 3, "2026-09-30")], "2026-09-30")).toMatchObject({ metric: "diluted_shares" });
+  expect(sharesAt([], "2026-09-30")).toBeNull();
+  // 個股報酬恰為基準的 1.5 倍 → Beta 1.5
+  const bench: [string, number][] = [], stock: [string, number][] = [];
+  let b = 100, s = 100;
+  for (let i = 0; i < 150; i++) {
+    const r = Math.sin(i) / 50;
+    b *= 1 + r; s *= 1 + 1.5 * r;
+    const d = new Date(Date.UTC(2023, 0, 6) + i * 7 * 86400000).toISOString().slice(0, 10);
+    bench.push([d, b]); stock.push([d, s]);
+  }
+  expect(betaFromWeekly(stock, bench)!.beta).toBeCloseTo(1.5, 6);
+  expect(betaFromWeekly(stock.slice(0, 50), bench)).toBeNull();
+});
+
+it("林區法成長率：期初虧損時改用較短年期，全部不可算時說明原因", async () => {
+  const { epsGrowthBest } = await import("../../src/lib/intrinsic");
+  const y = (year: number, value: number) => ({
+    metric: "eps", value, unit: "USD/shares", start: `${year}-01-01`, end: `${year}-12-31`, filed: `${year + 1}-02-01`,
+    accession: `a${year}`, tag: "x", source: "x", form: "10-K", quality: "reported" as const, lineage: [],
+  });
+  const r = epsGrowthBest([y(2020, -1), y(2021, -0.5), y(2022, 1), y(2023, 2), y(2024, 4), y(2025, 8)]);
+  expect(r.years).toBe(3);
+  expect(r.value).toBeCloseTo(1, 2);
+  expect(epsGrowthBest([y(2024, -1), y(2025, -2)]).reason).toContain("EPS ≤ 0");
+});

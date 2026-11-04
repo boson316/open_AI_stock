@@ -86,8 +86,8 @@ export function analyze(state: PortfolioState, data: Research | null) {
 }
 
 const money = (v: number | null) =>
-  v === null || !Number.isFinite(v) ? "N/A" : `$${v.toLocaleString("zh-TW", { maximumFractionDigits: 0 })}`;
-const pct = (v: number | null) => (v === null || !Number.isFinite(v) ? "N/A" : `${(v * 100).toFixed(1)}%`);
+  v === null || !Number.isFinite(v) ? "—" : `$${v.toLocaleString("zh-TW", { maximumFractionDigits: 0 })}`;
+const pct = (v: number | null) => (v === null || !Number.isFinite(v) ? "—" : `${(v * 100).toFixed(1)}%`);
 
 export function Portfolio({ base, onSelect }: { base: string; onSelect: (t: string) => void }) {
   const { data } = useResearch(base);
@@ -199,8 +199,8 @@ export function Portfolio({ base, onSelect }: { base: string; onSelect: (t: stri
                     />
                   </td>
                   <td>{money(r.value)}</td>
-                  <td>{r.value !== null && result.stock ? pct(r.value / result.stock) : "N/A"}</td>
-                  <td>{r.value !== null && result.total ? pct(r.value / result.total) : "N/A"}</td>
+                  <td>{r.value !== null && result.stock ? pct(r.value / result.stock) : "—"}</td>
+                  <td>{r.value !== null && result.total ? pct(r.value / result.total) : "—"}</td>
                   <td className={r.pnl === null ? "" : r.pnl >= 0 ? "positive" : "negative"}>{pct(r.pnl)}</td>
                   <td>
                     <button aria-label={`刪除 ${r.ticker || `第 ${i + 1} 列`}`} onClick={() => setState((s) => ({ ...s, holdings: s.holdings.filter((_, j) => j !== i) }))}>
@@ -216,7 +216,7 @@ export function Portfolio({ base, onSelect }: { base: string; onSelect: (t: stri
                 </td>
                 <td>{money(state.cash)}</td>
                 <td />
-                <td>{result.total ? pct(state.cash / result.total) : "N/A"}</td>
+                <td>{result.total ? pct(state.cash / result.total) : "—"}</td>
                 <td colSpan={2} />
               </tr>
             </tbody>
@@ -254,7 +254,7 @@ export function Portfolio({ base, onSelect }: { base: string; onSelect: (t: stri
             </div>
             <div className="kpi panel">
               <span>現金占比</span>
-              <strong>{result.total ? pct(state.cash / result.total) : "N/A"}</strong>
+              <strong>{result.total ? pct(state.cash / result.total) : "—"}</strong>
             </div>
           </div>
           <div className="panel">
@@ -286,7 +286,7 @@ export function Portfolio({ base, onSelect }: { base: string; onSelect: (t: stri
                       <td>
                         <strong>{money(e.sum)}</strong>
                       </td>
-                      <td>{result.total ? pct(e.sum / result.total) : "N/A"}</td>
+                      <td>{result.total ? pct(e.sum / result.total) : "—"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -316,7 +316,7 @@ export function Portfolio({ base, onSelect }: { base: string; onSelect: (t: stri
                     </label>
                     <strong className="negative">−{money(loss)}</strong>
                     <span className="muted small">
-                      總帳戶 {result.total ? pct(-loss / result.total) : "N/A"} → 剩 {money(result.total - loss)}
+                      總帳戶 {result.total ? pct(-loss / result.total) : "—"} → 剩 {money(result.total - loss)}
                     </span>
                   </div>
                 );

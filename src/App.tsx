@@ -69,10 +69,18 @@ import {
   yoy,
 } from "./lib/finance";
 import type { Catalog, Dataset, Fact, Price } from "./lib/finance";
-import { adjustForSplits, weeklyToPrices } from "./lib/finance";
+import {
+  adjustForSplits,
+  betaFromWeekly,
+  sharesAt,
+  weeklyToPrices,
+} from "./lib/finance";
+import { useResearch } from "./lib/research";
 import { quarterPricesFromWeekly } from "./lib/intrinsic";
 import { loadPriceFile } from "./lib/research";
-import type { PriceEntry } from "./lib/research";
+import type { PriceEntry, PriceFile } from "./lib/research";
+/** TSM：1 股 ADR = 5 股普通股。 */
+const ADR_RATIO = 5;
 
 const sections = [
   { id: "overview", label: "研究總覽", icon: Layers3 },
@@ -198,7 +206,8 @@ export function App() {
     [priceImported, setPriceImported] = useState(""),
     [priceConsent, setPriceConsent] = useState(false),
     [log, setLog] = useState(false),
-    [autoPrice, setAutoPrice] = useState<PriceEntry | null>(null);
+    [autoPrice, setAutoPrice] = useState<PriceEntry | null>(null),
+    [fxFile, setFxFile] = useState<PriceFile["fx"] | null>(null);
   const pageTop = useRef<HTMLElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
   const [favorites, setFavorites] = useState<string[]>(() => {
@@ -274,6 +283,7 @@ export function App() {
     // 預設載入每週自動更新的股價；使用者匯入 CSV 時會覆蓋。
     loadPriceFile(base).then((pf) => {
       const entry = pf?.tickers[ticker];
+      if (!controller.signal.aborted) setFxFile(pf?.fx ?? null);
       if (controller.signal.aborted || !entry || !Array.isArray(entry.weekly)) return;
       const series = weeklyToPrices(entry.weekly, `${entry.source ?? "Stooq"}（每週自動更新）`);
       if (!series.length) return;
@@ -449,13 +459,13 @@ export function App() {
     eps = annualOnly
       ? (last(quarters, "eps")?.value ?? null)
       : sumTTM(quarters, "eps");
-  const endingEquity = last(quarters, "equity"),
-    endingAssets = last(quarters, "assets");
+  const endingAssets = last(quarters, "assets");
   function returnOn(metric: string) {
-    if (currency === "TWD") return null; // TIFRS earnings must not mix with IASB IFRS balance sheets.
-    const end = last(quarters, metric);
+    // TSM：損益與資產負債表都用 6-K 的 TIFRS，不與 20-F 的 IFRS (IASB) 混算。
+    const rq = currency === "TWD" ? tifrsQuarters : quarters;
+    const end = last(rq, metric);
     if (!end) return null;
-    const prior = [...quarters]
+    const prior = [...rq]
       .reverse()
       .find(
         (f) =>
@@ -464,15 +474,15 @@ export function App() {
           (Date.parse(end.end) - Date.parse(f.end)) / 86400000 <= 380,
       );
     const earnings = annualOnly
-      ? (quarters.find((f) => f.metric === "net_income" && f.end === end.end)
+      ? (rq.find((f) => f.metric === "net_income" && f.end === end.end)
           ?.value ?? null)
       : ttm(
-          quarters
+          rq
             .filter((f) => f.metric === "net_income" && f.end <= end.end)
             .slice(-4),
         );
     const earningsEnd = last(
-      quarters.filter((f) => f.end <= end.end),
+      rq.filter((f) => f.end <= end.end),
       "net_income",
     )?.end;
     return prior && earningsEnd === end.end
@@ -491,35 +501,99 @@ export function App() {
     () => adjustForSplits(raw, splits),
     [raw, splits],
   );
-  const epsForPrice = annualOnly
-    ? (last(adjQuarters, "eps")?.value ?? null)
-    : sumTTM(adjQuarters, "eps");
-  const matchedLatest =
-    currency === "USD" &&
-    !annualOnly &&
-    !!lastPrice &&
-    !!latestDate &&
-    lastPrice.date >= latestDate &&
-    (Date.parse(lastPrice.date) - Date.parse(latestDate)) / 86400000 <= 180;
+  // TSM：季度損益與資產負債表都採 6-K 的 TIFRS（同一口徑），不與 20-F 的 IFRS (IASB) 混算。
+  const isAdr = currency === "TWD";
+  const tifrsRaw = useMemo(
+    () => (isAdr ? raw.filter((f) => f.tag.startsWith("disclosure:tsm.")) : []),
+    [raw, isAdr],
+  );
+  const tifrsQuarters = useMemo(() => normalize(tifrsRaw), [tifrsRaw]);
+  // 新臺幣普通股 → 每 ADR 美元：1 ADR = 5 股普通股，匯率取股價日（含）之前 14 天內最近一筆（BIS／聯準會 H.10）。
+  const fxWeekly = useMemo(
+    () => (isAdr ? (fxFile?.USDTWD?.weekly ?? []) : []),
+    [isAdr, fxFile],
+  );
+  const fxAt = (d: string) => {
+    const hit = fxWeekly.filter(([x]: [string, number]) => x <= d).at(-1);
+    return hit && (Date.parse(d) - Date.parse(hit[0])) / 86400000 <= 14
+      ? hit[1]
+      : null;
+  };
+  const perShareUsd = (d: string) => {
+    if (!isAdr) return 1;
+    const r = fxAt(d);
+    return r ? ADR_RATIO / r : null;
+  };
+  const toUsd = (d: string) => {
+    if (!isAdr) return 1;
+    const r = fxAt(d);
+    return r ? 1 / r : null;
+  };
+  /** 股價日之前已公布的財報（時點正確）：TTM EPS、每股淨值、股數與營收／自由現金流。 */
+  const pit = useMemo(() => {
+    if (!lastPrice || annualOnly) return null;
+    if (currency !== "USD" && !isAdr) return null;
+    const asOf = new Date(Date.parse(lastPrice.date) - 86400000)
+      .toISOString()
+      .slice(0, 10);
+    const q = normalize(isAdr ? tifrsRaw : adjRaw, asOf);
+    const epsUnit = isAdr ? "TWD/shares" : "USD/shares";
+    const epsFacts = q.filter((f) => f.metric === "eps" && f.unit === epsUnit);
+    const epsLocal = sumTTM(epsFacts, "eps");
+    const epsEnd = epsFacts.at(-1)?.end ?? null;
+    const k = perShareUsd(lastPrice.date),
+      m = toUsd(lastPrice.date);
+    const fresh = (end: string | null | undefined) =>
+      !!end && (Date.parse(lastPrice.date) - Date.parse(end)) / 86400000 <= 200;
+    const equity = last(q, "equity");
+    const sh = equity ? sharesAt(q, equity.end) : null;
+    const latestShares = (() => {
+      const ends = [...new Set(q.filter((f) => f.metric.includes("shares")).map((f) => f.end))].sort();
+      for (const end of ends.reverse()) {
+        const s = sharesAt(q, end);
+        if (s) return { ...s, end };
+      }
+      return null;
+    })();
+    // 營收與自由現金流：股價日前的四季不連續時（例如第四季只能由隔天才申報的年報還原），改用最新完整四季。
+    const latestQ = isAdr ? tifrsQuarters : quarters;
+    const rev = sumTTM(q, "revenue") ?? sumTTM(latestQ, "revenue");
+    const ocfA = sumTTM(q, "ocf"),
+      capexA = sumTTM(q, "capex");
+    const [ocf, capex] =
+      ocfA !== null && capexA !== null
+        ? [ocfA, capexA]
+        : [sumTTM(latestQ, "ocf"), sumTTM(latestQ, "capex")];
+    const fcf = ocf !== null && capex !== null ? ocf - Math.abs(capex) : null;
+    const ordinaryPerQuote = isAdr ? ADR_RATIO : 1;
+    const mcap =
+      latestShares && fresh(latestShares.end)
+        ? (lastPrice.close * latestShares.value) / ordinaryPerQuote
+        : null;
+    return {
+      epsTtm: epsLocal !== null && k !== null && fresh(epsEnd) ? epsLocal * k : null,
+      epsLocal,
+      epsEnd,
+      bvps:
+        equity && sh && k !== null && fresh(equity.end)
+          ? (equity.value / sh.value) * k
+          : null,
+      equityEnd: equity?.end ?? null,
+      sharesKind: latestShares?.metric ?? null,
+      sharesEnd: latestShares?.end ?? null,
+      mcap,
+      revUsd: rev !== null && m !== null ? rev * m : null,
+      fcfUsd: fcf !== null && m !== null ? fcf * m : null,
+      fx: isAdr ? fxAt(lastPrice.date) : null,
+    };
+  }, [lastPrice, annualOnly, currency, isAdr, tifrsRaw, adjRaw, fxWeekly, quarters, tifrsQuarters]);
   const peValue =
-    matchedLatest && epsForPrice !== null && epsForPrice > 0
-      ? divide(lastPrice!.close, epsForPrice)
+    pit && pit.epsTtm !== null && pit.epsTtm > 0
+      ? divide(lastPrice!.close, pit.epsTtm)
       : null;
-  const equityForPB =
-    endingEquity &&
-    endingEquity.filed < (lastPrice?.date ?? "") &&
-    lastPrice &&
-    (Date.parse(lastPrice.date) - Date.parse(endingEquity.end)) / 86400000 <=
-      180
-      ? endingEquity
-      : null;
-  const sharesForPB = last(adjQuarters, "shares");
   const pb =
-    matchedLatest &&
-    equityForPB &&
-    sharesForPB?.end === equityForPB.end &&
-    sharesForPB.filed < lastPrice!.date
-      ? divide(lastPrice!.close, divide(equityForPB.value, sharesForPB.value))
+    pit && pit.bvps !== null && pit.bvps > 0
+      ? divide(lastPrice!.close, pit.bvps)
       : null;
   const autoQuarterPrices = useMemo(
     () =>
@@ -531,33 +605,137 @@ export function App() {
         : null,
     [autoPrice, adjQuarters, currency, annualOnly],
   );
-  // 沒有外部研究資料的股票：以官方財報 × 自動股價計算行情卡。
-  const officialQuote = (() => {
-    if (!autoPrice || currency !== "USD" || annualOnly || !matchedLatest)
-      return null;
-    const shares = last(adjQuarters, "shares");
-    const mcap =
-      shares && shares.filed < autoPrice.asof
-        ? autoPrice.close * shares.value
-        : null;
-    const rev = sumTTM(quarters, "revenue");
-    const ocf = sumTTM(quarters, "ocf"),
-      capex = sumTTM(quarters, "capex");
-    const fcf = ocf !== null && capex !== null ? ocf - Math.abs(capex) : null;
-    return {
-      close: autoPrice.close,
-      asof: autoPrice.asof,
-      prev: autoPrice.prev_close ?? null,
-      hi52: autoPrice.hi52,
-      lo52: autoPrice.lo52,
-      source: autoPrice.source ?? "Stooq",
-      pe: peValue,
-      pb,
-      ps: mcap !== null && rev ? divide(mcap, rev) : null,
-      pfcf: mcap !== null && fcf !== null && fcf > 0 ? divide(mcap, fcf) : null,
-      mcap,
-      sharesEnd: shares?.end ?? null,
+  // 以官方財報 × 自動股價計算的行情卡；外部研究資料缺值時也用它補齊。
+  const officialQuote =
+    autoPrice && pit
+      ? {
+          close: autoPrice.close,
+          asof: autoPrice.asof,
+          prev: autoPrice.prev_close ?? null,
+          hi52: autoPrice.hi52,
+          lo52: autoPrice.lo52,
+          source: autoPrice.source ?? "Stooq",
+          pe: peValue,
+          pb,
+          ps: pit.mcap !== null && pit.revUsd ? divide(pit.mcap, pit.revUsd) : null,
+          pfcf:
+            pit.mcap !== null && pit.fcfUsd !== null && pit.fcfUsd > 0
+              ? divide(pit.mcap, pit.fcfUsd)
+              : null,
+          fcfNegative: pit.fcfUsd !== null && pit.fcfUsd <= 0,
+          mcap: pit.mcap,
+          sharesEnd: pit.sharesEnd,
+          sharesKind: pit.sharesKind,
+          epsTtm: pit.epsTtm,
+          epsEnd: pit.epsEnd,
+          fx: pit.fx,
+          adr: isAdr,
+        }
+      : null;
+  // 帳面每股淨值：同一資產負債表日的權益 ÷ 股數（流通股數 → 封面股數 → 加權稀釋股數）。
+  const bookPerShare = (() => {
+    const bq = currency === "TWD" ? tifrsQuarters : quarters;
+    const eq = last(bq, "equity");
+    const sh = eq ? sharesAt(bq, eq.end) : null;
+    return eq && sh
+      ? { value: eq.value / sh.value, end: eq.end, kind: sh.metric }
+      : null;
+  })();
+  // ROIC／WACC 實驗室預設值：官方財報、自動股價與本站研究資料的共同假設，可自行改寫。
+  const { data: researchData } = useResearch(base);
+  const [benchWeekly, setBenchWeekly] = useState<[string, number][]>([]);
+  useEffect(() => {
+    loadPriceFile(base).then((pf) => setBenchWeekly(pf?.tickers.SPY?.weekly ?? []));
+  }, [base]);
+  const waccDefaults = (() => {
+    const out: Record<string, { value: number; src: string }> = {};
+    if (annualOnly) return out;
+    const rq = isAdr ? tifrsQuarters : quarters;
+    const m = lastPrice ? toUsd(lastPrice.date) : isAdr ? null : 1;
+    const toM = (v: number | null) => (v === null || m === null ? null : (v * m) / 1e6);
+    const ebit = toM(sumTTM(rq, "operating_income"));
+    if (ebit !== null) out.ebit = { value: Math.round(ebit), src: "SEC 官方 TTM 營業利益" + (isAdr ? "（按匯率換算美元）" : "") };
+    const r = researchData?.roic[ticker === "GOOG" ? "GOOGL" : ticker];
+    out.tax = r
+      ? { value: r.tax, src: "研究資料假設稅率" }
+      : { value: isAdr ? 20 : 21, src: isAdr ? "台灣營所稅法定稅率" : "美國聯邦法定稅率" };
+    const debtAt = (end: string) => {
+      const parts = ["short_borrowings", "debt_current", "long_term_debt"].map(
+        (k) => rq.find((f) => f.metric === k && f.end === end)?.value ?? null,
+      );
+      // 該期沒有任何金融借款科目時以 0 計（預填來源會註明），使用者可自行改寫。
+      return parts.reduce<number>((a, x) => a + (x ?? 0), 0);
     };
+    const capAt = (end: string) => {
+      const eq = rq.find((f) => f.metric === "equity" && f.end === end)?.value ?? null;
+      const cash = rq.find((f) => f.metric === "cash" && f.end === end)?.value ?? null;
+      const debt = debtAt(end);
+      return eq === null || cash === null || debt === null ? null : eq + debt - cash;
+    };
+    const eqEnd = last(rq, "equity")?.end;
+    if (eqEnd) {
+      const prior = rq
+        .filter((f) => f.metric === "equity")
+        .reverse()
+        .find((f) => {
+          const d = (Date.parse(eqEnd) - Date.parse(f.end)) / 86400000;
+          return d >= 350 && d <= 380;
+        })?.end;
+      const c1 = capAt(eqEnd), c0 = prior ? capAt(prior) : null;
+      const cap = toM(c1 !== null && c0 !== null ? (c1 + c0) / 2 : c1);
+      if (cap !== null && cap > 0)
+        out.capital = { value: Math.round(cap), src: `（權益 + 金融借款 − 現金）${c0 !== null ? `${prior} 與 ${eqEnd} 平均` : eqEnd}` };
+      const debt = toM(debtAt(eqEnd));
+      const anyDebt = ["short_borrowings", "debt_current", "long_term_debt"].some((k) =>
+        rq.some((f) => f.metric === k && f.end === eqEnd),
+      );
+      if (debt !== null)
+        out.debt = {
+          value: Math.round(debt),
+          src: anyDebt ? `帳面金融借款（${eqEnd}）` : `${eqEnd} 未申報金融借款科目，以 0 計`,
+        };
+    }
+    if (pit?.mcap) out.equity = { value: Math.round(pit.mcap / 1e6), src: `市值（${lastPrice?.date} 收盤）` };
+    if (researchData) out.rf = { value: researchData.rf_us10y, src: "美國 10 年期公債殖利率（研究資料）" };
+    const computedBeta = autoPrice ? betaFromWeekly(autoPrice.weekly, benchWeekly) : null;
+    if (r) out.beta = { value: r.beta, src: r.beta_src };
+    else if (computedBeta)
+      out.beta = { value: Math.round(computedBeta.beta * 100) / 100, src: `本站以近 ${computedBeta.weeks} 週週報酬對 SPY 迴歸計算` };
+    out.erp = { value: r?.erp ?? 4.5, src: "權益風險溢酬假設（與本站研究資料一致）" };
+    if (researchData)
+      out.kd = { value: Math.round((researchData.rf_us10y + (r?.kd_spread ?? 1)) * 100) / 100, src: "無風險利率 + 1 個百分點信用利差（假設）" };
+    return out;
+  })();
+  // 報表空格的原因：金融業不適用的工商業科目、整段期間都沒申報的科目、或個別期間未揭露。
+  const bankNA = new Set(["gross_profit", "operating_income", "current_assets", "current_liabilities", "inventory", "payables", "receivables"]);
+  const reported = new Set(raw.map((f) => f.metric));
+  const missingReason = (m: string) =>
+    isFinancial && bankNA.has(m)
+      ? { text: "不適用", title: "金融機構不區分流動／非流動，也不揭露毛利、營業利益、存貨等工商業科目" }
+      : !reported.has(m)
+        ? { text: "未申報", title: "公司在 SEC 申報中沒有使用此科目（常見原因：沒有這類資產負債，或改用公司自訂科目）" }
+        : { text: "未揭露", title: "這一期沒有相容的官方數字（例如只在年報揭露，或季度無法由累計值還原）" };
+  // 金融機構補充指標：只用官方數字直接計算，不估計。
+  const bankComputed: Record<string, { text: string; note: string }> = (() => {
+    const out: Record<string, { text: string; note: string }> = {};
+    const eq = last(quarters, "equity");
+    if (eq) {
+      const gw = quarters.find((f) => f.metric === "goodwill" && f.end === eq.end);
+      const ia = quarters.find((f) => f.metric === "intangibles" && f.end === eq.end);
+      if (gw && ia)
+        out["有形帳面價值"] = {
+          text: displayFormat(eq.value - gw.value - ia.value),
+          note: `${eq.end}：股東權益 − 商譽 − 無形資產`,
+        };
+    }
+    const mem = last(quarters, "members");
+    const prod = mem ? quarters.find((f) => f.metric === "products" && f.end === mem.end) : null;
+    if (mem && prod && mem.value > 0)
+      out["每會員產品數"] = {
+        text: (prod.value / mem.value).toFixed(2),
+        note: `${mem.end}：產品總數 ÷ 會員總數`,
+      };
+    return out;
   })();
   const kpis = [
     {
@@ -610,28 +788,44 @@ export function App() {
       value: returnOn("equity"),
       unit: "%",
       metric: "equity",
-      desc: "同期間 TTM 淨利 ÷ 期初與期末股東權益平均。",
+      period: last(currency === "TWD" ? tifrsQuarters : quarters, "equity")?.end,
+      desc:
+        currency === "TWD"
+          ? "TIFRS 季度 TTM 淨利 ÷ 期初與期末歸屬母公司權益平均（皆取自 6-K 合併財報，不與 20-F 的 IFRS 混算）。"
+          : "同期間 TTM 淨利 ÷ 期初與期末股東權益平均。",
     },
     {
       title: "資產報酬率",
       value: returnOn("assets"),
       unit: "%",
       metric: "assets",
-      desc: "同期間 TTM 淨利 ÷ 期初與期末總資產平均。",
+      period: last(currency === "TWD" ? tifrsQuarters : quarters, "assets")?.end,
+      desc:
+        currency === "TWD"
+          ? "TIFRS 季度 TTM 淨利 ÷ 期初與期末總資產平均（皆取自 6-K 合併財報）。"
+          : "同期間 TTM 淨利 ÷ 期初與期末總資產平均。",
     },
     {
       title: "本益比 P/E",
       value: peValue,
       unit: "x",
       metric: "eps",
-      desc: "匯入收盤價 ÷ 正的 TTM GAAP 稀釋 EPS。此卡僅在價格晚於全部所用申報日時顯示。",
+      period: pit?.epsEnd,
+      desc:
+        currency === "TWD"
+          ? `ADR 收盤價 ÷ 每 ADR TTM EPS（TIFRS 普通股 EPS × 5 ÷ 當日 USD/TWD 匯率${pit?.fx ? ` ${pit.fx}` : ""}）。只用股價日以前已公布的季度。`
+          : "收盤價 ÷ 正的 TTM GAAP 稀釋 EPS；只用股價日以前已公布的季度（財報當天公布的數字從隔天起算）。",
     },
     {
       title: "股價淨值比 P/B",
       value: pb,
       unit: "x",
       metric: "equity",
-      desc: "收盤價 ÷（同日資產負債表權益 ÷ 發行在外股數），缺相容期間顯示 N/A。",
+      period: pit?.equityEnd,
+      desc:
+        currency === "TWD"
+          ? "ADR 收盤價 ÷ 每 ADR 帳面淨值（TIFRS 歸屬母公司權益 ÷ 普通股數 × 5 ÷ 匯率）。"
+          : "收盤價 ÷（同一資產負債表日的權益 ÷ 股數）；股數依序採流通股數、申報封面股數、加權平均稀釋股數。",
     },
     {
       title: "淨利差 NIM",
@@ -655,15 +849,7 @@ export function App() {
       desc: "僅接受官方營運指標揭露；Company Facts 不一定包含。",
     },
   ];
-  // Prevent price/earnings mismatch with publication date, including restatements.
-  if (
-    lastPrice &&
-    quarters
-      .filter((f) => f.metric === "eps")
-      .slice(-4)
-      .some((f) => f.filed >= lastPrice.date)
-  )
-    kpis[7].value = null;
+  // 本益比與股價淨值比已改為「股價日前一天以前已公布」的財報（pit），不會配到股價之後才公布的數字。
   const annualRevenue = annual(raw).filter((f) => f.metric === "revenue");
   const lastAnnual = annualRevenue.at(-1);
   const revenueCagr = (years: number) => {
@@ -687,8 +873,14 @@ export function App() {
       ? "尚無足夠且可比較的財報資料，暫不產生營收趨勢結論。"
       : `${annualOnly ? "本年度營收較上年度" : "本季營收較去年同期"}${revenueGrowth >= 0 ? "增加" : "減少"} ${Math.abs(revenueGrowth * 100).toFixed(1)}%。此變化需要查閱財報附註確認原因。`;
   const riverRows = useMemo(
-    () => river(currency === "USD" && !annualOnly ? adjRaw : [], prices),
-    [adjRaw, prices, currency, annualOnly],
+    () =>
+      isAdr
+        ? fxWeekly.length
+          ? river(tifrsRaw, prices, { epsUnit: "TWD/shares", perShare: perShareUsd })
+          : []
+        : river(currency === "USD" && !annualOnly ? adjRaw : [], prices),
+    // eslint 未啟用 hooks 規則；perShareUsd 只依賴 fxWeekly。
+    [adjRaw, tifrsRaw, prices, currency, annualOnly, isAdr, fxWeekly],
   );
   const riverDates = riverRows.filter(
     (r) =>
@@ -900,7 +1092,7 @@ export function App() {
             : displayFormat(k.value, k.unit)}
         </strong>
         <span className="metric-card-foot">
-          <span>{last(quarters, k.metric)?.end ?? "尚無可用期間"}</span>
+          <span>{k.period ?? last(quarters, k.metric)?.end ?? "尚無可用期間"}</span>
           <span>{k.value === null ? "尚無資料" : "查看明細"}</span>
         </span>
       </button>
@@ -1355,8 +1547,8 @@ export function App() {
               <p>
                 TSM 季度公告與現金流採 TIFRS，年度損益採 IFRS
                 (IASB)，以新臺幣與普通股口徑顯示；部分淨利／EPS
-                不可合併，ROE／ROA 暫不混算。美元 ADR 股價未與財報換算，PE／PB
-                保留 N/A。請注意財報截至日期。
+                不可合併。ROE／ROA 只用 6-K 的 TIFRS 季度損益與資產負債表計算；本益比、股價淨值比按
+                1 ADR = 5 股普通股與國際清算銀行（BIS）公布的 USD/TWD 匯率換算成每 ADR 美元。請注意財報截至日期。
               </p>
             </details>
           )}
@@ -1519,7 +1711,7 @@ export function App() {
                           <span>
                             {k.title}
                             <small>
-                              {last(quarters, k.metric)?.end ?? "期間 N/A"}
+                              {k.period ?? last(quarters, k.metric)?.end ?? "尚無可用期間"}
                             </small>
                           </span>
                           <strong>
@@ -1685,7 +1877,15 @@ export function App() {
                   </span>
                   <span>
                     營收 5 年 CAGR
-                    <strong>{displayFormat(revenueCagr(5), "%")}</strong>
+                    <strong>
+                      {revenueCagr(5) !== null ? (
+                        displayFormat(revenueCagr(5), "%")
+                      ) : (
+                        <small>
+                          年度資料自 {annualRevenue[0]?.end.slice(0, 4) ?? "—"} 年起，不足 5 年
+                        </small>
+                      )}
+                    </strong>
                   </span>
                 </div>
                 <RuleAnalysis
@@ -1810,12 +2010,16 @@ export function App() {
                       每股淨值{" "}
                       <strong>
                         {displayFormat(
-                          endingEquity && sharesForPB?.end === endingEquity.end
-                            ? divide(endingEquity.value, sharesForPB.value)
-                            : null,
+                          bookPerShare ? bookPerShare.value : null,
                           "USD/shares",
                         )}
                       </strong>
+                      {bookPerShare && (
+                        <small className="muted">
+                          {bookPerShare.end} · 股數採
+                          {labels[bookPerShare.kind]}
+                        </small>
+                      )}
                     </span>
                     <span>
                       最新資產{" "}
@@ -1862,23 +2066,28 @@ export function App() {
                             <div key={m}>
                               {labels[m]}
                               <strong>
-                                {displayFormat(
-                                  last(quarters, m)?.value,
-                                  last(quarters, m)?.unit,
-                                )}
+                                {last(quarters, m)
+                                  ? displayFormat(last(quarters, m)!.value, last(quarters, m)!.unit)
+                                  : "—"}
                               </strong>
                               <small>
-                                {last(quarters, m)?.end ?? "尚未取得"}
+                                {last(quarters, m)?.end ??
+                                  (m === "allowance"
+                                    ? "未以本站對應的備抵科目申報（部分放款採公允價值衡量，不提列備抵）"
+                                    : "本期未揭露")}
                               </small>
                             </div>
                           ))}
-                          {missingBanking.map((m) => (
-                            <div key={m}>
-                              {m}
-                              <strong>N/A</strong>
-                              <small>待官方揭露解析與口徑驗證</small>
-                            </div>
-                          ))}
+                          {missingBanking.map((m) => {
+                            const c = bankComputed[m];
+                            return (
+                              <div key={m}>
+                                {m}
+                                <strong>{c ? c.text : "—"}</strong>
+                                <small>{c ? c.note : "官方財報新聞稿有揭露，本站尚未解析（不以估計值代替）"}</small>
+                              </div>
+                            );
+                          })}
                         </div>
                       </details>
                     )}
@@ -2008,7 +2217,7 @@ export function App() {
                     ticker={ticker}
                     dark={dark}
                     quarters={quarters}
-                    raw={raw}
+                    raw={adjRaw}
                     isFinancial={isFinancial}
                     fallbackRows={autoQuarterPrices}
                   />
@@ -2017,7 +2226,7 @@ export function App() {
                       title={`本益比估值河流圖（${autoPrice ? "自動週收盤" : "你匯入的股價"}）`}
                       dates={riverDates.map((r) => r.date)}
                       dark={dark}
-                      unit="美元／股"
+                      unit={isAdr ? "美元／ADR" : "美元／股"}
                       initialType="line"
                       log={log}
                       series={[
@@ -2038,7 +2247,7 @@ export function App() {
                       dates={riverDates.map((r) => r.date)}
                       dark={dark}
                       unit="股價（美元）"
-                      secondaryUnit="TTM EPS（美元／股）"
+                      secondaryUnit={isAdr ? "TTM EPS（美元／ADR）" : "TTM EPS（美元／股）"}
                       dualAxis
                       initialType="line"
                       series={[
@@ -2058,7 +2267,11 @@ export function App() {
                     0、缺季度或分割口徑未確認時不得作正 PE 結論。Adjusted /
                     Normalized EPS 尚無可靠資料，維持 N/A。
                   </p>
-                  <WaccPanel sector={company.sector} />
+                  <WaccPanel
+                    key={ticker}
+                    sector={company.sector}
+                    defaults={waccDefaults}
+                  />
                 </section>
               </>
             )}
@@ -2120,6 +2333,7 @@ export function App() {
                                 metrics={metrics}
                                 dates={[...dates].reverse()}
                                 get={value}
+                                missing={missingReason}
                                 fact={aligned}
                                 unit={unit}
                                 shareUnit={shareUnit}
@@ -2453,6 +2667,7 @@ function TableGroup({
   unit,
   shareUnit,
   onDetail,
+  missing,
 }: {
   title: string;
   metrics: string[];
@@ -2462,6 +2677,8 @@ function TableGroup({
   unit: number;
   shareUnit: string;
   onDetail: (f: Fact) => void;
+  /** 空格的原因：不適用、公司未申報此科目、或該期未揭露。 */
+  missing?: (m: string) => { text: string; title: string };
 }) {
   return (
     <>
@@ -2480,16 +2697,17 @@ function TableGroup({
             dates.map((d) => {
               const v = get(m, d),
                 f = fact(m, d);
+              const why = v === null ? (missing?.(m) ?? { text: "未揭露", title: "該期沒有相容的官方數字" }) : null;
               return (
-                <td key={d} className={v !== null && v < 0 ? "negative" : ""}>
+                <td key={d} className={v !== null && v < 0 ? "negative" : why ? "muted" : ""}>
                   <button
                     disabled={!f}
-                    title="查看申報來源"
+                    title={why ? why.title : "查看申報來源"}
                     onClick={() => f && onDetail(f)}
                   >
-                    {v === null
-                      ? "N/A"
-                      : (v / metricScale(m, unit)).toLocaleString("zh-TW", {
+                    {why
+                      ? why.text
+                      : (v! / metricScale(m, unit)).toLocaleString("zh-TW", {
                           maximumFractionDigits: 2,
                         })}
                   </button>
@@ -2497,25 +2715,24 @@ function TableGroup({
               );
             })
           ) : (
-            <td>N/A</td>
+            <td className="muted">尚無期間</td>
           )}
         </tr>
       ))}
     </>
   );
 }
-function WaccPanel({ sector }: { sector: string }) {
-  const [v, setV] = useState<Record<string, string>>({
-    ebit: "",
-    tax: "",
-    capital: "",
-    equity: "",
-    debt: "",
-    rf: "",
-    beta: "",
-    erp: "",
-    kd: "",
-  });
+function WaccPanel({
+  sector,
+  defaults,
+}: {
+  sector: string;
+  defaults: Record<string, { value: number; src: string }>;
+}) {
+  const keys = ["ebit", "tax", "capital", "equity", "debt", "rf", "beta", "erp", "kd"];
+  const [v, setV] = useState<Record<string, string>>(() =>
+    Object.fromEntries(keys.map((k) => [k, defaults[k] ? String(defaults[k].value) : ""])),
+  );
   const fields = [
     ["ebit", "EBIT（百萬美元）"],
     ["tax", "正常化稅率 %"],
@@ -2556,7 +2773,7 @@ function WaccPanel({ sector }: { sector: string }) {
         {sector === "fintech" ? "金融機構不適用一般解讀" : "非金融公司研究"}
       </summary>
       <p className="muted">
-        全部輸入皆為使用者假設，未預填無來源的市場利率、Beta 或風險溢酬。ROIC =
+        已依本站官方財報、自動股價與研究資料預填（每格下方註明來源），全部可自行改寫。ROIC =
         EBIT × (1 − 稅率) ÷ 平均投入資本；WACC 按市值加權股債資金成本。
       </p>
       <div className="assumption-grid">
@@ -2569,34 +2786,45 @@ function WaccPanel({ sector }: { sector: string }) {
               value={v[k]}
               onChange={(e) => setV({ ...v, [k]: e.target.value })}
             />
+            {defaults[k] && (
+              <small className="muted">
+                {String(defaults[k].value) === v[k] ? "預填：" : "你已修改；原預填："}
+                {defaults[k].src}
+              </small>
+            )}
           </label>
         ))}
       </div>
       <div className="mini-metrics">
         <span>
-          NOPAT <strong>{valid ? nopat.toFixed(2) + " 百萬" : "N/A"}</strong>
+          NOPAT <strong>{valid ? nopat.toLocaleString("zh-TW", { maximumFractionDigits: 0 }) + " 百萬美元" : "—"}</strong>
         </span>
         <span>
-          股權成本 <strong>{format(valid ? ke : null, "%")}</strong>
+          股權成本 <strong>{pctOrDash(valid ? ke : null)}</strong>
         </span>
         <span>
-          ROIC <strong>{format(roic, "%")}</strong>
+          ROIC <strong>{pctOrDash(roic)}</strong>
         </span>
         <span>
-          WACC <strong>{format(wacc, "%")}</strong>
+          WACC <strong>{pctOrDash(wacc)}</strong>
         </span>
         <span>
           利差{" "}
           <strong>
-            {format(roic !== null && wacc !== null ? roic - wacc : null, "%")}
+            {pctOrDash(roic !== null && wacc !== null ? roic - wacc : null)}
           </strong>
         </span>
       </div>
       <p>
         {valid
           ? `在你輸入的假設下，每投入 100 美元資本，年化 NOPAT 為 ${(roic! * 100).toFixed(2)} 美元，資金成本為 ${(wacc! * 100).toFixed(2)} 美元。`
-          : "請輸入完整且有效的假設，才會產生計算結果。"}
+          : sector === "fintech"
+            ? "金融機構的營業利益與投入資本定義不同（存款即營運資金），ROIC／WACC 不適用一般解讀，因此不預填；仍可自行輸入試算。"
+            : "請輸入完整且有效的假設，才會產生計算結果。"}
       </p>
     </details>
   );
 }
+
+const pctOrDash = (v: number | null) =>
+  v === null || !Number.isFinite(v) ? "—" : `${(v * 100).toFixed(1)}%`;

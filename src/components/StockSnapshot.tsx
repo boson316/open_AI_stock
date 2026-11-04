@@ -19,6 +19,17 @@ export type OfficialQuote = {
   pfcf: number | null;
   mcap: number | null;
   sharesEnd: string | null;
+  sharesKind?: string | null;
+  fcfNegative?: boolean;
+  epsTtm?: number | null;
+  epsEnd?: string | null;
+  fx?: number | null;
+  adr?: boolean;
+};
+const SHARE_LABEL: Record<string, string> = {
+  shares: "資產負債表流通股數",
+  shares_cover: "申報封面流通股數",
+  diluted_shares: "加權平均稀釋股數",
 };
 
 export function StockSnapshot({
@@ -42,7 +53,8 @@ export function StockSnapshot({
   const key = ticker === "GOOG" ? "GOOGL" : ticker;
   const notes = data.commentary[key] ?? [];
   const risk = data.risk[key];
-  const comp = c ?? (ticker === "GOOG" ? data.companies.GOOGL : undefined);
+  // GOOG 有自己的自動股價時用自己的行情卡；沒有時才借用同一發行人 GOOGL 的外部報價。
+  const comp = c ?? (ticker === "GOOG" && !official ? data.companies.GOOGL : undefined);
   if (!comp && !official && !holders.length && !notes.length) return null;
   const pos =
     comp && comp.close !== null && comp.hi52 !== null && comp.lo52 !== null
@@ -87,30 +99,40 @@ export function StockSnapshot({
           <div className="panel valuation-mini">
             <div>
               <span>本益比（TTM）</span>
-              <strong>{comp.pe ? `${comp.pe.toFixed(1)}×` : "N/A"}</strong>
+              <strong>{multOr(comp.pe, official?.pe)}</strong>
             </div>
             <div>
               <span>預估本益比</span>
-              <strong>{comp.fwd_pe ? `${comp.fwd_pe.toFixed(1)}×` : "N/A"}</strong>
+              <strong>{comp.fwd_pe ? `${comp.fwd_pe.toFixed(1)}×` : "—"}</strong>
             </div>
             <div>
               <span>股價淨值比</span>
-              <strong>{comp.pb ? `${comp.pb.toFixed(1)}×` : "N/A"}</strong>
+              <strong>{multOr(comp.pb, official?.pb)}</strong>
             </div>
             <div>
               <span>股價營收比</span>
-              <strong>{comp.ps ? `${comp.ps.toFixed(1)}×` : "N/A"}</strong>
+              <strong>{multOr(comp.ps, official?.ps)}</strong>
             </div>
             <div>
               <span>股價自由現金流比</span>
-              <strong>{comp.pfcf ? `${comp.pfcf.toFixed(1)}×` : "N/A"}</strong>
+              <strong>{comp.pfcf ? `${comp.pfcf.toFixed(1)}×` : official?.fcfNegative ? <small>TTM 自由現金流為負</small> : multOr(null, official?.pfcf)}</strong>
             </div>
             <div>
               <span>市值</span>
-              <strong>{comp.mcap_100m_usd ? `${num(comp.mcap_100m_usd, 0)} 億美元` : "N/A"}</strong>
+              <strong>
+                {comp.mcap_100m_usd
+                  ? `${num(comp.mcap_100m_usd, 0)} 億美元`
+                  : official?.mcap
+                    ? `${num(official.mcap / 1e8, 0)} 億美元＊`
+                    : "—"}
+              </strong>
             </div>
             <p className="muted small span-all">
-              本益比以 {comp.price}（{comp.price_asof}）計；近 {comp.pe_n} 季本益比中位數 {comp.pe_median ?? "N/A"}×（{comp.pe_min ?? "N/A"}–{comp.pe_max ?? "N/A"}），目前高於約 {comp.pe_rank ?? "N/A"}% 的歷史季度。
+              本益比以 {comp.price}（{comp.price_asof}）計
+              {comp.pe_median !== null
+                ? `；近 ${comp.pe_n} 季本益比中位數 ${comp.pe_median}×（${comp.pe_min}–${comp.pe_max}），目前高於約 ${comp.pe_rank}% 的歷史季度。`
+                : "。"}
+              {official && <OfficialNote q={official} />}
             </p>
           </div>
         </div>
@@ -234,21 +256,42 @@ function OfficialQuoteCard({ q }: { q: OfficialQuote }) {
         </div>
         <div>
           <span>股價自由現金流比</span>
-          <strong>{mult(q.pfcf)}</strong>
+          <strong>{q.fcfNegative ? <small>TTM 自由現金流為負</small> : mult(q.pfcf)}</strong>
         </div>
         <div>
           <span>市值</span>
-          <strong>{q.mcap ? `${num(q.mcap / 1e8, 0)} 億美元` : "N/A"}</strong>
+          <strong>{q.mcap ? `${num(q.mcap / 1e8, 0)} 億美元` : "—"}</strong>
         </div>
         <div>
           <span>距 52 週低點</span>
           <strong>{q.lo52 > 0 ? `+${((q.close / q.lo52 - 1) * 100).toFixed(1)}%` : "N/A"}</strong>
         </div>
         <p className="muted small" style={{ gridColumn: "1 / -1" }}>
-          倍數＝收盤價 ÷ 本站 SEC 官方 TTM 數字（EPS、營收、自由現金流 = OCF − |CapEx|）；市值＝收盤價 × 最新申報流通股數
+          倍數＝收盤價 ÷ 本站 SEC 官方 TTM 數字（EPS 截至 {q.epsEnd ?? "—"}；營收；自由現金流 = OCF − |CapEx|），只用股價日以前已公布的季度；市值＝收盤價 ×{" "}
+          {q.sharesKind ? SHARE_LABEL[q.sharesKind] : "最新申報流通股數"}
           {q.sharesEnd ? `（${q.sharesEnd}）` : ""}。非外部研究資料，沒有預估本益比。
         </p>
       </div>
     </div>
+  );
+}
+
+/** 外部值缺漏時改用本站計算值（標＊）；兩者都沒有才顯示「—」。 */
+function multOr(external: number | null | undefined, ours: number | null | undefined) {
+  if (external) return `${external.toFixed(1)}×`;
+  if (ours !== null && ours !== undefined && Number.isFinite(ours) && ours > 0) return `${ours.toFixed(1)}×＊`;
+  return "—";
+}
+
+function OfficialNote({ q }: { q: OfficialQuote }) {
+  return (
+    <>
+      {" "}
+      ＊為本站計算：{q.asof} 收盤 {num(q.close)} ÷ SEC 官方 TTM 數字
+      {q.adr && q.fx ? `（1 ADR = 5 股普通股，USD/TWD ${q.fx}）` : ""}；市值 = 收盤價 ×{" "}
+      {q.sharesKind ? SHARE_LABEL[q.sharesKind] : "流通股數"}
+      {q.sharesEnd ? `（${q.sharesEnd}）` : ""}
+      {q.adr ? " ÷ 5" : ""}。
+    </>
   );
 }

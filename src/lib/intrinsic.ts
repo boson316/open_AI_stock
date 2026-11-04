@@ -117,6 +117,26 @@ export function epsCagr(raw: Fact[], years: number) {
   return prior ? cagr(prior.value, lastRow.value, prior.end, lastRow.end) : null;
 }
 
+/**
+ * 林區法用的 EPS 成長率：依序試 5、4、3、2 年年度 EPS 複合成長率，取第一個可算的。
+ * 期初年度虧損（EPS ≤ 0）時複合成長率沒有意義，回傳 null 並說明原因。
+ */
+export function epsGrowthBest(raw: Fact[]): { value: number | null; years: number | null; reason: string | null } {
+  for (const y of [5, 4, 3, 2]) {
+    const v = epsCagr(raw, y);
+    if (v !== null) return { value: v, years: y, reason: null };
+  }
+  const eps = annual(raw).filter((f) => f.metric === "eps");
+  const lossYears = eps.filter((f) => f.value <= 0).map((f) => f.end.slice(0, 4));
+  return {
+    value: null,
+    years: null,
+    reason: lossYears.length
+      ? `近年有年度 EPS ≤ 0（${lossYears.slice(-3).join("、")} 年度），無法計算複合成長率`
+      : "年度 EPS 資料不足 2 年",
+  };
+}
+
 export type DcfInput = {
   /** 基期每股自由現金流 */
   fcf: number;

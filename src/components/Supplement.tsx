@@ -23,7 +23,7 @@ const ROWS: [keyof ResearchQuarter, string, "money" | "pct" | "x"][] = [
 ];
 const fmt = (v: number | null, kind: "money" | "pct" | "x") =>
   v === null || !Number.isFinite(v)
-    ? "N/A"
+    ? "未揭露"
     : kind === "pct"
       ? `${v.toFixed(1)}%`
       : kind === "x"

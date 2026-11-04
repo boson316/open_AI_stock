@@ -31,6 +31,8 @@ Company Facts 不保證包含 issuer extension、維度、會員或信用風險�
 
 `public/data/prices.json` 由 `Price Update` 工作流程每週更新：依序嘗試 Yahoo Finance chart 介面（含分割事件）、Nasdaq 歷史行情、Stooq，皆為免費的非官方介面，僅供個人研究、非即時報價，網站標示實際來源與日期。收盤價按分割調整、未還原股息；分割事件以 Yahoo 回傳值與 `KNOWN_SPLITS`（已人工核對）合併，前端據此把分割前申報的 EPS／股數換算到目前股數基礎後才計算倍數。單檔下載失敗、資料超過 10 天或 OHLC 不合理時保留上一版。
 
+匯率：TSM 的新臺幣財報換算每 ADR 美元時，依序嘗試聯準會 H.10、FRED（DEXTAWUS）、國際清算銀行 BIS（WS_XRU，D.TW.TWD.A），存於 `prices.json` 的 `fx.USDTWD`（近 5 年週資料），換算時取股價日前 14 天內最近一筆。SPY 週收盤用於計算 Beta（近 5 年週報酬迴歸）。
+
 使用者也可匯入自己的 CSV 覆蓋自動股價；CSV 必須來自其有權使用的來源，記錄來源及匯入時間，只在本次工作階段使用。匯入的 CSV 不做分割換算，Close 配對 EPS，AdjustedClose 僅保存。無可靠價格時股價及估值卡維持 N/A。
 
 SEC 存取免費不代表所有 issuer 文件、第三方附件或市場資料均無版權限制；公開部署前應自行確認使用情境。不得把使用者 CSV 授權擴張成再散布授權。

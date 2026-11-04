@@ -83,7 +83,14 @@ export const instant = new Set([
   "short_borrowings",
   "debt_current",
   "long_term_debt",
+  "shares_cover",
+  "liabilities_and_equity",
+  "minority_interest",
+  "goodwill",
+  "intangibles",
 ]);
+/** 期間型但不可用「全年 − 前三季」還原第四季的指標。 */
+const nonAdditive = new Set(["eps", "dps", "nim", "diluted_shares"]);
 const equivalentTags: Record<string, string> = {
   "disclosure:sofi.revenue": "us-gaap:RevenuesNetOfInterestExpense",
   "disclosure:sofi.net_income": "us-gaap:NetIncomeLoss",
@@ -140,9 +147,7 @@ export function normalize(facts: Fact[], asOf = "9999-12-31"): Fact[] {
     const days = f.start ? duration(f.start, f.end) + 1 : 0;
     if (
       instant.has(f.metric) ||
-      f.metric === "eps" ||
-      f.metric === "dps" ||
-      f.metric === "nim" ||
+      nonAdditive.has(f.metric) ||
       days < 150 ||
       days > 380
     )
@@ -324,20 +329,26 @@ export function quantile(values: number[], q: number): number | null {
     low = Math.floor(index);
   return a[low] + (a[Math.ceil(index)] - a[low]) * (index - low);
 }
-export function river(facts: Fact[], prices: Price[]) {
+/**
+ * 本益比河流圖：每個交易日用「前一天以前已公布」的 TTM EPS。
+ * epsUnit／perShare 讓新臺幣普通股 EPS 換算成每 ADR 美元（TSM：× 5 ÷ 當日匯率）。
+ */
+export function river(
+  facts: Fact[],
+  prices: Price[],
+  opts: { epsUnit?: string; perShare?: (date: string) => number | null } = {},
+) {
   const observations: number[] = [];
+  const epsUnit = opts.epsUnit ?? "USD/shares";
+  const epsFacts = facts.filter((f) => f.metric === "eps" && f.unit === epsUnit);
   return prices.map((p) => {
     // Date-only filings: conservatively use from following day, never intraday.
     const asOf = new Date(Date.parse(p.date) - 86400000)
       .toISOString()
       .slice(0, 10);
-    const eps = sumTTM(
-      normalize(
-        facts.filter((f) => f.metric === "eps" && f.unit === "USD/shares"),
-        asOf,
-      ),
-      "eps",
-    );
+    const rawEps = sumTTM(normalize(epsFacts, asOf), "eps");
+    const k = opts.perShare ? opts.perShare(p.date) : 1;
+    const eps = rawEps === null || k === null ? null : rawEps * k;
     const pe = p.close > 0 && eps !== null && eps > 0 ? p.close / eps : null;
     if (pe !== null) observations.push(pe);
     return {
@@ -429,7 +440,21 @@ export const labels: Record<string, string> = {
   long_term_debt: "長期借款",
   dividends_paid: "發放現金股利",
   dps: "每股股利",
+  shares_cover: "封面流通股數",
+  diluted_shares: "加權平均稀釋股數",
 };
+const shareMetrics = new Set(["shares", "shares_cover", "diluted_shares"]);
+/**
+ * 某期末的股數：優先資產負債表流通股數，其次同申報封面流通股數，最後加權平均稀釋股數。
+ * 回傳採用的口徑，畫面據此標示。
+ */
+export function sharesAt(fs: Fact[], end: string): { value: number; metric: string; fact: Fact } | null {
+  for (const metric of ["shares", "shares_cover", "diluted_shares"]) {
+    const f = [...fs].reverse().find((x) => x.metric === metric && x.end === end && x.value > 0);
+    if (f) return { value: f.value, metric, fact: f };
+  }
+  return null;
+}
 
 export type Split = { date: string; ratio: number };
 /**
@@ -442,10 +467,10 @@ export function adjustForSplits(facts: Fact[], splits: Split[]): Fact[] {
   );
   if (!valid.length) return facts;
   return facts.map((f) => {
-    if (f.metric !== "eps" && f.metric !== "shares" && f.metric !== "dps") return f;
+    if (f.metric !== "eps" && !shareMetrics.has(f.metric) && f.metric !== "dps") return f;
     const k = valid.filter((s) => s.date > f.filed).reduce((a, s) => a * s.ratio, 1);
     if (k === 1) return f;
-    return { ...f, value: f.metric === "shares" ? f.value * k : f.value / k };
+    return { ...f, value: shareMetrics.has(f.metric) ? f.value * k : f.value / k };
   });
 }
 /** prices.json 的週收盤 → Price[]（只有收盤價；開高低以收盤代替，不用於 OHLC 判斷）。 */
@@ -454,4 +479,24 @@ export function weeklyToPrices(weekly: [string, number][], source: string): Pric
     .filter(([d, c]) => /^\d{4}-\d{2}-\d{2}$/.test(d) && Number.isFinite(c) && c > 0)
     .map(([date, close]) => ({ date, open: close, high: close, low: close, close, adjustedClose: null, volume: 0, source }))
     .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+/** 以週收盤計算 Beta：個股與基準（SPY）同一週的報酬率做 OLS 斜率；重疊少於 100 週回傳 null。 */
+export function betaFromWeekly(stock: [string, number][], bench: [string, number][]): { beta: number; weeks: number } | null {
+  const b = new Map(bench);
+  const pairs = stock.filter(([d]) => b.has(d)).map(([d, c]) => [c, b.get(d)!] as const);
+  const rs: number[] = [], rb: number[] = [];
+  for (let i = 1; i < pairs.length; i++) {
+    rs.push(pairs[i][0] / pairs[i - 1][0] - 1);
+    rb.push(pairs[i][1] / pairs[i - 1][1] - 1);
+  }
+  if (rs.length < 100) return null;
+  const mean = (a: number[]) => a.reduce((x, y) => x + y, 0) / a.length;
+  const ms = mean(rs), mb = mean(rb);
+  let cov = 0, varb = 0;
+  for (let i = 0; i < rs.length; i++) {
+    cov += (rs[i] - ms) * (rb[i] - mb);
+    varb += (rb[i] - mb) ** 2;
+  }
+  return varb > 0 ? { beta: cov / varb, weeks: rs.length } : null;
 }

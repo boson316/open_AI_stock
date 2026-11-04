@@ -160,8 +160,15 @@ export function piotroski(quarters: Fact[], end: string) {
   const levP = div(at("long_term_debt", prior), at("assets", prior));
   const cr = div(at("current_assets", end), at("current_liabilities", end));
   const crP = div(at("current_assets", prior), at("current_liabilities", prior));
-  const sh = at("shares", end),
-    shP = at("shares", prior);
+  // 股數：兩期用同一口徑，依序取流通股數、封面股數、加權平均稀釋股數。
+  const shareKind = ["shares", "shares_cover", "diluted_shares"].find(
+    (k) => at(k, end) !== null && at(k, prior) !== null,
+  );
+  const sh = shareKind ? at(shareKind, end) : null,
+    shP = shareKind ? at(shareKind, prior) : null;
+  const has = (m: string) => quarters.some((f) => f.metric === m);
+  const why = (detail: string, missing: string[], reason: string) =>
+    detail.includes("N/A") ? (missing.some((m) => !has(m)) ? reason : `期末或一年前缺少${missing.map((m) => (m === "long_term_debt" ? "長期借款" : m === "gross_profit" ? "毛利" : "流動資產／負債")).join("、")}資料，不計分`) : detail;
   const rev = ttm("revenue", end),
     revP = ttm("revenue", prior);
   const gm = div(ttm("gross_profit", end), rev),
@@ -180,14 +187,19 @@ export function piotroski(quarters: Fact[], end: string) {
       pass: ocf === null || ni === null ? null : ocf > ni, detail: `現金流 ÷ 淨利 ${fmtX(div(ocf, ni))}` },
     { key: "lev", group: "財務結構", label: "長期負債比下降", rule: "長期借款 ÷ 總資產低於去年",
       pass: lev === null || levP === null ? null : lev < levP || (lev === 0 && levP === 0),
-      detail: `${fmtPct(levP)} → ${fmtPct(lev)}` },
+      detail: why(`${fmtPct(levP)} → ${fmtPct(lev)}`, ["long_term_debt"], "公司未申報長期借款科目，不計分") },
     { key: "cr", group: "財務結構", label: "流動比率提升", rule: "流動資產 ÷ 流動負債高於去年",
-      pass: cmp(cr, crP, "up"), detail: `${fmtX(crP)} → ${fmtX(cr)}` },
+      pass: cmp(cr, crP, "up"),
+      detail: why(`${fmtX(crP)} → ${fmtX(cr)}`, ["current_assets", "current_liabilities"], "未區分流動／非流動（金融業常見），不計分") },
     { key: "shares", group: "財務結構", label: "沒有增發股票", rule: "發行在外股數未增加",
       pass: sh === null || shP === null ? null : sh <= shP * 1.005,
-      detail: sh === null || shP === null ? "N/A" : `股數變動 ${fmtPct(sh / shP - 1)}` },
+      detail:
+        sh === null || shP === null
+          ? "缺少一年前同口徑股數，不計分"
+          : `股數變動 ${fmtPct(sh / shP - 1)}${shareKind === "diluted_shares" ? "（加權平均稀釋股數）" : shareKind === "shares_cover" ? "（封面流通股數）" : ""}` },
     { key: "gm", group: "經營效率", label: "毛利率提升", rule: "近四季毛利率高於去年",
-      pass: cmp(gm, gmP, "up"), detail: `${fmtPct(gmP)} → ${fmtPct(gm)}` },
+      pass: cmp(gm, gmP, "up"),
+      detail: why(`${fmtPct(gmP)} → ${fmtPct(gm)}`, ["gross_profit"], "沒有毛利科目（金融業不適用），不計分") },
     { key: "turn", group: "經營效率", label: "資產週轉率提升", rule: "營收 ÷ 期初總資產高於去年",
       pass: cmp(turn, turnP, "up"), detail: `${fmtX(turnP)} → ${fmtX(turn)}` },
   ];

@@ -4,7 +4,7 @@ import { useResearch } from "../lib/research";
 import type { Etf, Research } from "../lib/research";
 
 const num = (v: number | null | undefined, d = 2) =>
-  v === null || v === undefined || !Number.isFinite(v) ? "N/A" : v.toLocaleString("zh-TW", { maximumFractionDigits: d });
+  v === null || v === undefined || !Number.isFinite(v) ? "—" : v.toLocaleString("zh-TW", { maximumFractionDigits: d });
 const host = (u: string | null) => {
   try {
     return u ? new URL(u).hostname.replace(/^www\./, "") : "";
@@ -58,7 +58,7 @@ export function Market({ base, dark, onSelect }: { base: string; dark: boolean; 
                 <tr key={r.id}>
                   <th>{r.metric}</th>
                   <td>
-                    <strong>{num(r.tw_now)}</strong>
+                    <strong>{r.tw_now === null ? <small className="muted">無同口徑資料</small> : num(r.tw_now)}</strong>
                     <small className="cell-meta">
                       {r.tw_asof ?? ""} {r.tw_src && <a href={r.tw_src} target="_blank" rel="noreferrer">{host(r.tw_src)}</a>}
                     </small>
@@ -68,7 +68,7 @@ export function Market({ base, dark, onSelect }: { base: string; dark: boolean; 
                     <small className="cell-meta">{r.tw_ref_label}</small>
                   </td>
                   <td>
-                    <strong>{num(r.us_now)}</strong>
+                    <strong>{r.us_now === null ? <small className="muted">未取得可靠的同期數字</small> : num(r.us_now)}</strong>
                     <small className="cell-meta">
                       {r.us_asof ?? ""} {r.us_src && <a href={r.us_src} target="_blank" rel="noreferrer">{host(r.us_src)}</a>}
                     </small>
@@ -185,10 +185,10 @@ export function Market({ base, dark, onSelect }: { base: string; dark: boolean; 
                   <th>{d.ticker}</th>
                   <td className="wrap">{d.name}</td>
                   <td>{num(d.close)}</td>
-                  <td>{d.pe ? `${d.pe}×` : "N/A"}</td>
-                  <td>{d.fwd_pe ? `${d.fwd_pe}×` : "N/A"}</td>
-                  <td>{d.beta ?? "N/A"}</td>
-                  <td>{d.div_yield !== null ? `${d.div_yield}%` : "N/A"}</td>
+                  <td>{d.pe ? `${d.pe}×` : <small className="muted">不適用（無盈餘）</small>}</td>
+                  <td>{d.fwd_pe ? `${d.fwd_pe}×` : <small className="muted">不適用</small>}</td>
+                  <td>{d.beta ?? <small className="muted">不適用（短期國庫券）</small>}</td>
+                  <td>{d.div_yield !== null ? `${d.div_yield}%` : "—"}</td>
                   <td className="wrap">{d.note}</td>
                 </tr>
               ))}
@@ -231,8 +231,8 @@ function EtfCard({ etf, data, onSelect }: { etf: Etf; data: Research; onSelect: 
       <div className="etf-stats">
         <span>費用率<strong>{etf.expense}%</strong></span>
         <span>規模<strong>${etf.aum_b}B</strong></span>
-        <span>本益比<strong>{etf.pe ?? "N/A"}</strong></span>
-        <span>殖利率<strong>{etf.div_yield ?? "N/A"}%</strong></span>
+        <span>本益比<strong>{etf.pe ?? "—"}</strong></span>
+        <span>殖利率<strong>{etf.div_yield !== null && etf.div_yield !== undefined ? `${etf.div_yield}%` : "—"}</strong></span>
         <span>一年總報酬<strong>{etf.ret_1y}%</strong></span>
         <span>持股數<strong>{etf.n_holdings}</strong></span>
       </div>
@@ -255,7 +255,7 @@ function EtfCard({ etf, data, onSelect }: { etf: Etf; data: Research; onSelect: 
         ))}
       </ul>
       <p className="muted small">
-        本站收錄個股合計占 {etf.overlap_total ?? "N/A"}%；持股日期 {etf.holdings_asof}；價格 {etf.price_note}。
+        本站收錄個股合計占 {etf.overlap_total ?? "—"}%；持股日期 {etf.holdings_asof}；價格 {etf.price_note}。
       </p>
       {notes.length > 0 && (
         <details>

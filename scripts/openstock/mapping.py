@@ -22,7 +22,9 @@ METRICS = {
     "sbc": ("USD", ["ShareBasedCompensation"]),
     "shares": ("shares", ["CommonStockSharesOutstanding"]),
     "deposits": ("USD", ["Deposits"]),
-    "allowance": ("USD", ["FinancingReceivableAllowanceForCreditLossExcludingAccruedInterestAfterAdjustmentForTimeValue"]),
+    "allowance": ("USD", ["FinancingReceivableAllowanceForCreditLossExcludingAccruedInterestAfterAdjustmentForTimeValue",
+                          "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest",
+                          "FinancingReceivableAllowanceForCreditLosses"]),
     "net_interest_income": ("USD", ["InterestIncomeExpenseNet"]),
     # 營運資金、金融借款與股利（Piotroski F 分數、現金週轉循環、長短期借款、股利折現）
     "current_assets": ("USD", ["AssetsCurrent"]),
@@ -42,11 +44,14 @@ METRICS = {
     # 總負債缺漏時以「負債及權益總計 − 權益」推算（見 pipeline.derive_liabilities）。
     "liabilities_and_equity": ("USD", ["LiabilitiesAndStockholdersEquity"]),
     "minority_interest": ("USD", ["MinorityInterest"]),
+    # 有形帳面價值 = 股東權益 − 商譽 − 無形資產
+    "goodwill": ("USD", ["Goodwill"]),
+    "intangibles": ("USD", ["IntangibleAssetsNetExcludingGoodwill", "FiniteLivedIntangibleAssetsNet"]),
 }
 BALANCE_EXTRA = {"current_assets", "current_liabilities", "receivables", "inventory", "payables",
                  "short_borrowings", "debt_current", "long_term_debt"}
 INSTANT = {"assets", "liabilities", "equity", "cash", "shares", "deposits", "allowance", "members", "products", "cet1",
-           "shares_cover", "liabilities_and_equity", "minority_interest"} | BALANCE_EXTRA
+           "shares_cover", "liabilities_and_equity", "minority_interest", "goodwill", "intangibles"} | BALANCE_EXTRA
 # 期間型但不可用「全年 − 前三季」相減還原第四季的指標。
 NON_ADDITIVE = {"eps", "nim", "dps", "diluted_shares"}
 

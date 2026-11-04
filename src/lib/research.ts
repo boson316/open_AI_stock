@@ -222,6 +222,8 @@ export type PriceFile = {
   note: string;
   updated: string;
   tickers: Record<string, PriceEntry>;
+  /** 匯率：USDTWD = 每 1 美元兌新臺幣（Federal Reserve H.10）。 */
+  fx?: Record<string, { asof: string; rate: number; weekly: [string, number][]; source?: string; unit?: string }>;
 };
 export type PriceEntry = {
   asof: string;

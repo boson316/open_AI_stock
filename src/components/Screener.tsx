@@ -12,7 +12,7 @@ import type { Filters, ScreenRow } from "../lib/screener";
 
 const fmt = (v: number | null | undefined, unit: "%" | "×") =>
   v === null || v === undefined
-    ? "N/A"
+    ? "—"
     : unit === "%"
       ? `${(v * 100).toFixed(1)}%`
       : `${v.toFixed(2)}×`;
@@ -254,7 +254,7 @@ export function Screener({
                       <small>{r.name}</small>
                     </button>
                   </th>
-                  <td>{r.latest ?? "N/A"}</td>
+                  <td>{r.latest ?? "—"}</td>
                   {SCREEN_METRICS.map((m) => (
                     <td key={m.id}>{fmt(r.values[m.id], m.unit)}</td>
                   ))}
