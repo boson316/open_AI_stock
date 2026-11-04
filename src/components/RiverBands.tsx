@@ -13,6 +13,8 @@ import { CanvasRenderer } from "echarts/renderers";
 import { Download } from "lucide-react";
 import { csvDownload, quantile } from "../lib/finance";
 import type { ExternalPoint } from "./ExternalValuation";
+import { PE_HISTORY, RIVER } from "../lib/chartGuides";
+import { ChartGuideBox } from "./ChartGuideBox";
 
 echarts.use([
   LineChart,
@@ -226,6 +228,7 @@ export function RiverBands({
             : ""}
           TTM EPS 被業外收益墊高時，股價會落在色帶下方，不代表便宜。
         </p>
+        <ChartGuideBox guide={RIVER} />
       </section>
       <section className="panel chart" aria-label="歷史本益比">
         <div className="panel-head">
@@ -235,6 +238,7 @@ export function RiverBands({
           </div>
         </div>
         <ReactECharts echarts={echarts} option={peChart} notMerge style={{ height: 260 }} />
+        <ChartGuideBox guide={PE_HISTORY} />
       </section>
     </div>
   );

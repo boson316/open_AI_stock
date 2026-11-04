@@ -12,6 +12,8 @@ import {
 import { CanvasRenderer, SVGRenderer } from "echarts/renderers";
 import { Download, Expand } from "lucide-react";
 import { csvDownload } from "../lib/finance";
+import { chartGuide } from "../lib/chartGuides";
+import { ChartGuideBox } from "./ChartGuideBox";
 echarts.use([
   BarChart,
   LineChart,
@@ -253,6 +255,7 @@ export function FinancialChart({
           </span>
         </div>
       )}
+      <ChartGuideBox guide={chartGuide(title)} />
     </section>
   );
 }

@@ -50,6 +50,8 @@ import {
   downloadText,
 } from "./lib/analysisPack";
 import { FinancialChart } from "./components/FinancialChart";
+import { ChartGuideBox } from "./components/ChartGuideBox";
+import { SNAPSHOT_GUIDE } from "./lib/chartGuides";
 import {
   annual,
   cagr,
@@ -1738,6 +1740,7 @@ export function App() {
                         </button>
                       ))}
                     </section>
+                    <ChartGuideBox guide={isFinancial ? null : SNAPSHOT_GUIDE} />
                     <section className="panel coverage-panel">
                       <div className="coverage-icon">
                         <ShieldCheck size={20} />
