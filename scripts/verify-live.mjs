@@ -32,7 +32,7 @@ try {
       await page.getByText('已載入 SEC 財報').waitFor();
     }
     await page.getByText('近 20 季核心資料已核對').waitFor();
-    if (company.ticker === 'TSM' && !(await page.getByRole('button', {name: /TTM 營業收入/}).innerText()).includes('NT$')) throw Error('TSM currency mismatch');
+    if (company.ticker === 'TSM' && !(await page.getByRole('button', {name: /TTM 營業收入/}).innerText()).includes('新臺幣')) throw Error('TSM currency mismatch');
     console.log(`Verified production: ${company.ticker}, ${company.quarters} contiguous quarters, exact dataset hash`);
   }
   if (errors.length) throw Error(errors.join('\n'));
