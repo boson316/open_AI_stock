@@ -9,7 +9,7 @@
       "sector": "fintech",
       "status": "available",
       "file": "SOFI.json",
-      "updated": "2026-11-04T02:07:56.866977+00:00",
+      "updated": "2026-11-05T14:51:58.159057+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -31,7 +31,7 @@
       "sector": "technology",
       "status": "available",
       "file": "GOOGL.json",
-      "updated": "2026-11-04T02:08:03.139327+00:00",
+      "updated": "2026-11-05T14:52:04.401201+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -53,7 +53,7 @@
       "sector": "technology",
       "status": "available",
       "file": "GOOG.json",
-      "updated": "2026-11-04T02:08:03.532392+00:00",
+      "updated": "2026-11-05T14:52:04.847997+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -75,7 +75,7 @@
       "sector": "semiconductor",
       "status": "available",
       "file": "NVDA.json",
-      "updated": "2026-11-04T02:08:12.824958+00:00",
+      "updated": "2026-11-05T14:52:13.736910+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -97,7 +97,7 @@
       "sector": "semiconductor",
       "status": "available",
       "file": "AMD.json",
-      "updated": "2026-11-04T02:08:19.493841+00:00",
+      "updated": "2026-11-05T14:52:20.071163+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -106,8 +106,30 @@
       ],
       "coverage": {
         "quarters": 20,
-        "first_end": "2021-09-25",
-        "last_end": "2026-06-27",
+        "first_end": "2021-12-25",
+        "last_end": "2026-09-26",
+        "core_complete": true
+      }
+    },
+    {
+      "ticker": "TSM",
+      "cik": "0001046179",
+      "name": "Taiwan Semiconductor Manufacturing",
+      "exchange": "NYSE",
+      "sector": "semiconductor",
+      "status": "available",
+      "file": "TSM.json",
+      "updated": "2026-11-05T14:53:41.243348+00:00",
+      "currency": "TWD",
+      "accounting_standard": "IFRS",
+      "periods": [
+        "quarter",
+        "annual"
+      ],
+      "coverage": {
+        "quarters": 20,
+        "first_end": "2021-12-31",
+        "last_end": "2026-09-30",
         "core_complete": true
       }
     },
@@ -119,7 +141,7 @@
       "sector": "technology",
       "status": "available",
       "file": "MSFT.json",
-      "updated": "2026-11-04T02:10:32.355598+00:00",
+      "updated": "2026-11-05T14:53:48.391726+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -141,7 +163,7 @@
       "sector": "technology",
       "status": "available",
       "file": "AAPL.json",
-      "updated": "2026-11-04T02:10:39.228897+00:00",
+      "updated": "2026-11-05T14:53:55.241199+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -163,7 +185,7 @@
       "sector": "technology",
       "status": "available",
       "file": "AMZN.json",
-      "updated": "2026-11-04T02:10:45.429787+00:00",
+      "updated": "2026-11-05T14:54:01.347058+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -185,7 +207,7 @@
       "sector": "technology",
       "status": "available",
       "file": "META.json",
-      "updated": "2026-11-04T02:10:51.853122+00:00",
+      "updated": "2026-11-05T14:54:07.766509+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -207,7 +229,7 @@
       "sector": "technology",
       "status": "available",
       "file": "PLTR.json",
-      "updated": "2026-11-04T02:10:57.744685+00:00",
+      "updated": "2026-11-05T14:54:13.756384+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -229,7 +251,7 @@
       "sector": "semiconductor",
       "status": "available",
       "file": "MU.json",
-      "updated": "2026-11-04T02:11:04.773465+00:00",
+      "updated": "2026-11-05T14:54:20.784638+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
       "periods": [
@@ -251,31 +273,9 @@
       "sector": "automotive",
       "status": "available",
       "file": "TSLA.json",
-      "updated": "2026-11-04T02:11:13.300638+00:00",
+      "updated": "2026-11-05T14:54:29.239726+00:00",
       "currency": "USD",
       "accounting_standard": "US GAAP",
-      "periods": [
-        "quarter",
-        "annual"
-      ],
-      "coverage": {
-        "quarters": 20,
-        "first_end": "2021-12-31",
-        "last_end": "2026-09-30",
-        "core_complete": true
-      }
-    },
-    {
-      "ticker": "TSM",
-      "cik": "0001046179",
-      "name": "Taiwan Semiconductor Manufacturing",
-      "exchange": "NYSE",
-      "sector": "semiconductor",
-      "status": "available",
-      "file": "TSM.json",
-      "updated": "2026-11-04T02:38:08.273528+00:00",
-      "currency": "TWD",
-      "accounting_standard": "IFRS",
       "periods": [
         "quarter",
         "annual"
