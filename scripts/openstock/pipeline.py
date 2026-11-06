@@ -41,7 +41,8 @@ COMPANY_MAPPINGS = {
 def atomic_json(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(".tmp")
-    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
+    # 精簡格式（無縮排）：檔案小約 25%，瀏覽器解析更快。
+    tmp.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False), encoding="utf-8")
     tmp.replace(path)
 
 
