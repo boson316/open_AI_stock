@@ -75,6 +75,13 @@ export SEC_USER_AGENT='OpenStockAnalytics your-real-contact@your-domain.com'
 - 每週自動更新的股價（近 5 年週收盤、52 週高低、分割事件），按申報可得日期計算的 PE 分位估值圖與股價 × EPS 疊圖；也可匯入自己的股價 CSV 覆蓋。使用者 ROIC / WACC 假設計算。
 - 缺值明示 N/A；不將自行推算值標示為官方 Adjusted EPS，也不在資料不足時產生健康總分。
 
+## 使用與效能
+
+- 網址可直接指定股票與分頁，例如 `?t=NVDA#valuation`；切換時網址與頁面標題會跟著改，並記住上次看的股票。
+- 可加入手機主畫面（manifest、圖示），service worker 快取程式與資料，斷線時仍能開啟看過的頁面；資料一律優先抓最新。
+- 圖表套件（ECharts）與非首頁分頁按需載入；首頁資料在第一次造訪時與程式同時下載。股票資料檔採精簡 JSON。
+- 總覽「財報體檢」以紅黃綠燈看成長、獲利、現金流、財務體質、估值，每張圖下方有「怎麼看這張圖」。
+
 ## 股價匯入
 
 `Price Update` 工作流程每週六（UTC 02:23）以 `python -m openstock.prices` 下載近 5 年日線，依序嘗試 Yahoo Finance（含分割事件）、Nasdaq、Stooq（設定 `STOOQ_APIKEY` secret 時使用），寫入 `public/data/prices.json`，在 main 執行時直接提交並觸發部署。單檔失敗保留上次價格；全部失敗不改檔。這些是免費的非官方介面，僅供個人研究，非即時報價。
