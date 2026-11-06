@@ -41,6 +41,8 @@ import {
 } from "./lib/analysisPack";
 import { FinancialChart } from "./components/FinancialChart";
 import { ChartGuideBox } from "./components/ChartGuideBox";
+import { Scorecard } from "./components/Scorecard";
+import type { ScoreItem } from "./components/Scorecard";
 import { BANK_GUIDE, SNAPSHOT_GUIDE } from "./lib/chartGuides";
 import {
   annual,
@@ -893,6 +895,100 @@ export function App() {
     // eslint 未啟用 hooks 規則；perShareUsd 只依賴 fxWeekly。
     [adjRaw, tifrsRaw, prices, currency, annualOnly, isAdr, fxWeekly],
   );
+  // 總覽體檢卡：五個面向的燈號，全部由官方財報與自動股價計算。
+  const scoreItems: ScoreItem[] = (() => {
+    if (!dataset || annualOnly) return [];
+    const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
+    const out: ScoreItem[] = [];
+    const g = yoy(quarters, "revenue");
+    out.push(
+      g === null
+        ? { name: "成長", light: "na", verdict: "缺少去年同期營收", rule: "最新一季營收 vs 去年同一季" }
+        : {
+            name: "成長",
+            light: g >= 0.15 ? "good" : g >= 0 ? "ok" : "bad",
+            verdict: `營收年增 ${pct(g)}${g >= 0.15 ? "，高成長" : g >= 0 ? "，溫和成長" : "，營收衰退"}`,
+            rule: "營收年增率：≥ 15% 佳、0–15% 普通、< 0% 注意",
+          },
+    );
+    if (isFinancial) {
+      const roe = returnOn("equity");
+      out.push(
+        roe === null
+          ? { name: "獲利", light: "na", verdict: "缺少可比 ROE", rule: "金融業看股東權益報酬率" }
+          : {
+              name: "獲利",
+              light: roe >= 0.12 ? "good" : roe >= 0.06 ? "ok" : "bad",
+              verdict: `ROE ${pct(roe)}`,
+              rule: "金融業 ROE：≥ 12% 佳、6%–12% 普通、< 6% 注意",
+            },
+      );
+      out.push({ name: "現金流", light: "na", verdict: "放款增減會讓營業現金流大幅波動，不適用一般標準", rule: "金融業不以自由現金流判斷" });
+      const cet1 = last(quarters, "cet1")?.value ?? null;
+      out.push(
+        cet1 === null
+          ? { name: "財務體質", light: "na", verdict: "缺少 CET1 資本適足率", rule: "CET1：≥ 10.5% 佳" }
+          : {
+              name: "財務體質",
+              light: cet1 >= 0.105 ? "good" : cet1 >= 0.07 ? "ok" : "bad",
+              verdict: `CET1 ${pct(cet1)}${cet1 >= 0.105 ? "，資本充足" : ""}`,
+              rule: "CET1 資本適足率：≥ 10.5% 佳、7%–10.5% 普通、< 7% 注意",
+            },
+      );
+    } else {
+      const rev = sumTTM(quarters, "revenue"), op = sumTTM(quarters, "operating_income");
+      const om = rev && op !== null ? op / rev : null;
+      out.push(
+        om === null
+          ? { name: "獲利", light: "na", verdict: "缺少連續四季營業利益", rule: "近四季營業利益率" }
+          : {
+              name: "獲利",
+              light: om >= 0.2 ? "good" : om >= 0.08 ? "ok" : "bad",
+              verdict: `營業利益率 ${pct(om)}${om >= 0.2 ? "，本業很賺錢" : om >= 0.08 ? "" : "，獲利偏薄"}`,
+              rule: "近四季營業利益率：≥ 20% 佳、8%–20% 普通、< 8% 注意",
+            },
+      );
+      const ocf = sumTTM(quarters, "ocf"), ni = sumTTM(quarters, "net_income"), capex = sumTTM(quarters, "capex");
+      const fcf = ocf !== null && capex !== null ? ocf - Math.abs(capex) : null;
+      const q = ocf !== null && ni !== null && ni > 0 ? ocf / ni : null;
+      out.push(
+        q === null || fcf === null
+          ? { name: "現金流", light: "na", verdict: "缺少連續四季現金流或淨利為負", rule: "營業現金流 ÷ 淨利、自由現金流" }
+          : {
+              name: "現金流",
+              light: q >= 0.8 && fcf > 0 ? "good" : q >= 0.5 ? "ok" : "bad",
+              verdict: `現金流 ÷ 淨利 ${pct(q)}，自由現金流${fcf > 0 ? "為正" : "為負（投資大於營業現金流）"}`,
+              rule: "營業現金流 ÷ 淨利 ≥ 80% 且自由現金流為正：佳；≥ 50% 普通；其他注意",
+            },
+      );
+      const li = last(quarters, "liabilities"), as = last(quarters, "assets");
+      const lev = li && as && li.end === as.end && as.value > 0 ? li.value / as.value : null;
+      out.push(
+        lev === null
+          ? { name: "財務體質", light: "na", verdict: "缺少同期總負債與總資產", rule: "負債 ÷ 資產" }
+          : {
+              name: "財務體質",
+              light: lev < 0.5 ? "good" : lev < 0.7 ? "ok" : "bad",
+              verdict: `負債占資產 ${pct(lev)}${lev < 0.5 ? "，財務穩健" : lev < 0.7 ? "" : "，槓桿偏高"}`,
+              rule: "負債 ÷ 資產：< 50% 佳、50%–70% 普通、≥ 70% 注意（含應付帳款等營運負債）",
+            },
+      );
+    }
+    const pes = riverRows.map((r) => r.pe).filter((v): v is number => v !== null && v > 0);
+    const nowPe = riverRows.at(-1)?.pe ?? null;
+    if (nowPe !== null && pes.length >= 52) {
+      const rank = pes.filter((v) => v <= nowPe).length / pes.length;
+      out.push({
+        name: "估值",
+        light: rank < 0.3 ? "good" : rank <= 0.75 ? "ok" : "bad",
+        verdict: `本益比 ${nowPe.toFixed(1)}×，高於近 ${Math.round(pes.length / 52)} 年 ${Math.round(rank * 100)}% 的時間${rank < 0.3 ? "，歷史相對便宜" : rank <= 0.75 ? "，歷史合理區間" : "，歷史偏貴"}`,
+        rule: "和自己過去的本益比比：低於 30% 分位相對便宜、30%–75% 合理、高於 75% 偏貴",
+      });
+    } else {
+      out.push({ name: "估值", light: "na", verdict: "股價或盈餘歷史不足，無法和過去比較", rule: "需要至少一年、EPS 為正的週資料" });
+    }
+    return out;
+  })();
   const riverDates = riverRows.filter(
     (r) =>
       !prices.at(-1) ||
@@ -1650,6 +1746,7 @@ export function App() {
                     <CircleHelp size={13} />
                   </span>
                 </div>
+                <Scorecard items={scoreItems} asOf={latestDate ?? null} />
                 <div className="dashboard-kpis">
                   {primaryMetrics.map(metricCard)}
                 </div>

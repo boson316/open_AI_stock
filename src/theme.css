@@ -333,3 +333,38 @@ select, input { border-radius: 12px; }
 @media (max-width: 760px) {
   .hide-narrow { display: none !important; }
 }
+
+/* 總覽體檢卡 */
+.scorecard { margin-bottom: 16px; }
+.scorecard-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin-bottom: 8px; }
+.scorecard-head h3 { margin: 0; }
+.scorecard ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.scorecard li {
+  display: grid;
+  grid-template-columns: 12px 4.5em 3.6em 1fr;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+}
+.scorecard li:first-child { border-top: 0; }
+.score-dot { width: 10px; height: 10px; border-radius: 50%; align-self: center; background: var(--muted); }
+.score-name { font-weight: 650; }
+.score-badge { font-size: 12px; font-weight: 650; padding: 1px 6px; border-radius: 999px; text-align: center; }
+.score-rule { grid-column: 4; color: var(--muted); font-size: 12px; }
+.score-good .score-dot { background: #16a34a; }
+.score-good .score-badge { color: #15803d; background: color-mix(in srgb, #16a34a 14%, transparent); }
+.score-ok .score-dot { background: #d99a06; }
+.score-ok .score-badge { color: #a16207; background: color-mix(in srgb, #eab308 16%, transparent); }
+.score-bad .score-dot { background: #dc2626; }
+.score-bad .score-badge { color: #b91c1c; background: color-mix(in srgb, #dc2626 13%, transparent); }
+.score-na .score-badge { color: var(--muted); background: color-mix(in srgb, var(--muted) 12%, transparent); }
+[data-theme="dark"] .score-good .score-badge { color: #4ade80; }
+[data-theme="dark"] .score-ok .score-badge { color: #facc15; }
+[data-theme="dark"] .score-bad .score-badge { color: #f87171; }
+@media (max-width: 640px) {
+  .scorecard li { grid-template-columns: 12px auto auto 1fr; }
+  .score-verdict, .score-rule { grid-column: 2 / -1; }
+}
+.panel.scorecard { padding: 18px 20px; }
+@media (max-width: 640px) { .panel.scorecard { padding: 16px; } }
