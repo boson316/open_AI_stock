@@ -251,7 +251,7 @@ export function Screener({
                         style={{ background: colors[r.ticker] ?? "#5376e5" }}
                       />{" "}
                       {r.ticker}
-                      <small>{r.name}</small>
+                      <small className="hide-narrow">{r.name}</small>
                     </button>
                   </th>
                   <td>{r.latest ?? "—"}</td>
