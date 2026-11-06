@@ -106,3 +106,5 @@ TSM 季度採官方 6-K 的 **TIFRS**，年度採 Company Facts / 20-F 的 **IFR
 近五年覆蓋指營收、淨利與稀釋 EPS，**不表示每個選用財務欄位都沒有缺值**。`public/data/coverage.json` 列出每季來源、會計期間、年度核對與選用欄位缺值，部署會檢查報告未過期且核心 20 季完整。這是可執行、可部署的版本，尚未完成需求中的所有進階功能。詳見 [PROJECT_STATUS.md](PROJECT_STATUS.md)：同 filing 累積值不足時現金流單季仍會 N/A；分部營收、放款與信用風險等補充指標尚未完整解析；健康分數未校準；Adjusted / Normalized EPS 模式尚未提供；股票分割 / ADR / 股息調整未整合至 UI。匯入資料經 schema 驗證仍不代表具有真實來源認證，使用者應核對官方申報。
 
 相關文件：[架構](ARCHITECTURE.md) · [資料來源](DATA_SOURCES.md) · [公式](FINANCIAL_FORMULAS.md) · [部署](DEPLOYMENT.md)。僅供研究輔助，不構成投資建議。
+
+授權：程式碼以 [MIT License](LICENSE) 授權。
