@@ -1,2 +1,8 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="description" content="OpenStock Analytics 免費股票財報研究平台，來源透明、可追溯的財務分析。"/><title>OpenStock Analytics｜財報研究</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/><meta name="theme-color" content="#f5f6fb"/><meta name="description" content="OpenStock Analytics 免費股票財報研究平台，來源透明、可追溯的財務分析。"/><title>OpenStock Analytics｜財報研究</title>
+<!-- 首頁一定會用到的資料與程式同時下載，不必等程式執行完才開始抓 -->
+<link rel="preload" href="%BASE_URL%data/catalog.json" as="fetch" crossorigin="anonymous"/>
+<link rel="preload" href="%BASE_URL%data/TSM.json" as="fetch" crossorigin="anonymous"/>
+<link rel="preload" href="%BASE_URL%data/research.json" as="fetch" crossorigin="anonymous"/>
+<link rel="preload" href="%BASE_URL%data/prices.json" as="fetch" crossorigin="anonymous"/>
+</head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>

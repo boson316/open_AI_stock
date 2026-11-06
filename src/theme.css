@@ -279,3 +279,14 @@ select, input { border-radius: 12px; }
 .guide-ranges th, .guide-ranges td { white-space: normal !important; overflow-wrap: anywhere; }
 .guide-ranges th { width: 34%; }
 .chart-guide { overflow: hidden; }
+
+/* 圖表載入前的佔位框 */
+.chart-skeleton-body {
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--line) 0%, transparent 50%, var(--line) 100%);
+  background-size: 200% 100%;
+  animation: chart-skeleton 1.4s ease-in-out infinite;
+  opacity: 0.5;
+}
+@keyframes chart-skeleton { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .chart-skeleton-body { animation: none; } }

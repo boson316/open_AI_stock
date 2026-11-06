@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   Activity,
   ArrowDownToLine,
@@ -32,18 +32,8 @@ import {
   X,
 } from "lucide-react";
 import { RuleAnalysis } from "./components/RuleAnalysis";
-import { Compare } from "./components/Compare";
-import { Screener } from "./components/Screener";
-import { ExternalValuationPanel } from "./components/ExternalValuation";
-import { ValuationTools } from "./components/ValuationTools";
-import { IntrinsicValue } from "./components/IntrinsicValue";
 import { StockSnapshot } from "./components/StockSnapshot";
 import { EarningsCall } from "./components/EarningsCall";
-import { HealthPanels } from "./components/HealthPanels";
-import { Gurus } from "./components/Gurus";
-import { Market } from "./components/Market";
-import { Portfolio } from "./components/Portfolio";
-import { Reconciliation, Supplement } from "./components/Supplement";
 import {
   buildAnalysisPack,
   buildCombinedPack,
@@ -82,6 +72,18 @@ import { quarterPricesFromWeekly } from "./lib/intrinsic";
 import { loadPriceFile } from "./lib/research";
 import type { PriceEntry, PriceFile } from "./lib/research";
 /** TSM：1 股 ADR = 5 股普通股。 */
+// 不在首頁的分頁按需載入，首次開啟只下載總覽需要的程式。
+const Compare = lazy(() => import("./components/Compare").then((m) => ({ default: m.Compare })));
+const Screener = lazy(() => import("./components/Screener").then((m) => ({ default: m.Screener })));
+const ExternalValuationPanel = lazy(() => import("./components/ExternalValuation").then((m) => ({ default: m.ExternalValuationPanel })));
+const ValuationTools = lazy(() => import("./components/ValuationTools").then((m) => ({ default: m.ValuationTools })));
+const IntrinsicValue = lazy(() => import("./components/IntrinsicValue").then((m) => ({ default: m.IntrinsicValue })));
+const HealthPanels = lazy(() => import("./components/HealthPanels").then((m) => ({ default: m.HealthPanels })));
+const Gurus = lazy(() => import("./components/Gurus").then((m) => ({ default: m.Gurus })));
+const Market = lazy(() => import("./components/Market").then((m) => ({ default: m.Market })));
+const Portfolio = lazy(() => import("./components/Portfolio").then((m) => ({ default: m.Portfolio })));
+const Reconciliation = lazy(() => import("./components/Supplement").then((m) => ({ default: m.Reconciliation })));
+const Supplement = lazy(() => import("./components/Supplement").then((m) => ({ default: m.Supplement })));
 const ADR_RATIO = 5;
 
 const sections = [
@@ -1635,6 +1637,7 @@ export function App() {
             </div>
           )}
           <div className="screen-content" key={section}>
+            <Suspense fallback={<div className="panel muted" aria-busy="true">載入中…</div>}>
             {section === "overview" && (
               <>
                 <div className="section-heading">
@@ -2538,6 +2541,7 @@ export function App() {
                 </section>
               </>
             )}
+            </Suspense>
           </div>
           <footer>
             <span>
