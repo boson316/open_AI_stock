@@ -595,3 +595,13 @@ test("automatic weekly prices fill quote card and valuation river for stocks wit
   await expect(page.getByRole("region", { name: "本益比估值河流圖（自動週收盤）", exact: true })).toBeVisible();
   await expect(page.getByText("現金流折現評價（DCF）").first()).toBeVisible();
 });
+
+test("deep link ?t=NVDA#valuation opens that stock and tab, and the URL follows navigation", async ({ page }) => {
+  await page.unroute("**/data/catalog.json");
+  await page.goto("./?t=NVDA#valuation");
+  await expect(page.locator(".ticker-pill")).toHaveText("NVDA");
+  await expect(page.getByRole("tab", { name: "估值研究", exact: true })).toHaveAttribute("aria-selected", "true");
+  await page.getByRole("tab", { name: "現金流分析", exact: true }).click();
+  await expect(page).toHaveURL(/\?t=NVDA#cashflow$/);
+  await expect(page).toHaveTitle(/NVDA/);
+});

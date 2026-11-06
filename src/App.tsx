@@ -197,7 +197,11 @@ export function App() {
     [error, setError] = useState(""),
     [packStatus, setPackStatus] = useState(""),
     [loading, setLoading] = useState(true);
-  const [section, setSection] = useState("overview"),
+  const [section, setSection] = useState(() => {
+      // 網址 #分頁 直接開到該分頁（分享連結、重新整理都停在同一頁）。
+      const h = window.location.hash.replace("#", "");
+      return sections.some((x) => x.id === h) ? h : "overview";
+    }),
     [mobile, setMobile] = useState(false);
   const [dark, setDark] = useState(
     () => localStorage.getItem("openstock-theme") === "dark",
@@ -252,6 +256,18 @@ export function App() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
   useEffect(() => {
+    if (!catalog.companies.some((c) => c.ticker === ticker)) return;
+    const url = `?t=${ticker}${window.location.hash || ""}`;
+    if (window.location.search + window.location.hash !== url)
+      window.history.replaceState(null, "", url);
+    try {
+      localStorage.setItem("openstock-last-ticker", ticker);
+    } catch {
+      /* 私密瀏覽等情況不能存，忽略 */
+    }
+    document.title = `${ticker}｜OpenStock Analytics 財報研究`;
+  }, [ticker, catalog]);
+  useEffect(() => {
     document.documentElement.dataset.theme = dark ? "dark" : "light";
     localStorage.setItem("openstock-theme", dark ? "dark" : "light");
   }, [dark]);
@@ -266,13 +282,18 @@ export function App() {
         if (c.version !== 1 || !Array.isArray(c.companies))
           throw Error("目錄格式無效");
         setCatalog(c);
-        // 預設開啟台積電；目錄沒有 TSM 時維持原本的備援公司。
-        if (
-          c.companies.some(
-            (x) => x.ticker === "TSM" && x.status === "available",
-          )
-        )
-          setTicker("TSM");
+        // 開啟順序：網址 ?t=代號 → 上次看的股票 → 台積電；目錄沒有時維持備援公司。
+        const ok = (t: string | null) =>
+          !!t && c.companies.some((x) => x.ticker === t && x.status === "available");
+        const fromUrl = new URLSearchParams(window.location.search).get("t")?.toUpperCase() ?? null;
+        let saved: string | null = null;
+        try {
+          saved = localStorage.getItem("openstock-last-ticker");
+        } catch {
+          saved = null;
+        }
+        const pick = [fromUrl, saved, "TSM"].find((t) => ok(t));
+        if (pick) setTicker(pick);
       })
       .catch((e) => {
         if (e.name !== "AbortError")
@@ -1171,7 +1192,7 @@ export function App() {
   function navigate(id: string) {
     setSection(id);
     setMobile(false);
-    window.history.replaceState(null, "", `#${id}`);
+    window.history.replaceState(null, "", `?t=${ticker}#${id}`);
     pageTop.current?.scrollIntoView?.({ block: "start" });
   }
   function selectCompany(selected: string) {

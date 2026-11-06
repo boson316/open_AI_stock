@@ -1,0 +1,17 @@
+{
+  "name": "OpenStock Analytics 美股財報研究",
+  "short_name": "OpenStock",
+  "description": "SEC 官方財報、20 季完整資料、估值河流圖；台積電、NVIDIA、Apple 等 13 檔，免費、來源可追溯。",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f6fb",
+  "theme_color": "#4f46e5",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

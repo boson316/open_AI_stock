@@ -1,8 +1,28 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/><meta name="theme-color" content="#f5f6fb"/><meta name="description" content="OpenStock Analytics 免費股票財報研究平台，來源透明、可追溯的財務分析。"/><title>OpenStock Analytics｜財報研究</title>
-<!-- 首頁一定會用到的資料與程式同時下載，不必等程式執行完才開始抓 -->
-<link rel="preload" href="%BASE_URL%data/catalog.json" as="fetch" crossorigin="anonymous"/>
-<link rel="preload" href="%BASE_URL%data/TSM.json" as="fetch" crossorigin="anonymous"/>
-<link rel="preload" href="%BASE_URL%data/research.json" as="fetch" crossorigin="anonymous"/>
-<link rel="preload" href="%BASE_URL%data/prices.json" as="fetch" crossorigin="anonymous"/>
+<link rel="icon" href="%BASE_URL%icon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png"/>
+<link rel="manifest" href="%BASE_URL%manifest.webmanifest"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="OpenStock"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="OpenStock Analytics"/>
+<meta property="og:title" content="OpenStock Analytics｜美股財報研究平台"/>
+<meta property="og:description" content="SEC 官方財報、20 季完整資料、估值河流圖；台積電、NVIDIA、Apple 等 13 檔，免費、來源可追溯。"/>
+<meta property="og:url" content="https://boson316.github.io/open_AI_stock/"/>
+<meta property="og:image" content="https://boson316.github.io/open_AI_stock/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<!-- 首頁一定會用到的資料與程式同時下載；已有離線快取（service worker）時直接用快取，不重複下載 -->
+<script>
+if (!(navigator.serviceWorker && navigator.serviceWorker.controller)) {
+  ["catalog", "TSM", "research", "prices"].forEach(function (n) {
+    var l = document.createElement("link");
+    l.rel = "preload"; l.as = "fetch"; l.crossOrigin = "anonymous";
+    l.href = "%BASE_URL%data/" + n + ".json";
+    document.head.appendChild(l);
+  });
+}
+</script>
 </head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>
