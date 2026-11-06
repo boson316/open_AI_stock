@@ -394,7 +394,15 @@ export function App() {
         ? `億${currencyLabel}`
         : currencyLabel;
   function aligned(metric: string, end: string) {
-    return view.find((f) => f.metric === metric && f.end === end) ?? null;
+    const f = view.find((x) => x.metric === metric && x.end === end) ?? null;
+    // 資產負債表沒標註股數時，改用同期申報封面股數，再不然用加權平均稀釋股數（明細會顯示實際標籤）。
+    if (!f && metric === "shares")
+      return (
+        view.find((x) => x.metric === "shares_cover" && x.end === end) ??
+        view.find((x) => x.metric === "diluted_shares" && x.end === end) ??
+        null
+      );
+    return f;
   }
   function value(metric: string, end: string): number | null {
     const f = aligned(metric, end);
