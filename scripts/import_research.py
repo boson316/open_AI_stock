@@ -106,7 +106,7 @@ def build(folder, data_dir):
             "price": c["price"], "price_asof": c["price_asof"],
             "close": lv.get("close"), "close_asof": "2026-10-14 收盤", "hi52": lv.get("hi52"), "lo52": lv.get("lo52"),
             "pe": c["pe"], "fwd_pe": c["fwd_pe"], "pb": c["pb"], "ps": c["ps"], "pfcf": c["pfcf"],
-            # TSM 市值單位在來源中自相矛盾（標示億新台幣、數量級為美元），不顯示。
+            # TSM 市值單位在來源中自相矛盾（標示億新臺幣、數量級為美元），不顯示。
             "mcap_100m_usd": None if t == "TSM" else c["mcap"],
             "pe_n": c["pe_n"], "pe_min": c["pe_min"], "pe_max": c["pe_max"], "pe_median": c["pe_median"],
             "pe_rank": c["pe_rank"],
@@ -166,7 +166,7 @@ if __name__ == "__main__":
     folder = Path(sys.argv[1])
     data_dir = Path("public/data")
     result = build(folder, data_dir)
-    (data_dir / "research.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    (data_dir / "research.json").write_text(json.dumps(result, ensure_ascii=False, indent=2).replace("新台幣", "新臺幣"), encoding="utf-8")
     r = result["reconciliation"]
     print(f"research.json: {len(result['companies'])} companies; reconciliation {r['matched']}/{r['checked']} matched")
     for m in r["mismatches"]:

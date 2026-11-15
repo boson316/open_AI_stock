@@ -3,7 +3,7 @@ export type ScoreItem = {
   /** 面向名稱，例如「成長」 */
   name: string;
   light: Light;
-  /** 一句話結論，例如「營收年增 50.9%，高成長」 */
+  /** 一句話結論，例如「單季營收年增 50.9%，高成長」 */
   verdict: string;
   /** 判斷標準 */
   rule: string;

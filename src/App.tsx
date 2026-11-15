@@ -619,6 +619,11 @@ export function App() {
         : null,
     [autoPrice, adjQuarters, currency, annualOnly],
   );
+  // 最新一季營收的截止日與申報日：研究觀察文字比它舊時，畫面要提示可能過期。
+  const latestReport = (() => {
+    const f = last(quarters, "revenue");
+    return f ? { end: f.end, filed: f.filed } : null;
+  })();
   // 以官方財報 × 自動股價計算的行情卡；外部研究資料缺值時也用它補齊。
   const officialQuote =
     autoPrice && pit
@@ -769,7 +774,7 @@ export function App() {
         : "四個連續且相容的單季營收之和；缺任一季不計算。",
     },
     {
-      title: "營收年增率",
+      title: annualOnly ? "營收年增率" : "單季營收年增率",
       value: yoy(quarters, "revenue"),
       unit: "%",
       metric: "revenue",
@@ -787,13 +792,13 @@ export function App() {
         : "四個已公布單季稀釋 EPS 合計（依公司 US GAAP 或 IFRS）。不從累積 EPS 相減，股數變動時不等同全年加權 EPS。",
     },
     {
-      title: "EPS 年增率",
+      title: annualOnly ? "EPS 年增率" : "單季 EPS 年增率",
       value: yoy(quarters, "eps"),
       unit: "%",
       metric: "eps",
       desc: annualOnly
         ? "本年度 IFRS 普通股稀釋 EPS ÷ 上年度 EPS − 1。"
-        : "本季 GAAP 稀釋 EPS ÷ 去年同期 EPS − 1；去年值非正數時 N/A。",
+        : "本季稀釋 EPS（依公司 US GAAP 或 IFRS）÷ 去年同期 EPS − 1；去年值非正數時 N/A。",
     },
     {
       title: annualOnly ? "年度稅後淨利" : "TTM 稅後淨利",
@@ -915,8 +920,8 @@ export function App() {
         : {
             name: "成長",
             light: g >= 0.15 ? "good" : g >= 0 ? "ok" : "bad",
-            verdict: `營收年增 ${pct(g)}${g >= 0.15 ? "，高成長" : g >= 0 ? "，溫和成長" : "，營收衰退"}`,
-            rule: "營收年增率：≥ 15% 佳、0–15% 普通、< 0% 注意",
+            verdict: `單季營收年增 ${pct(g)}${g >= 0.15 ? "，高成長" : g >= 0 ? "，溫和成長" : "，營收衰退"}`,
+            rule: "最新一季營收年增率（和去年同一季比）：≥ 15% 佳、0–15% 普通、< 0% 注意",
           },
     );
     if (isFinancial) {
@@ -1911,6 +1916,7 @@ export function App() {
                   ticker={ticker}
                   onGurus={() => navigate("gurus")}
                   official={officialQuote}
+                  latestReport={latestReport}
                 />
                 <section className="price-callout">
                   <div>

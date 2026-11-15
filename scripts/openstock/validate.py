@@ -1,7 +1,29 @@
 import json
 from pathlib import Path
+import re
 import sys
 from .models import Dataset
+
+# 會被前端放進 <a href> 的欄位：帶協定的值只允許 https，擋掉 javascript:、data:、http: 等。
+LINK_KEYS = re.compile(r"(^|_)(url|urls|source|sources|src|link|href)$")
+SCHEME = re.compile(r"^\s*[A-Za-z][A-Za-z0-9+.\-]*:")
+
+
+def check_links(node, path="$"):
+    """遞迴檢查 JSON；連結欄位的值若帶協定，必須是 https://。回傳違規清單。"""
+    bad = []
+    if isinstance(node, dict):
+        for key, value in node.items():
+            here = f"{path}.{key}"
+            if LINK_KEYS.search(key):
+                for item in value if isinstance(value, list) else [value]:
+                    if isinstance(item, str) and SCHEME.match(item) and not item.strip().startswith("https://"):
+                        bad.append(f"{here}: {item[:80]}")
+            bad += check_links(value, here)
+    elif isinstance(node, list):
+        for i, value in enumerate(node):
+            bad += check_links(value, f"{path}[{i}]")
+    return bad
 
 
 def validate(directory):
@@ -25,6 +47,11 @@ def validate(directory):
         if d.ticker != ticker or d.cik != company["cik"] or not d.facts:
             raise ValueError("company identity or empty facts mismatch")
         count += 1
+    bad = []
+    for file in sorted(directory.glob("*.json")):
+        bad += [f"{file.name} {b}" for b in check_links(json.loads(file.read_text(encoding="utf-8")))]
+    if bad:
+        raise ValueError("non-https link in published data:\n" + "\n".join(bad[:20]))
     print(f"Catalog validated: {count} available datasets, {len(seen)-count} unavailable (not financial validation)")
 
 

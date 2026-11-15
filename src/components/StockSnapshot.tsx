@@ -1,4 +1,4 @@
-import { useResearch } from "../lib/research";
+import { useResearch, type ResearchCompany } from "../lib/research";
 
 const num = (v: number | null | undefined, d = 2) =>
   v === null || v === undefined || !Number.isFinite(v) ? "N/A" : v.toLocaleString("zh-TW", { maximumFractionDigits: d });
@@ -37,11 +37,14 @@ export function StockSnapshot({
   ticker,
   onGurus,
   official = null,
+  latestReport = null,
 }: {
   base: string;
   ticker: string;
   onGurus: () => void;
   official?: OfficialQuote | null;
+  /** 本站官方財報最新一季的截止日與申報日；比研究資料新時提示觀察文字可能過期。 */
+  latestReport?: { end: string; filed: string } | null;
 }) {
   const { data } = useResearch(base);
   if (!data) return null;
@@ -64,6 +67,14 @@ export function StockSnapshot({
   const takeaway = notes.find((n) => n.kind === "takeaway");
   const obs = notes.filter((n) => n.kind === "obs");
   const caveats = notes.filter((n) => n.kind === "caveat");
+  // 研究資料涵蓋到哪一季：有季度表就看最後一季截止日（差 45 天以上才算新的一季，容許財年結帳日的幾天誤差），沒有才比申報日與擷取日。
+  const researchEnd = data.quarterly[key]?.at(-1)?.end ?? null;
+  const newer = latestReport
+    ? researchEnd
+      ? Date.parse(latestReport.end) - Date.parse(researchEnd) > 45 * 864e5
+      : latestReport.filed.slice(0, 10) > data.as_of.slice(0, 10)
+    : false;
+  const stale = newer ? latestReport : null;
   return (
     <section className="snapshot-research" aria-label="市場行情與研究觀察">
       <div className="section-heading">
@@ -115,7 +126,7 @@ export function StockSnapshot({
             </div>
             <div>
               <span>股價自由現金流比</span>
-              <strong>{comp.pfcf ? `${comp.pfcf.toFixed(1)}×` : official?.fcfNegative ? <small>TTM 自由現金流為負</small> : multOr(null, official?.pfcf)}</strong>
+              <strong>{official?.fcfNegative ? <small>TTM 自由現金流為負</small> : multOr(comp.pfcf, official?.pfcf)}</strong>
             </div>
             <div>
               <span>市值</span>
@@ -129,9 +140,7 @@ export function StockSnapshot({
             </div>
             <p className="muted small span-all">
               本益比以 {comp.price}（{comp.price_asof}）計
-              {comp.pe_median !== null
-                ? `；近 ${comp.pe_n} 季本益比中位數 ${comp.pe_median}×（${comp.pe_min}–${comp.pe_max}），目前高於約 ${comp.pe_rank}% 的歷史季度。`
-                : "。"}
+              {peHistoryText(comp, official?.pe)}
               {official && <OfficialNote q={official} />}
             </p>
           </div>
@@ -139,6 +148,11 @@ export function StockSnapshot({
       )}
       {(takeaway || intro) && (
         <div className="panel insight-card">
+          {stale && (
+            <p className="caveat-box" role="note">
+              以下觀察依據{researchEnd ? `截至 ${researchEnd} 的財報` : "較早的財報"}（{data.as_of} 擷取），本站官方財報已更新到 {stale.end}。文中的毛利率、本益比與股價是當時的數字，最新數字請看上方的官方財報與行情卡。
+            </p>
+          )}
           {takeaway && <p className="takeaway">{takeaway.text}</p>}
           {intro && <p className="muted">{intro.text}</p>}
           {obs.length > 0 && (
@@ -276,11 +290,32 @@ function OfficialQuoteCard({ q }: { q: OfficialQuote }) {
   );
 }
 
-/** 外部值缺漏時改用本站計算值（標＊）；兩者都沒有才顯示「—」。 */
+/** 有本站計算值（官方財報 × 自動股價，標＊）就用它，和頁面其他區塊一致；沒有才用外部值；都沒有顯示「—」。 */
 function multOr(external: number | null | undefined, ours: number | null | undefined) {
-  if (external) return `${external.toFixed(1)}×`;
   if (ours !== null && ours !== undefined && Number.isFinite(ours) && ours > 0) return `${ours.toFixed(1)}×＊`;
+  if (external) return `${external.toFixed(1)}×`;
   return "—";
+}
+
+/** 季末本益比歷史區間的說明。股價更新後外部分位數已失效（pe_rank 為 null），改描述目前落在區間的哪裡。 */
+export function peHistoryText(
+  c: Pick<ResearchCompany, "pe" | "pe_n" | "pe_min" | "pe_max" | "pe_median" | "pe_rank">,
+  oursPe?: number | null,
+) {
+  if (c.pe_median === null) return "。";
+  const head = `；近 ${c.pe_n} 季季末本益比中位數 ${c.pe_median}×（${c.pe_min}–${c.pe_max}）`;
+  if (c.pe_rank !== null) return `${head}，目前高於約 ${c.pe_rank}% 的歷史季度。`;
+  const now = oursPe && oursPe > 0 ? oursPe : c.pe;
+  if (now === null || c.pe_min === null || c.pe_max === null) return `${head}。`;
+  const where =
+    now > c.pe_max
+      ? "目前高於這段期間所有季末值"
+      : now < c.pe_min
+        ? "目前低於這段期間所有季末值"
+        : now >= c.pe_median
+          ? "目前在區間內、高於中位數"
+          : "目前在區間內、低於中位數";
+  return `${head}，${where}（季末值；財報體檢的估值燈號用每週本益比，算法不同）。`;
 }
 
 function OfficialNote({ q }: { q: OfficialQuote }) {

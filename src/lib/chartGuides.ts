@@ -222,6 +222,8 @@ const COMPARE: Record<string, ChartGuide> = {
   營收年增率: GUIDES["營收與 EPS 年增率"],
   淨利年增率: GUIDES["營收與 EPS 年增率"],
   "EPS 年增率": GUIDES["營收與 EPS 年增率"],
+  單季營收年增率: GUIDES["營收與 EPS 年增率"],
+  "單季 EPS 年增率": GUIDES["營收與 EPS 年增率"],
   "自由現金流率（FCF／營收）": GUIDES.自由現金流率,
   資本支出占營收: {
     what: "資本支出 ÷ 營收：每 100 元營收拿多少去買設備、蓋廠房、建資料中心。",

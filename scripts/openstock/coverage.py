@@ -157,7 +157,9 @@ def run(directory,check=False):
     for company in catalog['companies']:
         if company['status']!='available':continue
         raw=(directory/company['file']).read_bytes();d=Dataset.model_validate_json(raw)
-        item=audit_dataset(d);item['dataset_sha256']=hashlib.sha256(raw).hexdigest();results.append(item)
+        item=audit_dataset(d)
+        # 雜湊前把 CRLF 還原成 LF：Windows 上 git autocrlf 簽出的檔案換行不同，內容相同就該得到相同雜湊。
+        item['dataset_sha256']=hashlib.sha256(raw.replace(b'\r\n',b'\n')).hexdigest();results.append(item)
         if not check:
             company['coverage']={k:item[k] for k in ['quarters','first_end','last_end','core_complete']}
         print(f"{d.ticker}: {item['quarters']} quarters, core {'PASS' if item['core_complete'] else 'FAIL'}, cash {'PASS' if item['cashflow']['complete'] else 'FAIL'}, gross margin {item['gross_margin']['status'] if item['gross_margin']['status']=='not_applicable' else ('PASS' if item['gross_margin']['complete'] else 'FAIL')}, {item['first_end']} → {item['last_end']}")

@@ -271,6 +271,8 @@ export function applyPrices(research: Research, prices: PriceFile | null): Resea
           ps: scale(c.ps),
           pfcf: scale(c.pfcf),
           mcap_100m_usd: scale(c.mcap_100m_usd),
+          // 分位數是用舊股價算的，手上沒有完整歷史序列可重算；清掉，由畫面改用區間位置描述。
+          pe_rank: null,
         },
       ];
     }),

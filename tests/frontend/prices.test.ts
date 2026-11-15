@@ -107,3 +107,20 @@ it("林區法成長率：期初虧損時改用較短年期，全部不可算時�
   expect(r.value).toBeCloseTo(1, 2);
   expect(epsGrowthBest([y(2024, -1), y(2025, -2)]).reason).toContain("EPS ≤ 0");
 });
+
+it("股價更新後清掉舊的本益比分位數，說明改描述區間位置而不再宣稱分位", async () => {
+  const { peHistoryText } = await import("../../src/components/StockSnapshot");
+  const c = research.companies.TSM;
+  const old = c.close ?? c.price;
+  const prices: PriceFile = {
+    version: 1, source: "x", note: "", updated: "2026-11-14",
+    tickers: { TSM: { asof: "2026-11-12", close: old * 0.94, hi52: old * 1.2, lo52: old * 0.5, weekly: [] } },
+  };
+  const n = applyPrices(research, prices).companies.TSM;
+  expect(n.pe_rank).toBeNull();
+  const text = peHistoryText(n, 27.1);
+  expect(text).toContain("在區間內、高於中位數");
+  expect(text).not.toContain("% 的歷史季度");
+  // 股價沒更新時仍沿用外部分位數
+  expect(peHistoryText(c)).toContain(`${c.pe_rank}% 的歷史季度`);
+});

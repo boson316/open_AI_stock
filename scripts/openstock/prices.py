@@ -36,6 +36,13 @@ NASDAQ = "https://api.nasdaq.com/api/quote/{symbol}/historical"
 CBOE = "https://cdn.cboe.com/api/global/delayed_quotes/charts/historical/{symbol}.json"
 STOOQ = "https://stooq.com/q/d/l/?s={symbol}&d1={start}&d2={end}&i=d"
 SOURCES = {"yahoo": "Yahoo Finance", "cboe": "Cboe", "nasdaq": "Nasdaq", "stooq": "Stooq"}
+# prices.json 頂層 source：依優先順序取本次實際用到的第一個來源，避免標示與 note 不一致。
+SOURCE_URLS = {
+    "Yahoo Finance": "https://finance.yahoo.com/",
+    "Cboe": "https://www.cboe.com/",
+    "Nasdaq": "https://www.nasdaq.com/",
+    "Stooq": "https://stooq.com/",
+}
 # 已人工核對的股票分割（第一個以新股數交易的日期、1 股拆成幾股）。
 # 五年價格區間以外的分割也要列：早期季度 EPS 可能在分割前申報，需換算到目前股數基礎。
 KNOWN_SPLITS = {
@@ -439,7 +446,7 @@ def main(argv=None):
     names = "、".join(sorted(used)) or "免費日線資料"
     out = {
         "version": 1,
-        "source": "https://finance.yahoo.com/" if "Yahoo Finance" in used else "https://stooq.com/",
+        "source": next((url for name, url in SOURCE_URLS.items() if name in used), "https://stooq.com/"),
         "note": f"股價來自 {names} 免費日線資料，每週自動更新；僅供個人研究，非即時報價。收盤價已按股票分割調整、未還原股息。",
         "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "tickers": dict(sorted(tickers.items())),
