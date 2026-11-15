@@ -8,7 +8,7 @@ revisions remain missing.
 """
 from datetime import timedelta, date
 from .models import Fact
-from .mapping import INSTANT, NON_ADDITIVE
+from .mapping import BRIDGED_CASH_BASES, INSTANT, NON_ADDITIVE
 
 CASH_FLOWS = {'ocf','icf','financing_cf','capex','sbc'}
 
@@ -31,7 +31,9 @@ def cash_quarters(facts):
     for f in facts:
         if f.metric not in CASH_FLOWS|{'gross_profit'} or f.report_fiscal_year is None or f.start is None or (f.quality!='reported' and f.tag!='calculated:revenue-minus-cost'):continue
         if f.reporting_basis not in {'US GAAP','TIFRS'} or ytd_stage(f) is None:continue
-        key=(f.metric,f.tag,f.unit,f.start,f.report_fiscal_year,f.reporting_basis)
+        # 已核對的標籤遷移（BRIDGED）：同一 basis 下的不同標籤視為同一個項目，才能跨申報相減。
+        concept=f.basis if f.basis in BRIDGED_CASH_BASES else f.tag
+        key=(f.metric,concept,f.unit,f.start,f.report_fiscal_year,f.reporting_basis)
         cohorts.setdefault(key,{}).setdefault(f.end,[]).append(f)
     result=[]
     for periods in cohorts.values():
@@ -48,7 +50,7 @@ def cash_quarters(facts):
             if p.accession==f.accession:continue
             result.append(f.model_copy(update={'value':f.value-p.value,'start':p.end+timedelta(days=1),
                 'filed':max(f.filed,p.filed),'quality':'derived','source_refs':list(dict.fromkeys([f.source,p.source])),
-                'lineage':[f'YTD difference; stable reporting-vintage FY{f.report_fiscal_year}; {f.reporting_basis}; matching fiscal start, tag and unit; no amended or conflicting operand values',
+                'lineage':[f'YTD difference; stable reporting-vintage FY{f.report_fiscal_year}; {f.reporting_basis}; matching fiscal start, '+('tag' if f.tag==p.tag else 'reviewed equivalent tags')+' and unit; no amended or conflicting operand values',
                     f'{f.tag}|{f.accession}|{f.start}|{f.end}|{f.value}|{f.source}',
                     f'minus {p.tag}|{p.accession}|{p.start}|{p.end}|{p.value}|{p.source}']}))
     return result

@@ -32,7 +32,7 @@ COMPANIES = {
 # Reviewed consolidated revenue concept: customer-contract revenue is only one
 # component of SoFi net revenue. Do not use it as total company revenue.
 COMPANY_MAPPINGS = {
-    "SOFI": {"revenue": ["us-gaap:RevenuesNetOfInterestExpense"], "capex": ["us-gaap:PaymentsToAcquireProductiveAssets"]},
+    "SOFI": {"revenue": ["us-gaap:RevenuesNetOfInterestExpense"], "capex": ["us-gaap:PaymentsToAcquireProductiveAssets", "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment"]},
     "NVDA": {"capex": ["us-gaap:PaymentsToAcquireProductiveAssets"]},
     "AMZN": {"capex": ["us-gaap:PaymentsToAcquireProductiveAssets"]},
 }

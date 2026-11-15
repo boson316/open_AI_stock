@@ -83,6 +83,20 @@ IFRS_METRICS = {
 }
 
 
+# 已人工核對的標籤遷移：公司把同一個報表項目換了 XBRL 標籤時，允許把候選標籤接成同一條序列。
+# 只在重疊期間的數值完全相同時才接；沒有重疊或數值不同就報錯、交給人審。
+#   SoFi 資本支出：2026 Q3 10-Q（2026-11-05 申報）起由 PaymentsToAcquireProductiveAssets 改為
+#   PaymentsToAcquirePropertyPlantAndEquipment，去年同期比較值 176,047 千美元在兩個標籤下相同。
+BRIDGED = {
+    ("revenue", "0001652044"): "consolidated-revenue",
+    ("revenue", "0001045810"): "consolidated-revenue",
+    ("revenue", "0001318605"): "consolidated-revenue",
+    ("capex", "0001818874"): "capex",
+}
+# 現金流逐季相減時，這些 basis 底下的不同標籤視為同一個項目。
+BRIDGED_CASH_BASES = {f"{cik}:{name}" for (metric, cik), name in BRIDGED.items() if metric != "revenue"}
+
+
 def extract(companyfacts, cik, overrides=None, *, currency="USD", standard="US GAAP"):
     from .models import Fact
     result = []
@@ -100,7 +114,8 @@ def extract(companyfacts, cik, overrides=None, *, currency="USD", standard="US G
             values = companyfacts.get("facts", {}).get(ns, {}).get(local, {}).get("units", {}).get(unit, [])
             return max((r["end"] for r in values if r.get("form") in forms), default="")
         candidates = sorted(candidates, key=latest, reverse=True)
-        bridged = metric == "revenue" and cik in {"0001652044","0001045810","0001318605"}
+        bridge = BRIDGED.get((metric, cik))
+        bridged = bridge is not None
         if bridged:
             snapshots=[]
             for tag in candidates:
@@ -114,7 +129,7 @@ def extract(companyfacts, cik, overrides=None, *, currency="USD", standard="US G
                 for b in snapshots[i+1:]:
                     common=set(a)&set(b)
                     if not common or any(a[k]!=b[k] for k in common):
-                        raise ValueError(f"Revenue concept migration requires review: {cik}")
+                        raise ValueError(f"{metric} concept migration requires review: {cik}")
         # Choose one concept per metric, never splice different accounting bases.
         for tag in candidates:
             namespace, local = tag.split(":", 1)
@@ -128,7 +143,7 @@ def extract(companyfacts, cik, overrides=None, *, currency="USD", standard="US G
                 result.append(Fact(metric=metric, value=row["val"], unit=unit,
                     start=row.get("start"), end=row["end"], filed=row["filed"], accession=accession,
                     tag=tag, form=row["form"],
-                    basis=f"{cik}:consolidated-revenue" if bridged else None,
+                    basis=f"{cik}:{bridge}" if bridged else None,
                     report_fiscal_year=row.get('fy'),
                     reporting_basis='IFRS (IASB)' if standard=='IFRS' else 'US GAAP',
                     source=f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession.replace('-', '')}/{accession}-index.html"))
