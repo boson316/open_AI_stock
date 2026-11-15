@@ -11,7 +11,7 @@
     "quarter",
     "annual"
   ],
-  "updated": "2026-11-04T02:08:12.824958+00:00",
+  "updated": "2026-11-15T04:31:45.312056+00:00",
   "source": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
   "facts": [
     {
@@ -91791,7 +91791,7 @@
       "lineage": [
         "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
         "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-        "Original document SHA256: b948321da2565b4f64079c0e5402df22bf0038006fe9163fe57df41fa0c7dd62; current SHA256 9906e06811919aa2470f81e6ff57edf1e1ddad32906c40c7ed7987cccacf1456 (values re-verified in document)"
+        "Original document SHA256: b948321da2565b4f64079c0e5402df22bf0038006fe9163fe57df41fa0c7dd62; current SHA256 b8dd1e55b56c8a40bc011259d156bc28bb03dddde445eacd711357bf39e8e56b (values re-verified in document)"
       ]
     },
     {
@@ -91813,7 +91813,7 @@
       "lineage": [
         "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
         "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-        "Original document SHA256: b948321da2565b4f64079c0e5402df22bf0038006fe9163fe57df41fa0c7dd62; current SHA256 9906e06811919aa2470f81e6ff57edf1e1ddad32906c40c7ed7987cccacf1456 (values re-verified in document)"
+        "Original document SHA256: b948321da2565b4f64079c0e5402df22bf0038006fe9163fe57df41fa0c7dd62; current SHA256 b8dd1e55b56c8a40bc011259d156bc28bb03dddde445eacd711357bf39e8e56b (values re-verified in document)"
       ]
     },
     {
@@ -91835,7 +91835,7 @@
       "lineage": [
         "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
         "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-        "Original document SHA256: b948321da2565b4f64079c0e5402df22bf0038006fe9163fe57df41fa0c7dd62; current SHA256 9906e06811919aa2470f81e6ff57edf1e1ddad32906c40c7ed7987cccacf1456 (values re-verified in document)"
+        "Original document SHA256: b948321da2565b4f64079c0e5402df22bf0038006fe9163fe57df41fa0c7dd62; current SHA256 b8dd1e55b56c8a40bc011259d156bc28bb03dddde445eacd711357bf39e8e56b (values re-verified in document)"
       ]
     },
     {
@@ -91857,7 +91857,7 @@
       "lineage": [
         "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
         "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-        "Original document SHA256: 3b19dbb1ca5ffdabbb1566e690b49886fd0d05ea8264d2befa5b222f6c9b1fc9; current SHA256 e3fa96aa8763eefe0f5a33cfe23e50bdd2d80b4e494f530d17704e1e8c755444 (values re-verified in document)"
+        "Original document SHA256: 3b19dbb1ca5ffdabbb1566e690b49886fd0d05ea8264d2befa5b222f6c9b1fc9; current SHA256 dbd14a7e3e48aef95f072239ce12cfbc291acdd6ee27732755773b046b52d6bc (values re-verified in document)"
       ]
     },
     {
@@ -91879,7 +91879,7 @@
       "lineage": [
         "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
         "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-        "Original document SHA256: 3b19dbb1ca5ffdabbb1566e690b49886fd0d05ea8264d2befa5b222f6c9b1fc9; current SHA256 e3fa96aa8763eefe0f5a33cfe23e50bdd2d80b4e494f530d17704e1e8c755444 (values re-verified in document)"
+        "Original document SHA256: 3b19dbb1ca5ffdabbb1566e690b49886fd0d05ea8264d2befa5b222f6c9b1fc9; current SHA256 dbd14a7e3e48aef95f072239ce12cfbc291acdd6ee27732755773b046b52d6bc (values re-verified in document)"
       ]
     },
     {
@@ -91901,7 +91901,7 @@
       "lineage": [
         "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
         "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-        "Original document SHA256: f9e25e14ce80611acc4780cfe43302c399fc1f104442710bf5f7041b3908e7ed; current SHA256 552187f7f55936b67cfede0ebd186923ca014bb394e1092ee899f2e8ad18b033 (values re-verified in document)"
+        "Original document SHA256: f9e25e14ce80611acc4780cfe43302c399fc1f104442710bf5f7041b3908e7ed; current SHA256 c10bc0304bf29046e7119ed4ef64e283a6d142cbb414d7b41fab85659849ce32 (values re-verified in document)"
       ]
     },
     {
@@ -91923,7 +91923,7 @@
       "lineage": [
         "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
         "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-        "Original document SHA256: f9e25e14ce80611acc4780cfe43302c399fc1f104442710bf5f7041b3908e7ed; current SHA256 552187f7f55936b67cfede0ebd186923ca014bb394e1092ee899f2e8ad18b033 (values re-verified in document)"
+        "Original document SHA256: f9e25e14ce80611acc4780cfe43302c399fc1f104442710bf5f7041b3908e7ed; current SHA256 c10bc0304bf29046e7119ed4ef64e283a6d142cbb414d7b41fab85659849ce32 (values re-verified in document)"
       ]
     },
     {
@@ -91945,7 +91945,7 @@
       "lineage": [
         "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
         "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-        "Original document SHA256: 6fab293ff19b776f7f9c5fac0028bcb041ebd865fef5d30ad402e4af3adc517b; current SHA256 5f1a525289f463bd888e369b4438154923460f7626c231a487d3c1c62abac5a9 (values re-verified in document)"
+        "Original document SHA256: 6fab293ff19b776f7f9c5fac0028bcb041ebd865fef5d30ad402e4af3adc517b; current SHA256 97aaad2bbfe909ba5746be0cc27f89d956bac77be4c396f41fa68ef1a685b73f (values re-verified in document)"
       ]
     },
     {
@@ -91967,7 +91967,7 @@
       "lineage": [
         "Reviewed consolidated cash flow row: Purchases related to property and equipment and intangible assets",
         "USD millions; acquisition cash outflow displayed in parentheses; positive CapEx convention",
-        "Original document SHA256: 6fab293ff19b776f7f9c5fac0028bcb041ebd865fef5d30ad402e4af3adc517b; current SHA256 5f1a525289f463bd888e369b4438154923460f7626c231a487d3c1c62abac5a9 (values re-verified in document)"
+        "Original document SHA256: 6fab293ff19b776f7f9c5fac0028bcb041ebd865fef5d30ad402e4af3adc517b; current SHA256 97aaad2bbfe909ba5746be0cc27f89d956bac77be4c396f41fa68ef1a685b73f (values re-verified in document)"
       ]
     },
     {
